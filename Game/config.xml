@@ -1,0 +1,68 @@
+<!-- Config file for the game -->
+
+<config>
+  <app framerate_cap="30">
+    <title>SpriteOrdering and Camera Culling</title>
+    <organization>UPC</organization>
+  </app>
+	
+  <renderer>
+    <vsync value="false"/>
+	<camera camera_x="0" camera_y="0"/>
+  </renderer>
+
+  <colliders>
+    <debug value="false"/>
+  </colliders>
+
+  <window>
+    <resolution width="1024" height="768" scale="3"/>
+    <fullscreen value="false"/>
+    <borderless value="false"/>
+    <resizable value="false"/>
+    <fullscreen_window value="false"/>
+  </window>
+
+  <audio>
+    <volume lvl="128"/>
+  </audio>
+  
+  <file_system>
+    <path>data.zip</path>
+  </file_system>
+
+  <map>
+    <folder>maps/</folder>
+  </map>
+
+  <menu>
+   <level_0>IntroScene.tmx</level_0>
+  </menu>
+  
+  <scene>
+   
+    <level_1>SceneIndoor.tmx</level_1>
+	<level_2>Scene1.tmx</level_2>
+  </scene>
+
+  
+  <gui>
+    <atlas file="gui/atlas.png"/>
+    <audio button="audio/fx/button.wav" checkbox="audio/fx/checkbox.wav"/>
+  </gui>
+  
+  <fonts>
+	<default_font file="fonts/open_sans/OpenSans-Regular.ttf" size="24" />
+	<title_font file="fonts/ka1.ttf" size="24" />
+	</fonts>
+
+  <player>
+    <file>player.tsx</file>
+  </player>
+  
+  <enemies>
+	<enemy_1>gladiator.tsx</enemy_1>
+	<enemy_2>flying_tongue.tsx</enemy_2>
+  </enemies>
+
+</config>
