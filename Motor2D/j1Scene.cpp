@@ -16,7 +16,7 @@
 
 j1Scene::j1Scene() : j1Module()
 {
-	name.create("scene");
+	name.create("scenes");
 }
 
 // Destructor
@@ -34,7 +34,9 @@ bool j1Scene::Awake(pugi::xml_node& conf)
 // Called before the first frame
 bool j1Scene::Start()
 {
-	App->map->AddCollidersMap();
+	bool ret = false;
+
+	ret = App->map->Load("Scene.tmx");
 
 	CreateEntities();
 
@@ -43,7 +45,7 @@ bool j1Scene::Start()
 
 	App->render->camera = App->render->CameraInitPos();
 
-	return true;
+	return ret;
 }
 
 void j1Scene::CreateEntities()
@@ -52,19 +54,13 @@ void j1Scene::CreateEntities()
 	j1Entity* ent = nullptr;
 
 	for (; position; position = position->next) {
-		if (position->data->name == "Gladiator")
-			ent = App->entities->CreateEntity(j1Entity::Types::GLADIATOR, position->data->coll_x, position->data->coll_y);
-		else if (position->data->name == "Flying Tongue")
-			ent = App->entities->CreateEntity(j1Entity::Types::FLYING_TONGUE, position->data->coll_x, position->data->coll_y);
-		else if (position->data->name == "Player") {
+		if (position->data->name == "Player") {
 			ent = App->entities->CreateEntity(j1Entity::Types::PLAYER, position->data->coll_x, position->data->coll_y);
-		}
-		else if (position->data->name == "Coin") {
-			ent = App->entities->CreateEntity(j1Entity::Types::COIN, position->data->coll_x, position->data->coll_y);
 		}
 		else ent = nullptr;
 
 		if (ent != nullptr) {
+			LOG(ent->data.tileset.imagePath.GetString());
 			ent->data.tileset.texture = App->tex->Load(ent->data.tileset.imagePath.GetString());
 			
 		}
@@ -75,15 +71,18 @@ void j1Scene::CreateEntities()
 bool j1Scene::Update(float dt)
 {
 	BROFILER_CATEGORY("UpdateScene", Profiler::Color::Red);
-	//----------------------DEBUG KEYS-------------------------//
 
-	//F5 - Save the currant state
-	if (App->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN)
-		App->SaveGame();
+	if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
+		App->render->camera.y += 300 * dt;
 
-	//F6 - Load the previous state (even across levels)
-	if (App->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN)
-		App->LoadGame();
+	if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
+		App->render->camera.y -= 300 * dt;
+
+	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
+		App->render->camera.x += 300 * dt;
+
+	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
+		App->render->camera.x -= 300 * dt;
 
 	App->map->Draw();	
 	

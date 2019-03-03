@@ -17,7 +17,7 @@
 
 Player::Player(int x, int y) : j1Entity(Types::PLAYER, x, y) {
 
-	LoadEntityData("player.tsx");
+	LoadEntityData("entities/player.tsx");
 
 }
 
@@ -64,32 +64,24 @@ bool Player::CleanUp()
 }
 
 void Player::Move(float dt) {
-	if (App->input->GetKey(SDL_SCANCODE_D) == j1KeyState::KEY_REPEAT && speed.x < maxSpeed) {
-			speed.x += incrementSpeedX;			
+
+	int speed = 100*dt;
+	if (App->input->GetKey(SDL_SCANCODE_D) == j1KeyState::KEY_REPEAT) {
+		position.x += speed;
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_A) == j1KeyState::KEY_REPEAT && speed.x > -maxSpeed) {
-			speed.x -= incrementSpeedX;
+	if (App->input->GetKey(SDL_SCANCODE_A) == j1KeyState::KEY_REPEAT) {
+		position.x -= speed;
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_D) == j1KeyState::KEY_UP || App->input->GetKey(SDL_SCANCODE_A) == j1KeyState::KEY_UP) {
-		speed.x = 0.0f; 
+	if (App->input->GetKey(SDL_SCANCODE_S) == j1KeyState::KEY_REPEAT) {
+		position.y += speed;
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_W) == j1KeyState::KEY_REPEAT && speed.x < maxSpeed) {
-		speed.y += incrementSpeedX;
+	if (App->input->GetKey(SDL_SCANCODE_W) == j1KeyState::KEY_REPEAT) {
+		position.y -= speed;
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_S) == j1KeyState::KEY_REPEAT && speed.x > -maxSpeed) {
-		speed.y -= incrementSpeedX;
-	}
-
-	if (App->input->GetKey(SDL_SCANCODE_W) == j1KeyState::KEY_UP || App->input->GetKey(SDL_SCANCODE_S) == j1KeyState::KEY_UP) {
-		speed.y = 0.0f;
-	}
-
-	position.x += ceil(speed.x * dt);
-	position.y += ceil(speed.y * dt);
 	SetCollidersPos();
 }
 
@@ -146,7 +138,7 @@ void Player::IdAnimToEnum()
 		case 0:
 			data.animations[i].animType = EntityState::IDLE;
 			break;
-		case 16:
+		case 3:
 			data.animations[i].animType = EntityState::WALKING;
 			break;
 		default:
@@ -162,11 +154,6 @@ void Player::LoadProperties(pugi::xml_node &node)
 	while (node) {
 		nameIdentificator = node.attribute("name").as_string();
 
-		if (nameIdentificator == "animationSpeed")
-			animationSpeed = node.attribute("value").as_float();
-
-		else if (nameIdentificator == "maxSpeedX")
-			maxSpeed = node.attribute("value").as_float();
 
 		node = node.next_sibling();
 	}

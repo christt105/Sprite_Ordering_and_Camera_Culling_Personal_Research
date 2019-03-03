@@ -114,7 +114,7 @@ bool j1Entity::LoadEntityData(const char* file) {
 	data.tileset.margin = node.attribute("margin").as_uint();
 	data.tileset.tilecount = node.attribute("tilecount").as_uint();
 	data.tileset.columns = node.attribute("columns").as_uint();
-	data.tileset.imagePath = node.child("image").attribute("source").as_string();
+	data.tileset.imagePath = folder+=node.child("image").attribute("source").as_string();
 	data.tileset.width = node.child("image").attribute("width").as_uint();
 	data.tileset.height = node.child("image").attribute("height").as_uint();
 
