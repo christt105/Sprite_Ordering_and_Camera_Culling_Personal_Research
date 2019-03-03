@@ -54,8 +54,7 @@ private:
 	void PushBack();
 	void AddColliders();
 	void Move(float dt);
-	void CheckState();
-	void ChangeState();
+	void ChangeState(PlayerState);
 	void SetCollidersPos();
 	void IdAnimToEnum();
 	void LoadProperties(pugi::xml_node&);

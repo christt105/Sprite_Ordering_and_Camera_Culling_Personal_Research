@@ -119,7 +119,6 @@ public:
 
 	fPoint position;
 	const fPoint spawn_position;
-	fPoint		speed;
 
 	Types type;
 

@@ -33,8 +33,6 @@ bool Player::Start()
 	current_animation = &anim_idle;
 	current_animation->speed = animationSpeed;
 
-	speed.SetToZero();
-
 	AddColliders();
 
 	return true;
@@ -47,7 +45,6 @@ bool Player::Update(float dt)
 	//Player collider update
 	SetCollidersPos();
 
-	CheckState();
 	current_animation->GetCurrentFrame(dt);
 
 	return true;
@@ -65,21 +62,30 @@ bool Player::CleanUp()
 
 void Player::Move(float dt) {
 
-	int speed = 100*dt;
+	int speed = 100 * dt;
+
 	if (App->input->GetKey(SDL_SCANCODE_D) == j1KeyState::KEY_REPEAT) {
 		position.x += speed;
+		ChangeState(WALKING);
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_A) == j1KeyState::KEY_REPEAT) {
+	else if (App->input->GetKey(SDL_SCANCODE_A) == j1KeyState::KEY_REPEAT) {
 		position.x -= speed;
+		ChangeState(WALKING);
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_S) == j1KeyState::KEY_REPEAT) {
+	else if (App->input->GetKey(SDL_SCANCODE_S) == j1KeyState::KEY_REPEAT) {
 		position.y += speed;
+		ChangeState(WALKING);
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_W) == j1KeyState::KEY_REPEAT) {
+	else if (App->input->GetKey(SDL_SCANCODE_W) == j1KeyState::KEY_REPEAT) {
 		position.y -= speed;
+		ChangeState(WALKING);
+	}
+
+	else {
+		ChangeState(IDLE);
 	}
 
 	SetCollidersPos();
@@ -182,46 +188,24 @@ void Player::Draw(float dt)
 	App->render->Blit(data.tileset.texture, (int)position.x, (int)position.y, &current_animation->GetCurrentFrame(dt), 1.0F, flip);
 }
 
-void Player::CheckState() {
-	
-	PlayerState prevState = state;
-	switch (state) {
-	case IDLE:
-		if (speed.x != 0.0f || speed.y != 0.0f)
-			state = WALKING;
-		break;
-	case WALKING:
-		if (speed.x == 0.0f && speed.y == 0.0f)
-			state = IDLE;
-		break;
-	default:
-		break;
+void Player::ChangeState(PlayerState change_state) {
+
+	if (change_state != state) {
+		switch (change_state)
+		{
+		case IDLE:
+			current_animation = &anim_idle;
+			break;
+		case WALKING:
+			current_animation = &anim_walking;
+			break;
+		default:
+			break;
+		}
+
+		state = change_state;
+
+		current_animation->reset();
+		current_animation->speed = 5;
 	}
-
-	if (prevState != state) //only will change animation when change state
-		ChangeState();
-
-	if (speed.x > 0 && flip != SDL_FLIP_NONE)
-		flip = SDL_FLIP_NONE;
-	else if (speed.x < 0 && flip != SDL_FLIP_HORIZONTAL)
-		flip = SDL_FLIP_HORIZONTAL;
-}
-
-void Player::ChangeState() {
-
-	switch (state)
-	{
-	case IDLE:
-		current_animation = &anim_idle;
-		break;
-	case WALKING:
-		current_animation = &anim_walking;
-		break;
-	default:
-		break;
-	}
-
-	current_animation->reset();
-	current_animation->speed = animationSpeed;
-
 }
