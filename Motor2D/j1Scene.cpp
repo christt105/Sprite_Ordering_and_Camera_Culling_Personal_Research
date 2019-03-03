@@ -60,7 +60,6 @@ void j1Scene::CreateEntities()
 		else ent = nullptr;
 
 		if (ent != nullptr) {
-			LOG(ent->data.tileset.imagePath.GetString());
 			ent->data.tileset.texture = App->tex->Load(ent->data.tileset.imagePath.GetString());
 			
 		}

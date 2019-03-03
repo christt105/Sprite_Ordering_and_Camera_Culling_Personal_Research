@@ -20,7 +20,7 @@
 #include <cmath>
 
 
-j1Entity::j1Entity(Types type, int PositionX, int PositionY) : type(type), spawn_position(PositionX,PositionY), position(PositionX,PositionY)
+j1Entity::j1Entity(Types type, int PositionX, int PositionY) : type(type), position(PositionX, PositionY)
 {}
 
 j1Entity::~j1Entity()
@@ -66,8 +66,8 @@ bool j1Entity::Save(pugi::xml_node &node) const
 
 	e_node.append_attribute("x") = (int)position.x;
 	e_node.append_attribute("y") = (int)position.y;
-	e_node.append_attribute("spawn_x") = (int)spawn_position.x;
-	e_node.append_attribute("spawn_y") = (int)spawn_position.y;
+	/*e_node.append_attribute("spawn_x") = (int)spawn_position.x;
+	e_node.append_attribute("spawn_y") = (int)spawn_position.y;*/
 	e_node.append_attribute("type") = (int)type;
 
 	return true;
@@ -114,7 +114,7 @@ bool j1Entity::LoadEntityData(const char* file) {
 	data.tileset.margin = node.attribute("margin").as_uint();
 	data.tileset.tilecount = node.attribute("tilecount").as_uint();
 	data.tileset.columns = node.attribute("columns").as_uint();
-	data.tileset.imagePath = folder+=node.child("image").attribute("source").as_string();
+	data.tileset.imagePath = folder += node.child("image").attribute("source").as_string();
 	data.tileset.width = node.child("image").attribute("width").as_uint();
 	data.tileset.height = node.child("image").attribute("height").as_uint();
 
@@ -193,8 +193,6 @@ void j1Entity::LoadProperties(pugi::xml_node & node)
 		if (nameIdentificator == "AnimationSpeed")
 			animationSpeed = node.attribute("value").as_float();
 
-		else if (nameIdentificator == "attackSound")
-			AttackSound = node.attribute("value").as_string();
 		node = node.next_sibling();
 	}
 }

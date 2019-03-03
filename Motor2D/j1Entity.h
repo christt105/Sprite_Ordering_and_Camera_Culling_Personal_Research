@@ -118,13 +118,10 @@ public:
 public:
 
 	fPoint position;
-	const fPoint spawn_position;
 
 	Types type;
 
 	Animation anim_idle;
-
-	const char* AttackSound = nullptr;
 
 	COLLIDER_INFO collider;
 

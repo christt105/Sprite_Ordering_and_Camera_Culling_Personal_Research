@@ -97,8 +97,8 @@ bool Player::Save(pugi::xml_node &node) const
 
 	e_node.append_attribute("x") = (int)position.x;
 	e_node.append_attribute("y") = (int)position.y;
-	e_node.append_attribute("spawn_x") = (int)spawn_position.x;
-	e_node.append_attribute("spawn_y") = (int)spawn_position.y;
+	/*e_node.append_attribute("spawn_x") = (int)spawn_position.x;
+	e_node.append_attribute("spawn_y") = (int)spawn_position.y;*/
 	e_node.append_attribute("type") = (int)type;
 
 	return true;
@@ -160,6 +160,8 @@ void Player::LoadProperties(pugi::xml_node &node)
 	while (node) {
 		nameIdentificator = node.attribute("name").as_string();
 
+		if (nameIdentificator == "AnimationSpeed")
+			animationSpeed = node.attribute("value").as_float();
 
 		node = node.next_sibling();
 	}
@@ -206,6 +208,6 @@ void Player::ChangeState(PlayerState change_state) {
 		state = change_state;
 
 		current_animation->reset();
-		current_animation->speed = 5;
+		current_animation->speed = animationSpeed;
 	}
 }
