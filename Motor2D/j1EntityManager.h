@@ -26,9 +26,6 @@ public:
 	bool UpdateAll(float dt, bool do_logic);
 	bool PostUpdate();
 	bool CleanUp();
-	
-	bool Save(pugi::xml_node&) const;
-	bool Load(pugi::xml_node&);
 
 	j1Entity* CreateEntity(j1Entity::Types type, int PositionX, int PositionY);
 	void DestroyEntity(j1Entity* entity);
@@ -42,7 +39,6 @@ private:
 	bool do_logic = true;
 	uint32 accumulated_time = 0;
 	uint32 update_ms_cycle = 500;
-	EntityData queue[MAX_ENEMIES];
 
 };
 

@@ -35,19 +35,7 @@ struct TileSetEntity {
 enum class EntityState {
 	IDLE = 0,
 	WALKING,
-	HIT,
-	DETECTING,
-	DEAD,
-	JUMP,
-	FALL,
-	LAND,
-	HADOUKEN,
-	PUNCH,
-	IDLE_GHOST,
-	WALKING_GHOST,
-	JUMP_GHOST,
-	FALL_GHOST,
-	LAND_GHOST,
+
 	UNKNOWN
 };
 
@@ -81,9 +69,7 @@ public:
 	enum class Types
 	{
 		PLAYER,
-		GLADIATOR,
-		FLYING_TONGUE,
-		COIN,
+		STATIC,
 
 		UNKNOWN
 	};
@@ -109,11 +95,6 @@ public:
 	virtual void CreatePath() {}
 	virtual void OnCollision(Collider* collider1, Collider * collider2, float dt) {}
 	virtual bool CleanUp();
-
-	virtual bool Save(pugi::xml_node&) const;
-	virtual bool Load(pugi::xml_node&);
-
-	j1Entity* GetEntityPosition(j1Entity::Types type);
 	
 public:
 

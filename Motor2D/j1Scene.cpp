@@ -36,7 +36,7 @@ bool j1Scene::Start()
 {
 	bool ret = false;
 
-	ret = App->map->Load("Scene.tmx");
+	ret = App->map->Load("Scene2.tmx");
 
 	CreateEntities();
 
@@ -61,7 +61,6 @@ void j1Scene::CreateEntities()
 
 		if (ent != nullptr) {
 			ent->data.tileset.texture = App->tex->Load(ent->data.tileset.imagePath.GetString());
-			
 		}
 	}
 }

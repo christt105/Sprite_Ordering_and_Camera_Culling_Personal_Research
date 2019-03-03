@@ -60,38 +60,6 @@ bool j1Entity::CleanUp()
 	return ret;
 }
 
-bool j1Entity::Save(pugi::xml_node &node) const
-{
-	pugi::xml_node e_node = node.append_child("entity");
-
-	e_node.append_attribute("x") = (int)position.x;
-	e_node.append_attribute("y") = (int)position.y;
-	/*e_node.append_attribute("spawn_x") = (int)spawn_position.x;
-	e_node.append_attribute("spawn_y") = (int)spawn_position.y;*/
-	e_node.append_attribute("type") = (int)type;
-
-	return true;
-}
-
-bool j1Entity::Load(pugi::xml_node &)
-{
-	return true;
-}
-
-j1Entity * j1Entity::GetEntityPosition(j1Entity::Types type)
-{
-	j1Entity* ent = nullptr;
-	
-	for (int i = 0; i < App->entities->entities.Count(); ++i) {
-
-		if (i == (int)type) {
-			ent = App->entities->entities[i];
-		}	
-	}
-	
-	return ent;
-}
-
 bool j1Entity::LoadEntityData(const char* file) {
 
 	bool ret = true;
@@ -216,9 +184,10 @@ void j1Entity::IdAnimToEnum()
 
 void j1Entity::AddColliders(j1Entity* callback)
 {
-		SDL_Rect r = { (int)position.x + collider.offset.x,
-			(int)position.y + collider.offset.y,
-			collider.width, collider.height };
+		SDL_Rect r = {	(int)position.x + collider.offset.x,
+						(int)position.y + collider.offset.y,
+						collider.width, collider.height };
+
 		collider.collider = App->collider->AddCollider(r, collider.type, callback);
 
 }

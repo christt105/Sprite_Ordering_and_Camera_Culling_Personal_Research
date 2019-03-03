@@ -44,9 +44,6 @@ public:
 	bool Update(float dt);
 	bool CleanUp();
 
-	bool Save(pugi::xml_node&) const;
-	//bool Load(pugi::xml_node&);
-
 	void OnCollision(Collider*, Collider*, float dt);
 
 private:

@@ -50,19 +50,20 @@ void j1Map::Draw()
 
 	while (layer) {
 		if (layer->data->visible)
-			for (uint i = camera.y*layer->data->properties.speed; i <= cameraSize.y + camera.y && i < layer->data->height; ++i) { //since camera position to camera size plus initial position or to final of layer
-				for (uint j = camera.x*layer->data->properties.speed; j <= cameraSize.x + camera.x + 1 && j < layer->data->width; ++j) {
+			for (uint i = camera.y; i <= cameraSize.y + camera.y && i < layer->data->height; ++i) { //since camera position to camera size plus initial position or to final of layer
+				for (uint j = camera.x; j <= cameraSize.x + camera.x + 1 && j < layer->data->width; ++j) {
 
 					id = layer->data->Get(j, i);
 					if (id != 0) {
 						TileSet* tileset = GetTilesetFromTileId(id);
 						if (tileset != nullptr)
-							App->render->Blit(tileset->texture, MapToWorld(j, i).x, MapToWorld(j, i).y, &tileset->GetTileRect(id), layer->data->properties.speed);
+							App->render->Blit(tileset->texture, MapToWorld(j, i).x, MapToWorld(j, i).y, &tileset->GetTileRect(id));
 					}
 				}
 			}
 		layer = layer->next;
 	}
+
 }
 
 TileSet* j1Map::GetTilesetFromTileId(int id) const
@@ -504,52 +505,6 @@ bool j1Map::LoadObject(pugi::xml_node& node_object, ColliderObject* obj) {
 	else if (type == "COLLIDER_FLOOR")
 	{
 		obj->type = COLLIDER_FLOOR;
-	}
-	else if (type == "COLLIDER_SCENE") {
-		obj->type = COLLIDER_SCENE;
-	}
-
-	return ret;
-}
-
-bool j1Map::CreateWalkabilityMap(int& width, int& height, uchar** buffer) const
-{
-	bool ret = false;
-	p2List_item<MapLayer*>* item;
-	item = data.layers.start;
-
-	for (item = data.layers.start; item != NULL; item = item->next)
-	{
-		MapLayer* layer = item->data;
-
-		if (layer->properties.Navigation == 0)
-			continue;
-
-		uchar* map = new uchar[layer->width*layer->height];
-		memset(map, 1, layer->width*layer->height);
-
-		for (int y = 0; y < data.height; ++y)
-		{
-			for (int x = 0; x < data.width; ++x)
-			{
-				int i = (y*layer->width) + x;
-
-				int tile_id = layer->Get(x, y);
-				TileSet* tileset = (tile_id > 0) ? GetTilesetFromTileId(tile_id) : NULL;
-
-				if (tileset != NULL)
-				{
-					map[i] = (tile_id - tileset->firstgid) > 0 ? 0 : 1;
-				}
-			}
-		}
-
-		*buffer = map;
-		width = data.width;
-		height = data.height;
-		ret = true;
-
-		break;
 	}
 
 	return ret;

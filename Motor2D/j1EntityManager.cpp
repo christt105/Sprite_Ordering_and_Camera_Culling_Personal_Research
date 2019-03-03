@@ -26,13 +26,6 @@ bool j1EntityManager::Awake(pugi::xml_node& conf)
 {
 	LOG("Loading TSX files");
 	bool ret = true;
-
-	// TSX of each enemy
-	pugi::xml_node node = conf.child("entity");
-	for (int i = 0; node; node = node.next_sibling()) {
-		queue[i].tsx_file.create(node.attribute("file").as_string());
-		++i;
-	}
 	
 	return ret;
 }
@@ -102,31 +95,9 @@ bool j1EntityManager::CleanUp()
 	return true;
 }
 
-bool j1EntityManager::Save(pugi::xml_node & node) const
-{
-	bool ret = false;
-	LOG("Saving all entities...");
-
-	for (int i = 0; i < entities.Count(); ++i) {
-		if (entities[i] != nullptr)
-			ret = entities[i]->Save(node);
-	}
-	return ret;
-}
-
-bool j1EntityManager::Load(pugi::xml_node & node)
-{
-	bool ret = false;
-	LOG("Loading all entities...");
-
-	ret = CleanUp();
-
-	return ret;
-}
-
 j1Entity* j1EntityManager::CreateEntity(j1Entity::Types type, int PositionX, int PositionY)
 {
-	static_assert(j1Entity::Types::UNKNOWN == (j1Entity::Types)4, "code needs update");
+	static_assert(j1Entity::Types::UNKNOWN == (j1Entity::Types)2, "code needs update");
 	j1Entity* ret = nullptr;
 	switch (type) {
 		case j1Entity::Types::PLAYER: ret = new Player(PositionX, PositionY); break;
