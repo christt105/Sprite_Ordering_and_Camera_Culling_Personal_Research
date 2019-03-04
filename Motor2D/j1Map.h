@@ -30,10 +30,7 @@ struct ColliderObject {
 
 struct Properties
 {
-	float gravity;
-	float maxAccelerationY;
-	float speed = 1.0F;
-	bool Navigation;
+	bool draw = true;
 };
 
 struct MapLayer {
@@ -86,7 +83,6 @@ struct MapData
 	int					tile_height;
 	SDL_Color			background_color;
 	MapTypes			type;
-	Properties			properties;
 	const char*			musicEnvironment;
 	p2List<TileSet*>	tilesets;
 	p2List<MapLayer*>	layers;

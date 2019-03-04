@@ -49,7 +49,7 @@ void j1Map::Draw()
 	iPoint cameraSize(WorldToMap(App->render->camera.w / scale, App->render->camera.h / scale));
 
 	while (layer) {
-		if (layer->data->visible)
+		if (layer->data->visible && layer->data->properties.draw)
 			for (uint i = camera.y; i <= cameraSize.y + camera.y && i < layer->data->height; ++i) { //since camera position to camera size plus initial position or to final of layer
 				for (uint j = camera.x; j <= cameraSize.x + camera.x + 1 && j < layer->data->width; ++j) {
 
@@ -386,6 +386,9 @@ void j1Map::LoadProperties(pugi::xml_node& properties_node, MapLayer* layer) {
 	for (properties_node = properties_node.child("property"); properties_node != NULL; properties_node = properties_node.next_sibling()) {
 		p2SString prop = properties_node.attribute("name").as_string();
 		
+		if (prop == "NoDraw") {
+			layer->properties.draw = properties_node.attribute("value").as_bool(true);
+		}
 	}
 }
 
