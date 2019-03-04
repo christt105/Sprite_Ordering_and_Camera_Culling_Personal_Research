@@ -28,10 +28,6 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
-private:
-
-	uint win_width = 0;
-	uint win_height = 0;
 };
 
 #endif // __j1SCENE_H__

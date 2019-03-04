@@ -40,9 +40,6 @@ bool j1Scene::Start()
 
 	CreateEntities();
 
-	win_width = App->win->screen_surface->w;
-	win_height = App->win->screen_surface->h;
-
 	App->render->camera = App->render->CameraInitPos();
 
 	return ret;
@@ -56,11 +53,6 @@ void j1Scene::CreateEntities()
 	for (; position; position = position->next) {
 		if (position->data->name == "Player") {
 			ent = App->entities->CreateEntity(j1Entity::Types::PLAYER, position->data->coll_x, position->data->coll_y);
-		}
-		else ent = nullptr;
-
-		if (ent != nullptr) {
-			ent->data.tileset.texture = App->tex->Load(ent->data.tileset.imagePath.GetString());
 		}
 	}
 }

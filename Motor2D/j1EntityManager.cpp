@@ -105,6 +105,7 @@ j1Entity* j1EntityManager::CreateEntity(j1Entity::Types type, int PositionX, int
 	if (ret != nullptr) {
 		entities.PushBack(ret);
 		ret->Start();
+		ret->data.tileset.texture = App->tex->Load(ret->data.tileset.imagePath.GetString());
 	}
 	
 	return ret;
