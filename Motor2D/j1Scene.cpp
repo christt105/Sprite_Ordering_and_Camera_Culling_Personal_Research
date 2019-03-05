@@ -52,7 +52,11 @@ void j1Scene::CreateEntities()
 
 	for (; position; position = position->next) {
 		if (position->data->name == "Player") {
-			ent = App->entities->CreateEntity(j1Entity::Types::PLAYER, position->data->coll_x, position->data->coll_y);
+			ent = App->entities->CreateEntity(j1Entity::Types::PLAYER, position->data->coll_x, position->data->coll_y, position->data->name);
+		}
+		else if (position->data->ent_type == "static") {
+			ent = App->entities->CreateEntity(j1Entity::Types::STATIC, position->data->coll_x, position->data->coll_y, position->data->name);
+				
 		}
 	}
 }
@@ -73,6 +77,10 @@ bool j1Scene::Update(float dt)
 
 	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
 		App->render->camera.x -= 300 * dt;
+
+
+	if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
+		App->quit_game = true;
 
 	App->map->Draw();	
 	

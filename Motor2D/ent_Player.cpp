@@ -35,6 +35,8 @@ bool Player::Start()
 
 	AddColliders();
 
+	data.tileset.texture = App->tex->Load(data.tileset.imagePath.GetString());
+
 	return true;
 }
 
@@ -170,11 +172,6 @@ void Player::LoadCollider(pugi::xml_node &node)
 
 		node = node.next_sibling();
 	}
-}
-
-void Player::Draw(float dt)
-{
-	App->render->Blit(data.tileset.texture, (int)position.x, (int)position.y, &current_animation->GetCurrentFrame(dt), 1.0F, flip);
 }
 
 void Player::ChangeState(PlayerState change_state) {

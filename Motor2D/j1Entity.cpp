@@ -60,6 +60,10 @@ bool j1Entity::CleanUp()
 	return ret;
 }
 
+
+
+//---------------------------------Load Entity XML DATA----------------------------------------------------------------------------
+
 bool j1Entity::LoadEntityData(const char* file) {
 
 	bool ret = true;

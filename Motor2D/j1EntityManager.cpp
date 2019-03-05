@@ -8,6 +8,7 @@
 #include "j1Scene.h"
 #include "j1Entity.h"
 #include "ent_Player.h"
+#include "ent_Static.h"
 
 #include "Brofiler/Brofiler.h"
 
@@ -95,17 +96,17 @@ bool j1EntityManager::CleanUp()
 	return true;
 }
 
-j1Entity* j1EntityManager::CreateEntity(j1Entity::Types type, int PositionX, int PositionY)
+j1Entity* j1EntityManager::CreateEntity(j1Entity::Types type, int PositionX, int PositionY, p2SString name = "")
 {
 	static_assert(j1Entity::Types::UNKNOWN == (j1Entity::Types)2, "code needs update");
 	j1Entity* ret = nullptr;
 	switch (type) {
 		case j1Entity::Types::PLAYER: ret = new Player(PositionX, PositionY); break;
+		case j1Entity::Types::STATIC: ret = new ent_Static(PositionX, PositionY, name); break;
 	}
 	if (ret != nullptr) {
 		entities.PushBack(ret);
 		ret->Start();
-		ret->data.tileset.texture = App->tex->Load(ret->data.tileset.imagePath.GetString());
 	}
 	
 	return ret;

@@ -27,7 +27,7 @@ public:
 	bool PostUpdate();
 	bool CleanUp();
 
-	j1Entity* CreateEntity(j1Entity::Types type, int PositionX, int PositionY);
+	j1Entity* CreateEntity(j1Entity::Types type, int PositionX, int PositionY, p2SString name);
 	void DestroyEntity(j1Entity* entity);
 
 public:

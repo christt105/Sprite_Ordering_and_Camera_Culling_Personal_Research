@@ -18,6 +18,7 @@ struct EntityPos
 struct ColliderObject {
 
 	p2SString name;
+	p2SString ent_type;
 
 	COLLIDER_TYPE type;
 	uint tile_id;
@@ -114,12 +115,7 @@ public:
 	iPoint MapToWorld(int x, int y) const;
 	iPoint WorldToMap(int x, int y) const;
 	
-	
-	//void InitialEntityPosition();
-
-	bool CreateWalkabilityMap(int & width, int & height, uchar ** buffer) const;
-	
-	void AddCollidersMap();
+	//void AddCollidersMap();
 	
 
 private:

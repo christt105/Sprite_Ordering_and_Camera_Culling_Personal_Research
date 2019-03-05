@@ -80,20 +80,6 @@ TileSet* j1Map::GetTilesetFromTileId(int id) const
 	return ret;
 }
 
-void j1Map::AddCollidersMap()
-{
-
-	p2List_item<ColliderObject*>* colliders = data.colliders.start;
-
-	while (colliders) {
-		SDL_Rect collider_rect = { colliders->data->coll_x,colliders->data->coll_y,colliders->data->coll_width,colliders->data->coll_height };
-		App->collider->AddCollider(collider_rect, colliders->data->type);
-	
-		colliders = colliders->next;
-	}
-
-}
-
 iPoint j1Map::MapToWorld(int x, int y) const
 {
 	iPoint ret(0,0);
@@ -491,6 +477,7 @@ bool j1Map::LoadObject(pugi::xml_node& node_object, ColliderObject* obj) {
 
 	//Load Collider / Entity data
 	obj->name = node_object.attribute("name").as_string();
+	obj->ent_type = node_object.attribute("type").as_string();
 	obj->tile_id = node_object.attribute("id").as_uint();
 	obj->coll_x = node_object.attribute("x").as_int();
 	obj->coll_y = node_object.attribute("y").as_int();

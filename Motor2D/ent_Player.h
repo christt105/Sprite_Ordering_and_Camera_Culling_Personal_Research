@@ -10,24 +10,11 @@
 
 
 struct SDL_Texture;
-class Label;
-class Image;
-
 
 enum PlayerState {
 	IDLE = 0,
 	WALKING,
-	JUMP,
-	FALL,
-	LAND,
-	DEAD,
-	HADOUKEN,
-	PUNCH,
-	IDLE_GHOST,
-	WALKING_GHOST,
-	JUMP_GHOST,
-	FALL_GHOST,
-	LAND_GHOST,
+
 	UNKNOWN
 };
 
@@ -56,7 +43,6 @@ private:
 	void IdAnimToEnum();
 	void LoadProperties(pugi::xml_node&);
 	void LoadCollider(pugi::xml_node&);
-	void Draw(float dt);
 
 private:
 

@@ -48,6 +48,9 @@
     <ClCompile Include="ent_Player.cpp">
       <Filter>Entities</Filter>
     </ClCompile>
+    <ClCompile Include="ent_Static.cpp">
+      <Filter>Entities</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="j1Scene.h">
@@ -121,6 +124,9 @@
       <Filter>Entities</Filter>
     </ClInclude>
     <ClInclude Include="ent_Player.h">
+      <Filter>Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="ent_Static.h">
       <Filter>Entities</Filter>
     </ClInclude>
   </ItemGroup>
