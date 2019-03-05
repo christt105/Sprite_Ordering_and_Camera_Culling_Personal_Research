@@ -10,7 +10,7 @@
 j1Audio::j1Audio() : j1Module()
 {
 	music = NULL;
-	name.create("audio");
+	name.assign("audio");
 	
 }
 
@@ -69,9 +69,8 @@ bool j1Audio::CleanUp()
 		Mix_FreeMusic(music);
 	}
 
-	std::list<Mix_Chunk*>* item;
-	for(item = fx.start; item != NULL; item = item->next)
-		Mix_FreeChunk(item->data);
+	for(std::vector<Mix_Chunk*>::iterator item = fx.begin(); item != fx.end(); item++)
+		Mix_FreeChunk(*item);
 
 	fx.clear();
 
@@ -152,8 +151,8 @@ unsigned int j1Audio::LoadFx(const char* path)
 	}
 	else
 	{
-		fx.add(chunk);
-		ret = fx.count();
+		fx.push_back(chunk);
+		ret = fx.size();
 	}
 
 	return ret;
@@ -167,7 +166,7 @@ bool j1Audio::PlayFx(unsigned int id, int repeat)
 	if(!active)
 		return false;
 
-	if(id > 0 && id <= fx.count())
+	if(id > 0 && id <= fx.size())
 	{
 		Mix_PlayChannel(-1, fx[id - 1], repeat);
 	}
@@ -183,7 +182,7 @@ bool j1Audio::FadeOutFx(unsigned int id, int fade)
 	if (!active)
 		return false;
 
-	if (id > 0 && id <= fx.count())
+	if (id > 0 && id <= fx.size())
 	{
 		Mix_FadeOutChannel(-1, fade);
 	}
@@ -199,7 +198,7 @@ bool j1Audio::StopFx(unsigned int id)
 	if (!active)
 		return false;
 
-	if (id > 0 && id <= fx.count())
+	if (id > 0 && id <= fx.size())
 	{
 		Mix_HaltChannel(-1);
 	}
@@ -232,19 +231,4 @@ int j1Audio::SetFx(float volume)
 int j1Audio::GetVolume() const
 {
 	return Mix_VolumeMusic(-1);
-}
-
-//Set Volume
-int j1Audio::RaiseVolume() {
-	if (volumeMusic <= MIX_MAX_VOLUME)
-		volumeMusic += 10;
-	else { volumeMusic = MIX_MAX_VOLUME; }
-	return Mix_VolumeMusic(volumeMusic);
-}
-
-int j1Audio::DecreaseVolume() {
-	if (volumeMusic >= 10)
-		volumeMusic -= 10;
-	else { volumeMusic = 0; }
-	return Mix_VolumeMusic(volumeMusic);
 }

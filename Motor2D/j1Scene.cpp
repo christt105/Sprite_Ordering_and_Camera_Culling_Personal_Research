@@ -16,7 +16,7 @@
 
 j1Scene::j1Scene() : j1Module()
 {
-	name.create("scenes");
+	name.assign("scenes");
 }
 
 // Destructor
@@ -47,15 +47,15 @@ bool j1Scene::Start()
 
 void j1Scene::CreateEntities()
 {
-	std::list<ColliderObject*>* position = App->map->data.colliders.start; //iterate all objects of tile to find entities
+	//iterate all objects of tile to find entities
 	j1Entity* ent = nullptr;
 
-	for (; position; position = position->next) {
-		if (position->data->name == "Player") {
-			ent = App->entities->CreateEntity(j1Entity::Types::PLAYER, position->data->coll_x, position->data->coll_y, position->data->name);
+	for (std::list<ColliderObject*>::iterator position = App->map->data.colliders.begin(); position != App->map->data.colliders.end(); position++) {
+		if ((*position)->name == "Player") {
+			App->entities->CreateEntity(j1Entity::Types::PLAYER, (*position)->coll_x, (*position)->coll_y, (*position)->name);
 		}
-		else if (position->data->ent_type == "static") {
-			ent = App->entities->CreateEntity(j1Entity::Types::STATIC, position->data->coll_x, position->data->coll_y, position->data->name);
+		else if ((*position)->ent_type == "static") {
+			App->entities->CreateEntity(j1Entity::Types::STATIC, (*position)->coll_x, (*position)->coll_y, (*position)->name);
 				
 		}
 	}

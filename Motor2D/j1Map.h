@@ -10,6 +10,8 @@
 #define MAX_ENTITIES 100
 
 
+struct SDL_Texture;
+
 // ----------------------------------------------------
 struct EntityPos
 {

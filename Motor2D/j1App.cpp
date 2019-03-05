@@ -54,12 +54,10 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 j1App::~j1App()
 {
 	// release modules
-	std::list<j1Module*>::iterator item = modules.end();
 
-	while(*item != nullptr)
+	for (std::list<j1Module*>::reverse_iterator item = modules.rbegin(); item != modules.rend(); ++item)
 	{
 		RELEASE(*item);
-		++item;
 	}
 
 	modules.clear();
@@ -98,7 +96,7 @@ bool j1App::Awake()
 	{
 		std::list<j1Module*>::iterator item = modules.begin();
 
-		while(*item != nullptr && ret == true)
+		while (item != modules.end() && ret)
 		{
 			ret = (*item)->Awake(config.child((*item)->name.data()));
 			item++;
@@ -118,14 +116,14 @@ bool j1App::Start()
 	bool ret = true;
 	std::list<j1Module*>::iterator item = modules.begin();
 
-	while(*item != NULL && ret == true)
+	while (item != modules.end() && ret)
 	{
-		if (item->active == false) {
-			item = item->next;
+		if ((*item)->active == false) {
+			item++;
 			continue;
 		}
-		ret = item->data->Start();
-		item = item->next;
+		ret = (*item)->Start();
+		item++;
 	}
 
 	PERF_PEEK(ptimer);
@@ -179,10 +177,7 @@ void j1App::PrepareUpdate()
 
 	frame_count++;
 	last_sec_frame_count++;
-	if (!pause)
-		dt = frame_time.ReadSec();
-	else
-		dt = 0.0f;
+	dt = frame_time.ReadSec();
 	frame_time.Start();
 }
 
@@ -190,12 +185,6 @@ void j1App::PrepareUpdate()
 void j1App::FinishUpdate()
 {
 	BROFILER_CATEGORY("FinishUpdate", Profiler::Color::Magenta);
-
-	if(want_to_save == true)
-		SavegameNow();
-
-	if(want_to_load == true)
-		LoadGameNow();
 
 	// Framerate calculations --
 
@@ -236,19 +225,17 @@ bool j1App::PreUpdate()
 	BROFILER_CATEGORY("PreUpdate", Profiler::Color::Yellow);
 
 	bool ret = true;
-	std::list<j1Module*>* item;
-	item = modules.start;
 	j1Module* pModule = NULL;
 
-	for(item = modules.start; item != NULL && ret == true; item = item->next)
+	for(std::list<j1Module*>::iterator item = modules.begin(); item != modules.end() && ret == true; item++)
 	{
-		pModule = item->data;
+		pModule = *item;
 
 		if(pModule->active == false) {
 			continue;
 		}
 
-		ret = item->data->PreUpdate();
+		ret = (*item)->PreUpdate();
 	}
 
 	return ret;
@@ -260,19 +247,17 @@ bool j1App::DoUpdate()
 	BROFILER_CATEGORY("DoUpdate", Profiler::Color::Red);
 
 	bool ret = true;
-	std::list<j1Module*>* item;
-	item = modules.start;
 	j1Module* pModule = NULL;
 
-	for(item = modules.start; item != NULL && ret == true; item = item->next)
+	for (std::list<j1Module*>::iterator item = modules.begin(); item != modules.end() && ret == true; item++)
 	{
-		pModule = item->data;
+		pModule = *item;
 
-		if(pModule->active == false) {
+		if (pModule->active == false) {
 			continue;
 		}
 
-		ret = item->data->Update(dt);
+		ret = (*item)->Update(dt);
 	}
 
 	return ret;
@@ -284,18 +269,17 @@ bool j1App::PostUpdate()
 	BROFILER_CATEGORY("PostUpdate", Profiler::Color::Green);
 
 	bool ret = true;
-	std::list<j1Module*>* item;
 	j1Module* pModule = NULL;
 
-	for(item = modules.start; item != NULL && ret == true; item = item->next)
+	for (std::list<j1Module*>::iterator item = modules.begin(); item != modules.end() && ret == true; item++)
 	{
-		pModule = item->data;
+		pModule = *item;
 
-		if(pModule->active == false) {
+		if (pModule->active == false) {
 			continue;
 		}
 
-		ret = item->data->PostUpdate();
+		ret = (*item)->PostUpdate();
 	}
 
 	return ret;
@@ -305,13 +289,10 @@ bool j1App::PostUpdate()
 bool j1App::CleanUp()
 {
 	bool ret = true;
-	std::list<j1Module*>* item;
-	item = modules.end;
 
-	while(item != NULL && ret == true)
+	for (std::list<j1Module*>::reverse_iterator item = modules.rbegin(); item != modules.rend() && ret == true; ++item)
 	{
-		ret = item->data->CleanUp();
-		item = item->prev;
+		ret = (*item)->CleanUp();
 	}
 
 	return ret;
@@ -335,81 +316,11 @@ const char* j1App::GetArgv(int index) const
 // ---------------------------------------
 const char* j1App::GetTitle() const
 {
-	return title.GetString();
+	return title.data();
 }
 
 // ---------------------------------------
 const char* j1App::GetOrganization() const
 {
-	return organization.GetString();
-}
-
-bool j1App::LoadGameNow()
-{
-	bool ret = false;
-
-	pugi::xml_document data;
-	pugi::xml_node root;
-
-	pugi::xml_parse_result result = data.load_file(load_game.GetString());
-
-	if(result != NULL)
-	{
-		LOG("Loading new Game State from %s...", load_game.GetString());
-
-		root = data.child("game_state");
-
-		std::list<j1Module*>* item = modules.start;
-		ret = true;
-
-		while(item != NULL && ret == true)
-		{
-			ret = item->data->Load(root.child(item->data->name.GetString()));
-			item = item->next;
-		}
-
-		data.reset();
-		if(ret == true)
-			LOG("...finished loading");
-		else
-			LOG("...loading process interrupted with error on module %s", (item != NULL) ? item->data->name.GetString() : "unknown");
-	}
-	else
-		LOG("Could not parse game state xml file %s. pugi error: %s", load_game.GetString(), result.description());
-
-	want_to_load = false;
-	return ret;
-}
-
-bool j1App::SavegameNow() const
-{
-	bool ret = true;
-
-	LOG("Saving Game State to %s...", save_game.GetString());
-
-	// xml object were we will store all data
-	pugi::xml_document data;
-	pugi::xml_node root;
-	
-	root = data.append_child("game_state");
-
-	std::list<j1Module*>* item = modules.start;
-
-	while(item != NULL && ret == true)
-	{
-		ret = item->data->Save(root.append_child(item->data->name.GetString()));
-		item = item->next;
-	}
-
-	if(ret == true)
-	{
-		data.save_file(save_game.GetString());
-		LOG("... finished saving", );
-	}
-	else
-		LOG("Save process halted from an error in module %s", (item != NULL) ? item->data->name.GetString() : "unknown");
-
-	data.reset();
-	want_to_save = false;
-	return ret;
+	return organization.data();
 }

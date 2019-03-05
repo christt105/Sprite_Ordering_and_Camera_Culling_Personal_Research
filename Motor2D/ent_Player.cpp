@@ -34,7 +34,7 @@ bool Player::Start()
 
 	AddColliders();
 
-	data.tileset.texture = App->tex->Load(data.tileset.imagePath.GetString());
+	data.tileset.texture = App->tex->Load(data.tileset.imagePath.data());
 
 	return true;
 }
@@ -63,25 +63,25 @@ bool Player::CleanUp()
 
 void Player::Move(float dt) {
 
-	int speed = 100 * dt;
+	int speed = 125;
 
 	if (App->input->GetKey(SDL_SCANCODE_D) == j1KeyState::KEY_REPEAT) {
-		position.x += speed;
+		position.x += speed * dt;
 		ChangeState(WALKING);
 	}
 
 	else if (App->input->GetKey(SDL_SCANCODE_A) == j1KeyState::KEY_REPEAT) {
-		position.x -= speed;
+		position.x -= speed * dt;
 		ChangeState(WALKING);
 	}
 
 	else if (App->input->GetKey(SDL_SCANCODE_S) == j1KeyState::KEY_REPEAT) {
-		position.y += speed;
+		position.y += speed * dt;
 		ChangeState(WALKING);
 	}
 
 	else if (App->input->GetKey(SDL_SCANCODE_W) == j1KeyState::KEY_REPEAT) {
-		position.y -= speed;
+		position.y -= speed * dt;
 		ChangeState(WALKING);
 	}
 

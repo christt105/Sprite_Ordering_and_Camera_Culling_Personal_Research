@@ -66,11 +66,11 @@ void j1Map::Draw()
 
 TileSet* j1Map::GetTilesetFromTileId(int id) const
 {
-	std::list<TileSet*>::iterator tileset = data.tilesets.begin();
-	TileSet* ret = *tileset;
-	for (; tileset != data.tilesets.end(); ++tileset) {
-		if (id >= (*tileset)->firstgid)
-			ret = tileset.operator*;
+	std::list<TileSet*>::const_iterator item = data.tilesets.begin();
+	TileSet* ret = *item;
+	for (; item != data.tilesets.end(); ++item) {
+		if (id >= (*item)->firstgid)
+			ret = *item;
 		else return ret;
 	}
 	return ret;
@@ -146,7 +146,7 @@ bool j1Map::CleanUp()
 	while(item != data.tilesets.end())
 	{
 		App->tex->UnLoad((*item)->texture);
-		RELEASE(item.operator*);
+		RELEASE(*item);
 		++item;
 	}
 	data.tilesets.clear();
@@ -181,9 +181,9 @@ bool j1Map::CleanUp()
 bool j1Map::Load(const char* file_name)
 {
 	bool ret = true;
-	std::string tmp("%s%s" + folder.data + file_name);
+	std::string tmp = (folder.data() + std::string(file_name));
 
-	pugi::xml_parse_result result = map_file.load_file(tmp.data);
+	pugi::xml_parse_result result = map_file.load_file(tmp.data());
 
 	if(result == NULL)
 	{
