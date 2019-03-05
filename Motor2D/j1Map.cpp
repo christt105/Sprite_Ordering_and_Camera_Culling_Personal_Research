@@ -41,22 +41,18 @@ void j1Map::Draw()
 		return;
 
 	uint id = 0;
-	
-	//Local variables to simplify code
-	int scale = App->win->GetScale();
-	iPoint camera(WorldToMap(-App->render->camera.x/scale, -App->render->camera.y/scale)); //camera pass virtual coordinates to map coordinates with the correct scale
-	iPoint cameraSize(WorldToMap(App->render->camera.w / scale, App->render->camera.h / scale));
 
 	for (std::list<MapLayer*>::iterator layer = data.layers.begin(); layer != data.layers.end(); ++layer) {
 		if ((*layer)->visible && (*layer)->properties.draw)
-			for (uint i = 0; i < (*layer)->height; ++i) { //since camera position to camera size plus initial position or to final of layer
+			for (uint i = 0; i < (*layer)->height; ++i) {
 				for (uint j = 0; j < (*layer)->width; ++j) {
-
-					id = (*layer)->Get(j, i);
-					if (id != 0) {
-						TileSet* tileset = GetTilesetFromTileId(id);
-						if (tileset != nullptr)
-							App->render->Blit(tileset->texture, MapToWorld(j, i).x, MapToWorld(j, i).y, &tileset->GetTileRect(id));
+					if (App->render->IsInCamera(MapToWorld(j+1, i).x, MapToWorld(j, i+1).y)) {
+						id = (*layer)->Get(j, i);
+						if (id != 0) {
+							TileSet* tileset = GetTilesetFromTileId(id);
+							if (tileset != nullptr)
+								App->render->Blit(tileset->texture, MapToWorld(j, i).x, MapToWorld(j, i).y, &tileset->GetTileRect(id));
+						}
 					}
 				}
 			}

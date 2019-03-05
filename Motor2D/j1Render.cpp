@@ -132,6 +132,11 @@ void j1Render::SetViewPort(const SDL_Rect& rect)
 	SDL_RenderSetViewport(renderer, &rect);
 }
 
+bool j1Render::IsInCamera(int x, int y)
+{
+	return x > -camera.x && x < camera.x + camera.w && y > -camera.y && y < camera.y + camera.h;
+}
+
 void j1Render::ResetViewPort()
 {
 	SDL_RenderSetViewport(renderer, &viewport);

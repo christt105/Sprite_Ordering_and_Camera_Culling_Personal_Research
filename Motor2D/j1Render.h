@@ -34,6 +34,7 @@ public:
 	SDL_Rect CameraInitPos();
 	// Blit
 	void SetViewPort(const SDL_Rect& rect);
+	bool IsInCamera(int x, int y);
 	void ResetViewPort();
 	iPoint ScreenToWorld(int x, int y) const;
 	bool Blit(SDL_Texture* texture, int x, int y, const SDL_Rect* section = NULL, float speed = 1.0f, bool scale = true, 
