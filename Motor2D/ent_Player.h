@@ -4,7 +4,6 @@
 #include "j1Entity.h"
 #include "p2Point.h"
 #include "Animation.h"
-#include "p2List.h"
 #include "j1Collision.h"
 #include "SDL_image/include/SDL_image.h"
 

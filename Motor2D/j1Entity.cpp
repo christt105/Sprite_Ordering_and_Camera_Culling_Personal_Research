@@ -10,7 +10,6 @@
 #include "p2Log.h"
 #include "j1Map.h"
 #include "j1Scene.h"
-#include "p2List.h"
 #include "j1Input.h"
 
 #include "j1EntityManager.h"
@@ -79,7 +78,7 @@ bool j1Entity::LoadEntityData(const char* file) {
 	//fill tileset info
 	pugi::xml_node node = entity_file.child("tileset");
 
-	data.tileset.name.create(node.attribute("name").as_string());
+	data.tileset.name.assign(node.attribute("name").as_string());
 	data.tileset.tilewidth = node.attribute("tilewidth").as_uint();
 	data.tileset.tileheight = node.attribute("tileheight").as_uint();
 	data.tileset.spacing = node.attribute("spacing").as_uint();
@@ -158,7 +157,7 @@ bool j1Entity::LoadEntityData(const char* file) {
 
 void j1Entity::LoadProperties(pugi::xml_node & node)
 {
-	p2SString nameIdentificator;
+	std::string nameIdentificator;
 	while (node) {
 		nameIdentificator = node.attribute("name").as_string();
 
@@ -176,7 +175,7 @@ void j1Entity::LoadCollider(pugi::xml_node &node)
 	collider.width = node.attribute("width").as_uint();
 	collider.height = node.attribute("height").as_uint();
 
-	p2SString colliderType = node.attribute("type").as_string();
+	std::string colliderType = node.attribute("type").as_string();
 	if (colliderType == "COLLIDER_PLAYER")
 		collider.type = COLLIDER_TYPE::COLLIDER_PLAYER;
 }

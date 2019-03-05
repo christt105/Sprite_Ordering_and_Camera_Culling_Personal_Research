@@ -54,7 +54,7 @@ public:
 private:
 
 	_Mix_Music*			music;
-	p2List<Mix_Chunk*>	fx;
+	std::list<Mix_Chunk*>	fx;
 	int					volumeMusic;
 	
 };

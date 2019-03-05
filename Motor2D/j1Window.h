@@ -42,7 +42,7 @@ public:
 	bool fullscreen;
 
 private:
-	p2SString	title;
+	std::string	title;
 	uint		width;
 	uint		height;
 	uint		scale;

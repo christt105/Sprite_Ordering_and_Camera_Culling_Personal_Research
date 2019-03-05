@@ -2,7 +2,7 @@
 #define __j1TEXTURES_H__
 
 #include "j1Module.h"
-#include "p2List.h"
+#include <list>
 
 struct SDL_Texture;
 struct SDL_Surface;
@@ -33,7 +33,7 @@ public:
 
 public:
 
-	p2List<SDL_Texture*>	textures;
+	std::list<SDL_Texture*>	textures;
 };
 
 

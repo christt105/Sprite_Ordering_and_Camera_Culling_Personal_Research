@@ -2,9 +2,6 @@
 #define __ENT_STATIC_H__
 
 #include "j1Entity.h"
-#include "p2List.h"
-#include "j1Collision.h"
-#include "SDL_image/include/SDL_image.h"
 
 
 struct SDL_Texture;
@@ -23,7 +20,7 @@ public:
 
 public:
 
-	ent_Static(int x, int y, p2SString name);
+	ent_Static(int x, int y, std::string name);
 
 	~ent_Static();
 

@@ -8,7 +8,6 @@
 #include "j1Collision.h"
 #include "j1Map.h"
 #include "j1Scene.h"
-#include "p2List.h"
 #include "j1Input.h"
 #include "j1Audio.h"
 #include "j1EntityManager.h"
@@ -145,7 +144,7 @@ void Player::IdAnimToEnum()
 
 void Player::LoadProperties(pugi::xml_node &node)
 {
-	p2SString nameIdentificator;
+	std::string nameIdentificator;
 	while (node) {
 		nameIdentificator = node.attribute("name").as_string();
 
@@ -158,7 +157,7 @@ void Player::LoadProperties(pugi::xml_node &node)
 
 void Player::LoadCollider(pugi::xml_node &node)
 {
-	p2SString nameIdentificator;
+	std::string nameIdentificator;
 	while (node) {
 		nameIdentificator = node.attribute("name").as_string();
 

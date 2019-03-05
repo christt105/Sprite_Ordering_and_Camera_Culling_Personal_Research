@@ -47,7 +47,7 @@ bool j1Scene::Start()
 
 void j1Scene::CreateEntities()
 {
-	p2List_item<ColliderObject*>* position = App->map->data.colliders.start; //iterate all objects of tile to find entities
+	std::list<ColliderObject*>* position = App->map->data.colliders.start; //iterate all objects of tile to find entities
 	j1Entity* ent = nullptr;
 
 	for (; position; position = position->next) {

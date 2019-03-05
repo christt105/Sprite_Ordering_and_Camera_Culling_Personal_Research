@@ -4,11 +4,9 @@
 #include "p2Point.h"
 #include "Animation.h"
 #include "SDL/include/SDL_timer.h"
-#include "p2SString.h"
-#include "j1Module.h"	
-#include "p2List.h"
+#include <string>
+#include "j1Module.h"
 #include "j1Collision.h"
-#include "p2DynArray.h"
 #include "SDL_image/include/SDL_image.h"
 
 
@@ -19,14 +17,14 @@ struct TileSetEntity {
 
 	SDL_Rect GetTileRect(int id) const;
 
-	p2SString name;
+	std::string name;
 	uint tilewidth = 0;
 	uint tileheight = 0;
 	uint spacing = 0;
 	uint margin = 0;
 	uint tilecount = 0;
 	uint columns = 0;
-	p2SString imagePath;
+	std::string imagePath;
 	SDL_Texture* texture = nullptr;
 	uint width = 0;
 	uint height = 0;
@@ -108,7 +106,7 @@ public:
 
 	EntityInfo data;
 
-	p2SString folder = "entities/";
+	std::string folder = "entities/";
 
 	SDL_RendererFlip flip = (SDL_RendererFlip)SDL_FLIP_NONE;
 

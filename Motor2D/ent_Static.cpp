@@ -4,7 +4,7 @@
 #include "j1Textures.h"
 #include "p2Log.h"
 
-ent_Static::ent_Static(int x, int y, p2SString name) :j1Entity(Types::STATIC, x, y)
+ent_Static::ent_Static(int x, int y, std::string name) :j1Entity(Types::STATIC, x, y)
 {
 	if (name == "tree") {
 		type = ent_Static::Type::TREE;
@@ -20,7 +20,7 @@ ent_Static::ent_Static(int x, int y, p2SString name) :j1Entity(Types::STATIC, x,
 		break;
 
 	case ent_Static::Type::STATUE:
-		SetRect(0, 48, 112, 158);
+		SetRect(0, 48, 112, 160);
 		break;
 	default:
 		LOG("Cannot find static object type");

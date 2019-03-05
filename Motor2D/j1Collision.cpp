@@ -11,7 +11,7 @@
 
 j1Colliders::j1Colliders() : j1Module()
 {
-	name.create("colliders");
+	name.assign("colliders");
 	for (uint i = 0; i < MAX_COLLIDERS; ++i)
 		colliders[i] = nullptr;
 

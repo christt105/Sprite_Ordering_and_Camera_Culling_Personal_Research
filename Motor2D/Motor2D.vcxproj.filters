@@ -86,19 +86,10 @@
     <ClInclude Include="p2Defs.h">
       <Filter>Tools</Filter>
     </ClInclude>
-    <ClInclude Include="p2DynArray.h">
-      <Filter>Tools</Filter>
-    </ClInclude>
-    <ClInclude Include="p2List.h">
-      <Filter>Tools</Filter>
-    </ClInclude>
     <ClInclude Include="p2Log.h">
       <Filter>Tools</Filter>
     </ClInclude>
     <ClInclude Include="p2Point.h">
-      <Filter>Tools</Filter>
-    </ClInclude>
-    <ClInclude Include="p2SString.h">
       <Filter>Tools</Filter>
     </ClInclude>
     <ClInclude Include="j1App.h" />
@@ -116,9 +107,6 @@
     </ClInclude>
     <ClInclude Include="j1EntityManager.h">
       <Filter>Header</Filter>
-    </ClInclude>
-    <ClInclude Include="p2Queue.h">
-      <Filter>Tools</Filter>
     </ClInclude>
     <ClInclude Include="j1Entity.h">
       <Filter>Entities</Filter>

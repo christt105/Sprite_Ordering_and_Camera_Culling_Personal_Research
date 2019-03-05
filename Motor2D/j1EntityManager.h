@@ -3,14 +3,12 @@
 
 #include "j1Module.h"
 #include "j1Entity.h"
-#include "p2DynArray.h"
-
-#define MAX_ENEMIES 15
+#include <vector>
 
 struct EntityData
 {
 	j1Entity::Types type = j1Entity::Types::UNKNOWN;
-	p2SString tsx_file;
+	std::string tsx_file;
 };
 
 class j1EntityManager : public j1Module
@@ -23,22 +21,16 @@ public:
 	bool Awake(pugi::xml_node&);
 	bool Start();
 	bool Update(float dt);
-	bool UpdateAll(float dt, bool do_logic);
+	bool UpdateAll(float dt);
 	bool PostUpdate();
 	bool CleanUp();
 
-	j1Entity* CreateEntity(j1Entity::Types type, int PositionX, int PositionY, p2SString name);
+	j1Entity* CreateEntity(j1Entity::Types type, int PositionX, int PositionY, std::string name);
 	void DestroyEntity(j1Entity* entity);
 
 public:
 
-	p2DynArray<j1Entity*> entities;
-
-private:
-
-	bool do_logic = true;
-	uint32 accumulated_time = 0;
-	uint32 update_ms_cycle = 500;
+	std::vector<j1Entity*> entities;
 
 };
 

@@ -1,7 +1,8 @@
 #ifndef __j1MAP_H__
 #define __j1MAP_H__
 
-#include "p2List.h"
+#include <list>
+#include <string>
 #include "p2Point.h"
 #include "j1Module.h"
 #include "j1Collision.h"
@@ -17,8 +18,8 @@ struct EntityPos
 
 struct ColliderObject {
 
-	p2SString name;
-	p2SString ent_type;
+	std::string name;
+	std::string ent_type;
 
 	COLLIDER_TYPE type;
 	uint tile_id;
@@ -35,7 +36,7 @@ struct Properties
 };
 
 struct MapLayer {
-	p2SString	name;
+	std::string	name;
 	uint		width = 0;
 	uint		height = 0;
 	uint*		tiles = nullptr;
@@ -52,7 +53,7 @@ struct TileSet
 {
 	SDL_Rect GetTileRect(int id) const;
 
-	p2SString			name;
+	std::string			name;
 	int					firstgid;
 	int					margin;
 	int					spacing;
@@ -78,16 +79,15 @@ enum MapTypes
 // ----------------------------------------------------
 struct MapData
 {
-	int					width;
-	int					height;
-	int					tile_width;
-	int					tile_height;
-	SDL_Color			background_color;
-	MapTypes			type;
-	const char*			musicEnvironment;
-	p2List<TileSet*>	tilesets;
-	p2List<MapLayer*>	layers;
-	p2List<ColliderObject*>	colliders;
+	int							width;
+	int							height;
+	int							tile_width;
+	int							tile_height;
+	SDL_Color					background_color;
+	MapTypes					type;
+	std::list<TileSet*>			tilesets;
+	std::list<MapLayer*>		layers;
+	std::list<ColliderObject*>	colliders;
 };
 
 // ----------------------------------------------------
@@ -132,13 +132,13 @@ private:
 public:
 
 	MapData data;
-	p2SString sceneName;
+	std::string sceneName;
 	EntityPos queue[MAX_ENTITIES];
 	
 private:
 
 	pugi::xml_document	map_file;
-	p2SString			folder;
+	std::string			folder;
 	bool				map_loaded;
 	
 };

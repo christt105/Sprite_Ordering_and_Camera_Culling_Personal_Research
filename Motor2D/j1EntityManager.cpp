@@ -14,7 +14,7 @@
 
 j1EntityManager::j1EntityManager()
 {
-	name.create("entities");
+	name.assign("entities");
 }
 
 // Destructor
@@ -43,29 +43,19 @@ bool j1EntityManager::Start()
 bool j1EntityManager::Update(float dt)
 {
 	BROFILER_CATEGORY("UpdateEntityManager", Profiler::Color::Red);
-	accumulated_time += dt;
-	if (accumulated_time >= update_ms_cycle)
-		do_logic = true;
-	UpdateAll(dt, do_logic);
-	if (do_logic == true) {
-		accumulated_time = update_ms_cycle - accumulated_time;
-		do_logic = false;
-	}
-	return true;
+
+	return UpdateAll(dt);
 }
 
-bool j1EntityManager::UpdateAll(float dt, bool do_logic)
+bool j1EntityManager::UpdateAll(float dt)
 {
 	bool ret = true;
-
-	for (int i = 0; i < entities.Count(); ++i) {
-		if (entities[i] != nullptr) {
-			entities[i]->Move(dt);
-			ret = entities[i]->Update(dt);
-			entities[i]->Draw();
-			if (do_logic) {
-				entities[i]->CreatePath();
-			}
+	
+	for (std::vector<j1Entity*>::iterator item = entities.begin();item != entities.end(); ++item) {
+		if (*item != nullptr) {
+			(*item)->Move(dt);
+			ret = (*item)->Update(dt);
+			(*item)->Draw();
 		}
 	}
 	
@@ -84,19 +74,19 @@ bool j1EntityManager::CleanUp()
 {
 	LOG("Freeing all enemies");
 
-	for (int i = 0; i < entities.Count(); ++i)
+	for (std::vector<j1Entity*>::iterator item = entities.begin(); item != entities.end(); ++item)
 	{
-		if (entities[i] != nullptr) {
-			entities[i]->CleanUp();
-			RELEASE(entities[i]);
+		if ((*item) != nullptr) {
+			(*item)->CleanUp();
+			RELEASE(*item);
 		}
 	}
-	entities.Clear();
+	entities.clear();
 
 	return true;
 }
 
-j1Entity* j1EntityManager::CreateEntity(j1Entity::Types type, int PositionX, int PositionY, p2SString name = "")
+j1Entity* j1EntityManager::CreateEntity(j1Entity::Types type, int PositionX, int PositionY, std::string name = "")
 {
 	static_assert(j1Entity::Types::UNKNOWN == (j1Entity::Types)2, "code needs update");
 	j1Entity* ret = nullptr;
@@ -105,7 +95,7 @@ j1Entity* j1EntityManager::CreateEntity(j1Entity::Types type, int PositionX, int
 		case j1Entity::Types::STATIC: ret = new ent_Static(PositionX, PositionY, name); break;
 	}
 	if (ret != nullptr) {
-		entities.PushBack(ret);
+		entities.push_back(ret);
 		ret->Start();
 	}
 	
@@ -117,7 +107,7 @@ void j1EntityManager::DestroyEntity(j1Entity * entity)
 	
 	if (entity != nullptr) {
 		entity->CleanUp();
-		for (int i = 0; i < entities.Count(); ++i) {
+		for (int i = 0; i < entities.size(); ++i) {
 			if (entities[i] == entity) {
 				delete entities[i];
 				entities[i] = nullptr;

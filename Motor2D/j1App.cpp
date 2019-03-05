@@ -22,7 +22,6 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	PERF_START(ptimer);
 
 	frames = 0;
-	want_to_save = want_to_load = false;
 
 	input		= new j1Input();
 	win			= new j1Window();
@@ -55,12 +54,12 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 j1App::~j1App()
 {
 	// release modules
-	p2List_item<j1Module*>* item = modules.end;
+	std::list<j1Module*>::iterator item = modules.end();
 
-	while(item != NULL)
+	while(*item != nullptr)
 	{
-		RELEASE(item->data);
-		item = item->prev;
+		RELEASE(*item);
+		++item;
 	}
 
 	modules.clear();
@@ -69,7 +68,7 @@ j1App::~j1App()
 void j1App::AddModule(j1Module* module)
 {
 	module->Init();
-	modules.add(module);
+	modules.push_back(module);
 }
 
 // Called before render is available
@@ -82,8 +81,6 @@ bool j1App::Awake()
 	pugi::xml_node		app_config;
 
 	bool ret = false;
-
-	save_game.create(load_game.create("save_game.xml").GetString());
 		
 	config = LoadConfig(config_file);
 
@@ -92,20 +89,19 @@ bool j1App::Awake()
 		// self-config
 		ret = true;
 		app_config = config.child("app");
-		title.create(app_config.child("title").child_value());
-		organization.create(app_config.child("organization").child_value());
+		title.assign(app_config.child("title").child_value());
+		organization.assign(app_config.child("organization").child_value());
 		framerate_cap = 1000 / app_config.attribute("framerate_cap").as_uint();
 	}
 
 	if(ret == true)
 	{
-		p2List_item<j1Module*>* item;
-		item = modules.start;
+		std::list<j1Module*>::iterator item = modules.begin();
 
-		while(item != NULL && ret == true)
+		while(*item != nullptr && ret == true)
 		{
-			ret = item->data->Awake(config.child(item->data->name.GetString()));
-			item = item->next;
+			ret = (*item)->Awake(config.child((*item)->name.data()));
+			item++;
 		}
 	}
 
@@ -120,12 +116,11 @@ bool j1App::Start()
 	PERF_START(ptimer);
 
 	bool ret = true;
-	p2List_item<j1Module*>* item;
-	item = modules.start;
+	std::list<j1Module*>::iterator item = modules.begin();
 
-	while(item != NULL && ret == true)
+	while(*item != NULL && ret == true)
 	{
-		if (item->data->active == false) {
+		if (item->active == false) {
 			item = item->next;
 			continue;
 		}
@@ -241,7 +236,7 @@ bool j1App::PreUpdate()
 	BROFILER_CATEGORY("PreUpdate", Profiler::Color::Yellow);
 
 	bool ret = true;
-	p2List_item<j1Module*>* item;
+	std::list<j1Module*>* item;
 	item = modules.start;
 	j1Module* pModule = NULL;
 
@@ -265,7 +260,7 @@ bool j1App::DoUpdate()
 	BROFILER_CATEGORY("DoUpdate", Profiler::Color::Red);
 
 	bool ret = true;
-	p2List_item<j1Module*>* item;
+	std::list<j1Module*>* item;
 	item = modules.start;
 	j1Module* pModule = NULL;
 
@@ -289,7 +284,7 @@ bool j1App::PostUpdate()
 	BROFILER_CATEGORY("PostUpdate", Profiler::Color::Green);
 
 	bool ret = true;
-	p2List_item<j1Module*>* item;
+	std::list<j1Module*>* item;
 	j1Module* pModule = NULL;
 
 	for(item = modules.start; item != NULL && ret == true; item = item->next)
@@ -310,7 +305,7 @@ bool j1App::PostUpdate()
 bool j1App::CleanUp()
 {
 	bool ret = true;
-	p2List_item<j1Module*>* item;
+	std::list<j1Module*>* item;
 	item = modules.end;
 
 	while(item != NULL && ret == true)
@@ -349,35 +344,6 @@ const char* j1App::GetOrganization() const
 	return organization.GetString();
 }
 
-// Load / Save
-void j1App::LoadGame()
-{
-	// we should be checking if that file actually exist
-	// from the "GetSaveGames" list
-	want_to_load = true;
-}
-
-// ---------------------------------------
-void j1App::SaveGame() const
-{
-	// we should be checking if that file actually exist
-	// from the "GetSaveGames" list ... should we overwrite ?
-
-	want_to_save = true;
-}
-
-// ---------------------------------------
-void j1App::GetSaveGames(p2List<p2SString>& list_to_fill) const
-{
-	// need to add functionality to file_system module for this to work
-}
-
-void j1App::GetFrameRate()
-{
-	cap_framerate = !cap_framerate;
-}
-
-
 bool j1App::LoadGameNow()
 {
 	bool ret = false;
@@ -393,7 +359,7 @@ bool j1App::LoadGameNow()
 
 		root = data.child("game_state");
 
-		p2List_item<j1Module*>* item = modules.start;
+		std::list<j1Module*>* item = modules.start;
 		ret = true;
 
 		while(item != NULL && ret == true)
@@ -427,7 +393,7 @@ bool j1App::SavegameNow() const
 	
 	root = data.append_child("game_state");
 
-	p2List_item<j1Module*>* item = modules.start;
+	std::list<j1Module*>* item = modules.start;
 
 	while(item != NULL && ret == true)
 	{
