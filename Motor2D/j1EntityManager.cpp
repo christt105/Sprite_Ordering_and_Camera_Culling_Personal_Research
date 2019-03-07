@@ -9,6 +9,7 @@
 #include "j1Entity.h"
 #include "ent_Player.h"
 #include "ent_Static.h"
+#include <algorithm>
 
 #include "Brofiler/Brofiler.h"
 
@@ -47,20 +48,38 @@ bool j1EntityManager::Update(float dt)
 	return UpdateAll(dt);
 }
 
+bool SortByYPos(const j1Entity * ent1, const j1Entity * ent2)
+{
+	return ent1->position.y < ent2->position.y;
+}
+
 bool j1EntityManager::UpdateAll(float dt)
 {
 	bool ret = true;
+	
 	
 	for (std::vector<j1Entity*>::iterator item = entities.begin();item != entities.end(); ++item) {
 		if (*item != nullptr) {
 			(*item)->Move(dt);
 			ret = (*item)->Update(dt);
+		}
+		LOG((*item)->data.tileset.name.data());
+	}
+	
+
+	std::sort(entities.begin(), entities.end(), SortByYPos);
+
+	for (std::vector<j1Entity*>::iterator item = entities.begin(); item != entities.end(); ++item) {
+		if (*item != nullptr) {
 			(*item)->Draw();
 		}
+		LOG((*item)->data.tileset.name.data());
 	}
 	
 	return ret;
 }
+
+
 
 bool j1EntityManager::PostUpdate()
 {

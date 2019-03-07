@@ -93,6 +93,8 @@ public:
 	virtual void CreatePath() {}
 	virtual void OnCollision(Collider* collider1, Collider * collider2, float dt) {}
 	virtual bool CleanUp();
+
+	bool SortByYPos(const j1Entity &ent1, const j1Entity &ent2);
 	
 public:
 
