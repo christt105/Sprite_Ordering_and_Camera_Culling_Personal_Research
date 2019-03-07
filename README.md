@@ -18,11 +18,11 @@ This project contains a research about the optimization of a game to only blit s
 
 ## Controls
 
-# Main
+### Main
 
 + WASD to move player.
 
-# Debug
+### Debug
 
 + 1/2/3 to change from different zoom levels.
 + F1 to show/hide grid.
@@ -40,7 +40,7 @@ This project contains a research about the optimization of a game to only blit s
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
+This project is licensed under the MIT License - see the [LICENSE.md](https://github.com/christt105/Sprite_Ordering_and_Camera_Culling_Personal_Research/blob/master/LICENSE) file for details
 
 ## Acknowledgments
 
