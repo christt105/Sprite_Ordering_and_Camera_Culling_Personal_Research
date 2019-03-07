@@ -133,15 +133,17 @@ private:
 
 public:
 
-	MapData data;
-	std::string sceneName;
-	EntityPos queue[MAX_ENTITIES];
+	MapData			data;
+	std::string		sceneName;
+
+	bool			draw_grid = true;
 	
 private:
 
 	pugi::xml_document	map_file;
 	std::string			folder;
 	bool				map_loaded;
+	SDL_Texture*		grid = nullptr;
 	
 };
 

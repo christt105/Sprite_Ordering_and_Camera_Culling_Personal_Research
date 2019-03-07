@@ -31,6 +31,8 @@ public:
 	// Retrieve window scale
 	uint GetScale() const;
 
+	void SetScale(int scale);
+
 public:
 	//The window we'll be rendering to
 	SDL_Window* window;
@@ -38,7 +40,6 @@ public:
 	//The surface contained by the window
 	SDL_Surface* screen_surface;
 
-	SDL_Surface* iconExe = nullptr;
 	bool fullscreen;
 
 private:

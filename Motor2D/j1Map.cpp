@@ -41,21 +41,37 @@ void j1Map::Draw()
 		return;
 
 	uint id = 0;
+	SDL_Rect section = { 0,0,0,0 };
+	uint tiles_painted = 0;
 
 	for (std::list<MapLayer*>::iterator layer = data.layers.begin(); layer != data.layers.end(); ++layer) {
-		if ((*layer)->visible && (*layer)->properties.draw)
-			for (uint i = 0; i < (*layer)->height; ++i) {
-				for (uint j = 0; j < (*layer)->width; ++j) {
-					if (App->render->IsInCamera(MapToWorld(j+1, i).x, MapToWorld(j, i+1).y)) {
-						id = (*layer)->Get(j, i);
-						if (id != 0) {
-							TileSet* tileset = GetTilesetFromTileId(id);
-							if (tileset != nullptr)
-								App->render->Blit(tileset->texture, MapToWorld(j, i).x, MapToWorld(j, i).y, &tileset->GetTileRect(id));
+		if ((*layer)->visible && (*layer)->properties.draw) {
+			for (uint i = 0; i < (*layer)->width; ++i) {
+				for (uint j = 0; j < (*layer)->height; ++j) {
+					id = (*layer)->Get(i, j);
+					if (id != 0) {
+						TileSet* tileset = GetTilesetFromTileId(id);
+						if (tileset != nullptr) {
+							section = { MapToWorld(i,j).x, MapToWorld(i,j).y, tileset->tile_width, tileset->tile_height };
+							if (App->render->IsInCamera(section)) {
+								tiles_painted++;
+								App->render->Blit(tileset->texture, MapToWorld(i, j).x, MapToWorld(i, j).y, &tileset->GetTileRect(id));
+							}
 						}
 					}
 				}
 			}
+		}
+	}
+
+	LOG("%u tiles painted", tiles_painted);
+
+	if (draw_grid) {
+		for (uint i = 0; i < data.width; ++i) {
+			for (uint j = 0; j < data.height; ++j) {
+					App->render->Blit(grid, MapToWorld(i, j).x, MapToWorld(i, j).y);
+			}
+		}
 	}
 
 }
@@ -165,7 +181,7 @@ bool j1Map::CleanUp()
 	}
 	data.colliders.clear();
 
-
+	App->tex->UnLoad(grid);
 
 	// Clean up the pugui tree
 	map_file.reset();
@@ -178,6 +194,8 @@ bool j1Map::Load(const char* file_name)
 {
 	bool ret = true;
 	std::string tmp = (folder.data() + std::string(file_name));
+
+	grid = App->tex->Load("maps/Quad.png");
 
 	pugi::xml_parse_result result = map_file.load_file(tmp.data());
 

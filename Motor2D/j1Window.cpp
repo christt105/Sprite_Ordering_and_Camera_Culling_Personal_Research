@@ -65,8 +65,6 @@ bool j1Window::Awake(pugi::xml_node& config)
 		}
 
 		window = SDL_CreateWindow(App->GetTitle(), SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, width, height, flags);
-		
-		SDL_SetWindowIcon(window, iconExe);
 
 		if(window == NULL)
 		{
@@ -119,4 +117,9 @@ uint j1Window::GetWindowHeight() const
 uint j1Window::GetScale() const
 {
 	return scale;
+}
+
+void j1Window::SetScale(int sc)
+{
+	scale = sc;
 }

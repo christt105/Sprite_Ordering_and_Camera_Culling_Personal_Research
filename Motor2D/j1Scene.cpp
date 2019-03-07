@@ -78,6 +78,17 @@ bool j1Scene::Update(float dt)
 	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
 		App->render->camera.x -= 300 * dt;
 
+	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
+		App->map->draw_grid = !App->map->draw_grid;
+
+	if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
+		App->win->SetScale(1);
+
+	if (App->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN)
+		App->win->SetScale(2);
+
+	if (App->input->GetKey(SDL_SCANCODE_3) == KEY_DOWN)
+		App->win->SetScale(3);
 
 	if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 		App->quit_game = true;
