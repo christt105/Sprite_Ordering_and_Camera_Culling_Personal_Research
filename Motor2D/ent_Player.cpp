@@ -36,6 +36,8 @@ bool Player::Start()
 
 	data.tileset.texture = App->tex->Load(data.tileset.imagePath.data());
 
+	pivot = { 6,18 };
+
 	return true;
 }
 

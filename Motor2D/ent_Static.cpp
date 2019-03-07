@@ -12,15 +12,21 @@ ent_Static::ent_Static(int x, int y, std::string name) :j1Entity(Types::STATIC, 
 	else if (name == "statue") {
 		type = ent_Static::Type::STATUE;
 	}
+	else {
+		LOG("There isn't any type assigned to %s name entity", name);
+	}
+
 
 	switch (type)
 	{
 	case ent_Static::Type::TREE:
 		SetRect(16, 0, 32, 48);
+		pivot = { 30, 36 };
 		break;
 
 	case ent_Static::Type::STATUE:
 		SetRect(0, 48, 112, 160);
+		pivot = { 60, 140 };
 		break;
 	default:
 		LOG("Cannot find static object type");

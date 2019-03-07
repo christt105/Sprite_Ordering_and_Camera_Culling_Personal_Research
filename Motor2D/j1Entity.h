@@ -99,6 +99,7 @@ public:
 	std::string name;
 
 	fPoint position;
+	iPoint pivot;
 
 	iPoint size;
 
