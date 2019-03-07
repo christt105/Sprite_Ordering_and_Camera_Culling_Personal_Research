@@ -34,11 +34,10 @@ public:
 	SDL_Rect CameraInitPos();
 	// Blit
 	void SetViewPort(const SDL_Rect& rect);
-	bool IsInCamera(int x, int y);
+	bool IsInCamera(const SDL_Rect& rect);
 	void ResetViewPort();
 	iPoint ScreenToWorld(int x, int y) const;
-	bool Blit(SDL_Texture* texture, int x, int y, const SDL_Rect* section = NULL, float speed = 1.0f, bool scale = true, 
-		SDL_RendererFlip = SDL_FLIP_NONE, bool ui_element = false, bool clip = false, const SDL_Rect &section_to_clip = { 0,0,0,0 }, double angle = 0, int pivot_x = INT_MAX, int pivot_y = INT_MAX);
+	bool Blit(SDL_Texture* texture, int x, int y, const SDL_Rect* section = NULL, float speed = 1.0f, bool scale = true, SDL_RendererFlip = SDL_FLIP_NONE, double angle = 0, int pivot_x = INT_MAX, int pivot_y = INT_MAX);
 	bool DrawQuad(const SDL_Rect& rect, Uint8 r, Uint8 g, Uint8 b, Uint8 a = 255, bool filled = true, bool use_camera = true) const;
 	bool DrawLine(int x1, int y1, int x2, int y2, Uint8 r, Uint8 g, Uint8 b, Uint8 a = 255, bool use_camera = true) const;
 	bool DrawCircle(int x1, int y1, int redius, Uint8 r, Uint8 g, Uint8 b, Uint8 a = 255, bool use_camera = true) const;

@@ -11,9 +11,9 @@
 j1Render::j1Render() : j1Module()
 {
 	name.assign("renderer");
-	background.r = 105;
-	background.g = 63;
-	background.b = 85;
+	background.r = 0;
+	background.g = 0;
+	background.b = 0;
 	background.a = 0;
 }
 
@@ -132,9 +132,12 @@ void j1Render::SetViewPort(const SDL_Rect& rect)
 	SDL_RenderSetViewport(renderer, &rect);
 }
 
-bool j1Render::IsInCamera(int x, int y)
+bool j1Render::IsInCamera(const SDL_Rect& rect)
 {
-	return x > -camera.x && x < camera.x + camera.w && y > -camera.y && y < camera.y + camera.h;
+	int scale = App->win->GetScale();
+	SDL_Rect cam = { -camera.x, -camera.y, camera.w, camera.h };
+	SDL_Rect r = { rect.x * scale,rect.y*scale,rect.w*scale,rect.h*scale };
+	return SDL_HasIntersection(&r, &cam);
 }
 
 void j1Render::ResetViewPort()
@@ -154,21 +157,15 @@ iPoint j1Render::ScreenToWorld(int x, int y) const
 }
 
 // Blit to screen
-bool j1Render::Blit(SDL_Texture* texture, int x, int y, const SDL_Rect* section, float speed, bool apply_scale, SDL_RendererFlip flip, bool ui_element, bool clip, const SDL_Rect &section_to_clip, double angle, int pivot_x, int pivot_y)
+bool j1Render::Blit(SDL_Texture* texture, int x, int y, const SDL_Rect* section, float speed, bool apply_scale, SDL_RendererFlip flip, double angle, int pivot_x, int pivot_y)
 {
 	bool ret = true;
 	uint scale = App->win->GetScale();
 
 	SDL_Rect rect;
 
-	if (!ui_element) {
-		rect.x = (int)(camera.x * speed) + x * scale;
-		rect.y = (int)(camera.y * speed) + y * scale;
-	}
-	else{
-		rect.x = x;
-		rect.y = y;
-	}
+	rect.x = (int)(camera.x * speed) + x * scale;
+	rect.y = (int)(camera.y * speed) + y * scale;
 
 	if(section != NULL)
 	{
@@ -195,16 +192,12 @@ bool j1Render::Blit(SDL_Texture* texture, int x, int y, const SDL_Rect* section,
 		pivot.y = pivot_y;
 		p = &pivot;
 	}
-	if (clip)
-		SetViewPort(section_to_clip);
 
 	if(SDL_RenderCopyEx(renderer, texture, section, &rect, angle, p, flip) != 0)
 	{
 		LOG("Cannot blit to screen. SDL_RenderCopy error: %s", SDL_GetError());
 		ret = false;
 	}
-	if (clip)
-		ResetViewPort();
 
 	return ret;
 }
