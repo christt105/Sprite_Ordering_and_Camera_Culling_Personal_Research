@@ -64,7 +64,10 @@ void j1Map::Draw()
 		}
 	}
 
-	LOG("%u tiles painted", tiles_painted);
+	static char title[250];
+	sprintf_s(title, 256, "SpriteOrdering and Camera Culling | Tiles Rendered: %u", tiles_painted);
+
+	App->win->SetTitle(title);
 
 	if (draw_grid) {
 		for (uint i = 0; i < data.width; ++i) {

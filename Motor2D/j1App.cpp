@@ -200,17 +200,17 @@ void j1App::FinishUpdate()
 	uint32 last_frame_ms = frame_time.Read();
 	uint32 frames_on_last_update = prev_last_sec_frame_count;
 
-	static char title[256];
-	if (cap_framerate) {
-		sprintf_s(title, 256, "SpriteOrdering and Camera Culling | FPS %i | average FPS: %.2f | Last Frame Ms: %02u | Cap ON | VSync OFF ",
-								frames_on_last_update, avg_fps, last_frame_ms);
-	}
-	else {
-		sprintf_s(title, 256, "SpriteOrdering and Camera Culling | FPS %i | average FPS: %.2f | Last Frame Ms: %02u | Cap OFF | VSync OFF ",
-								frames_on_last_update, avg_fps, last_frame_ms);
-	}
+	//static char title[256];
+	//if (cap_framerate) {
+	//	sprintf_s(title, 256, "SpriteOrdering and Camera Culling | FPS %i | average FPS: %.2f | Last Frame Ms: %02u | Cap ON | VSync OFF ",
+	//							frames_on_last_update, avg_fps, last_frame_ms);
+	//}
+	//else {
+	//	sprintf_s(title, 256, "SpriteOrdering and Camera Culling | FPS %i | average FPS: %.2f | Last Frame Ms: %02u | Cap OFF | VSync OFF ",
+	//							frames_on_last_update, avg_fps, last_frame_ms);
+	//}
 
-	App->win->SetTitle(title);
+	//App->win->SetTitle(title);
 
 	if (cap_framerate) {
 		if (framerate_cap >= last_frame_ms)
