@@ -28,7 +28,7 @@ public:
 	j1Entity* CreateEntity(j1Entity::Types type, int PositionX, int PositionY, std::string name);
 	void DestroyEntity(j1Entity* entity);
 
-	//bool SortByYPos(const j1Entity * ent1, const j1Entity * ent2);
+	void DrawDebugQuad(j1Entity*);
 
 public:
 

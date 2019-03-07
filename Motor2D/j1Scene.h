@@ -26,6 +26,7 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
+	bool entities_box = false;
 };
 
 #endif // __j1SCENE_H__

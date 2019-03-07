@@ -72,8 +72,11 @@ bool j1EntityManager::UpdateAll(float dt)
 		SDL_Rect r = { (int)(*item)->position.x, (int)(*item)->position.y, (*item)->size.x, (*item)->size.y };
 		if (*item != nullptr && App->render->IsInCamera(r)) {
 			(*item)->Draw();
+			if (App->scene->entities_box) {
+				DrawDebugQuad(*item);
+			}
+			LOG("Drawing: %s\nRect: x(%i) y(%i) w(%i) h(%i)", (*item)->name.data(), r.x, r.y, r.w, r.h);
 		}
-		LOG("Drawing: %s\nRect: x(%i) y(%i) w(%i) h(%i)", (*item)->name.data(),r.x, r.y, r.w, r.h);
 	}
 	
 	return ret;
@@ -132,5 +135,24 @@ void j1EntityManager::DestroyEntity(j1Entity * entity)
 				entities[i] = nullptr;
 			}
 		}
+	}
+}
+
+void j1EntityManager::DrawDebugQuad(j1Entity *entity)
+{
+	SDL_Rect section = { entity->position.x, entity->position.y, entity->size.x, entity->size.y };
+	Uint8 alpha = 80;
+
+	switch (entity->type) {
+	case j1Entity::Types::PLAYER:
+		App->render->DrawQuad(section, 255, 0, 0, alpha);
+		break;
+
+	case j1Entity::Types::STATIC:
+		if (entity->name == "tree")
+			App->render->DrawQuad(section, 0, 255, 255, alpha);
+		else if (entity->name == "statue")
+			App->render->DrawQuad(section, 0, 0, 255, alpha);
+		break;
 	}
 }

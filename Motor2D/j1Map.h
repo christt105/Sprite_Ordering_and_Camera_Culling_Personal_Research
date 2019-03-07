@@ -136,7 +136,7 @@ public:
 	MapData			data;
 	std::string		sceneName;
 
-	bool			draw_grid = true;
+	bool			draw_grid = false;
 	
 private:
 

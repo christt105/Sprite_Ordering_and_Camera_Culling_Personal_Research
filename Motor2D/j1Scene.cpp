@@ -48,7 +48,6 @@ bool j1Scene::Start()
 void j1Scene::CreateEntities()
 {
 	//iterate all objects of tile to find entities
-	j1Entity* ent = nullptr;
 
 	for (std::list<ColliderObject*>::iterator position = App->map->data.colliders.begin(); position != App->map->data.colliders.end(); position++) {
 		if ((*position)->name == "Player") {
@@ -89,6 +88,9 @@ bool j1Scene::Update(float dt)
 
 	if (App->input->GetKey(SDL_SCANCODE_3) == KEY_DOWN)
 		App->win->SetScale(3);
+
+	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
+		entities_box = !entities_box;
 
 	if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 		App->quit_game = true;
