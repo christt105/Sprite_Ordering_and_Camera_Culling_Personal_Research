@@ -36,4 +36,8 @@ public:
 
 };
 
+//struct Sort{
+//	bool SortByYPos(const j1Entity * ent1, const j1Entity * ent2);
+//}
+
 #endif // __J1ENEMIES_H__

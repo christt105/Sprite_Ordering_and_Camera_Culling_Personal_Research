@@ -21,7 +21,7 @@ ent_Static::ent_Static(int x, int y, std::string name) :j1Entity(Types::STATIC, 
 	{
 	case ent_Static::Type::TREE:
 		SetRect(16, 0, 32, 48);
-		pivot = { 30, 36 };
+		pivot = { 15, 36 };
 		break;
 
 	case ent_Static::Type::STATUE:

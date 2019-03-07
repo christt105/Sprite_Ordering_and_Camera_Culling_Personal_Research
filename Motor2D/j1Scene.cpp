@@ -36,7 +36,7 @@ bool j1Scene::Start()
 {
 	bool ret = false;
 
-	ret = App->map->Load("Scene2.tmx");
+	ret = App->map->Load("Scene.tmx");
 
 	CreateEntities();
 
@@ -56,6 +56,9 @@ void j1Scene::CreateEntities()
 		else if ((*position)->ent_type == "static") {
 			App->entities->CreateEntity(j1Entity::Types::STATIC, (*position)->coll_x, (*position)->coll_y, (*position)->name);
 				
+		}
+		else if ((*position)->name == "NPC") {
+			App->entities->CreateEntity(j1Entity::Types::NPC, (*position)->coll_x, (*position)->coll_y, (*position)->name);
 		}
 	}
 }

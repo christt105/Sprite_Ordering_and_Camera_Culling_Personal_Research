@@ -67,6 +67,7 @@ public:
 	enum class Types
 	{
 		PLAYER,
+		NPC,
 		STATIC,
 
 		UNKNOWN

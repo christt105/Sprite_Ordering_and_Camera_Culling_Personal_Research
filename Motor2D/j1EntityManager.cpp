@@ -9,6 +9,7 @@
 #include "j1Entity.h"
 #include "ent_Player.h"
 #include "ent_Static.h"
+#include "ent_NPC.h"
 #include <algorithm>
 
 #include "Brofiler/Brofiler.h"
@@ -50,7 +51,7 @@ bool j1EntityManager::Update(float dt)
 
 bool SortByYPos(const j1Entity * ent1, const j1Entity * ent2)
 {
-	return ent1->position.y < ent2->position.y;
+	return ent1->pivot.y + ent1->position.y < ent2->position.y + ent2->pivot.y;
 }
 
 bool j1EntityManager::UpdateAll(float dt)
@@ -110,11 +111,12 @@ bool j1EntityManager::CleanUp()
 
 j1Entity* j1EntityManager::CreateEntity(j1Entity::Types type, int PositionX, int PositionY, std::string name)
 {
-	static_assert(j1Entity::Types::UNKNOWN == (j1Entity::Types)2, "code needs update");
+	static_assert(j1Entity::Types::UNKNOWN == (j1Entity::Types)3, "code needs update");
 	j1Entity* ret = nullptr;
 	switch (type) {
-		case j1Entity::Types::PLAYER: ret = new Player(PositionX, PositionY, name); break;
-		case j1Entity::Types::STATIC: ret = new ent_Static(PositionX, PositionY, name); break;
+	case j1Entity::Types::PLAYER: ret = new Player(PositionX, PositionY, name); break;
+	case j1Entity::Types::STATIC: ret = new ent_Static(PositionX, PositionY, name); break;
+	case j1Entity::Types::NPC: ret = new ent_NPC(PositionX, PositionY, name); break;
 	}
 	if (ret != nullptr) {
 		entities.push_back(ret);
