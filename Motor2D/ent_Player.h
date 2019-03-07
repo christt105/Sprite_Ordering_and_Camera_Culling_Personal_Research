@@ -22,7 +22,7 @@ class Player : public j1Entity
 
 public:
 
-	Player(int x, int y);
+	Player(int x, int y, std::string name);
 
 	~Player();
 

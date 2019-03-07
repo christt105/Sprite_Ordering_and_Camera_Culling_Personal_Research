@@ -19,7 +19,7 @@
 #include <cmath>
 
 
-j1Entity::j1Entity(Types type, int PositionX, int PositionY) : type(type), position(PositionX, PositionY)
+j1Entity::j1Entity(Types type, int PositionX, int PositionY, std::string name) : type(type), position(PositionX, PositionY), name(name)
 {}
 
 j1Entity::~j1Entity()
@@ -88,6 +88,8 @@ bool j1Entity::LoadEntityData(const char* file) {
 	data.tileset.imagePath = folder += node.child("image").attribute("source").as_string();
 	data.tileset.width = node.child("image").attribute("width").as_uint();
 	data.tileset.height = node.child("image").attribute("height").as_uint();
+
+	size = iPoint(data.tileset.tilewidth, data.tileset.tileheight);
 
 	//count how many animations are in file
 	node = node.child("tile");

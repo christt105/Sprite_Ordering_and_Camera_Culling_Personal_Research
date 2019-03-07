@@ -63,17 +63,17 @@ bool j1EntityManager::UpdateAll(float dt)
 			(*item)->Move(dt);
 			ret = (*item)->Update(dt);
 		}
-		LOG((*item)->data.tileset.name.data());
 	}
 	
 
 	std::sort(entities.begin(), entities.end(), SortByYPos);
 
 	for (std::vector<j1Entity*>::iterator item = entities.begin(); item != entities.end(); ++item) {
-		if (*item != nullptr) {
+		SDL_Rect r = { (int)(*item)->position.x, (int)(*item)->position.y, (*item)->size.x, (*item)->size.y };
+		if (*item != nullptr && App->render->IsInCamera(r)) {
 			(*item)->Draw();
 		}
-		LOG((*item)->data.tileset.name.data());
+		LOG("Drawing: %s\nRect: x(%i) y(%i) w(%i) h(%i)", (*item)->name.data(),r.x, r.y, r.w, r.h);
 	}
 	
 	return ret;
@@ -105,12 +105,12 @@ bool j1EntityManager::CleanUp()
 	return true;
 }
 
-j1Entity* j1EntityManager::CreateEntity(j1Entity::Types type, int PositionX, int PositionY, std::string name = "")
+j1Entity* j1EntityManager::CreateEntity(j1Entity::Types type, int PositionX, int PositionY, std::string name)
 {
 	static_assert(j1Entity::Types::UNKNOWN == (j1Entity::Types)2, "code needs update");
 	j1Entity* ret = nullptr;
 	switch (type) {
-		case j1Entity::Types::PLAYER: ret = new Player(PositionX, PositionY); break;
+		case j1Entity::Types::PLAYER: ret = new Player(PositionX, PositionY, name); break;
 		case j1Entity::Types::STATIC: ret = new ent_Static(PositionX, PositionY, name); break;
 	}
 	if (ret != nullptr) {

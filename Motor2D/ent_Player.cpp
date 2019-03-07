@@ -14,7 +14,7 @@
 
 #include "Brofiler/Brofiler.h"
 
-Player::Player(int x, int y) : j1Entity(Types::PLAYER, x, y) {
+Player::Player(int x, int y, std::string name) : j1Entity(Types::PLAYER, x, y, name) {
 
 	LoadEntityData("entities/player.tsx");
 

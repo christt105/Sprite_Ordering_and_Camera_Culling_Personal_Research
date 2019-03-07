@@ -74,7 +74,7 @@ public:
 
 public:
 
-	j1Entity(Types type, int x, int y);
+	j1Entity(Types type, int x, int y, std::string name);
 	virtual ~j1Entity();
 
 	const Collider* GetCollider() const;
@@ -93,12 +93,14 @@ public:
 	virtual void CreatePath() {}
 	virtual void OnCollision(Collider* collider1, Collider * collider2, float dt) {}
 	virtual bool CleanUp();
-
-	bool SortByYPos(const j1Entity &ent1, const j1Entity &ent2);
 	
 public:
 
+	std::string name;
+
 	fPoint position;
+
+	iPoint size;
 
 	Types type;
 

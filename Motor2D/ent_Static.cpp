@@ -4,7 +4,7 @@
 #include "j1Textures.h"
 #include "p2Log.h"
 
-ent_Static::ent_Static(int x, int y, std::string name) :j1Entity(Types::STATIC, x, y)
+ent_Static::ent_Static(int x, int y, std::string name) :j1Entity(Types::STATIC, x, y, name)
 {
 	if (name == "tree") {
 		type = ent_Static::Type::TREE;
@@ -26,6 +26,8 @@ ent_Static::ent_Static(int x, int y, std::string name) :j1Entity(Types::STATIC, 
 		LOG("Cannot find static object type");
 		break;
 	}
+
+	size = iPoint(frame.w, frame.h);
 
 	data.tileset.texture = App->tex->Load("maps/Pokemon_Objects.png");
 }
