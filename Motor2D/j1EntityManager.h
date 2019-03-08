@@ -30,6 +30,11 @@ public:
 
 	void DrawDebugQuad(j1Entity*);
 
+	static bool SortByYPos(const j1Entity * ent1, const j1Entity * ent2)
+	{
+		return ent1->pivot.y + ent1->position.y < ent2->position.y + ent2->pivot.y;
+	}
+
 public:
 
 	std::vector<j1Entity*> entities;

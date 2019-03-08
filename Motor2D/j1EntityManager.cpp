@@ -49,37 +49,40 @@ bool j1EntityManager::Update(float dt)
 	return UpdateAll(dt);
 }
 
-bool SortByYPos(const j1Entity * ent1, const j1Entity * ent2)
-{
-	return ent1->pivot.y + ent1->position.y < ent2->position.y + ent2->pivot.y;
-}
-
 bool j1EntityManager::UpdateAll(float dt)
 {
 	bool ret = true;
-	
-	
+
+	std::vector<j1Entity*> draw_entities;
+	SDL_Rect r = { 0,0,0,0 };
+	uint entities_drawn = 0;
+
 	for (std::vector<j1Entity*>::iterator item = entities.begin();item != entities.end(); ++item) {
 		if (*item != nullptr) {
 			(*item)->Move(dt);
 			ret = (*item)->Update(dt);
+			r = { (int)(*item)->position.x, (int)(*item)->position.y, (*item)->size.x, (*item)->size.y };
+			if (App->render->IsInCamera(r)) {
+				draw_entities.push_back(*item);
+			}
 		}
 	}
-	
 
-	std::sort(entities.begin(), entities.end(), SortByYPos);
+	std::sort(draw_entities.begin(), draw_entities.end(), j1EntityManager::SortByYPos);
 
-	for (std::vector<j1Entity*>::iterator item = entities.begin(); item != entities.end(); ++item) {
-		SDL_Rect r = { (int)(*item)->position.x, (int)(*item)->position.y, (*item)->size.x, (*item)->size.y };
-		if (*item != nullptr && App->render->IsInCamera(r)) {
+	for (std::vector<j1Entity*>::iterator item = draw_entities.begin(); item != draw_entities.end(); ++item) {
+		if (*item != nullptr) {
 			(*item)->Draw();
+			entities_drawn++;
+
 			if (App->scene->entities_box) {
 				DrawDebugQuad(*item);
 			}
-			LOG("Drawing: %s\nRect: x(%i) y(%i) w(%i) h(%i)", (*item)->name.data(), r.x, r.y, r.w, r.h);
 		}
 	}
 	
+	LOG("Entities drawn: %u", entities_drawn);
+
 	return ret;
 }
 

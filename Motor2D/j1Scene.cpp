@@ -36,7 +36,7 @@ bool j1Scene::Start()
 {
 	bool ret = false;
 
-	ret = App->map->Load("Scene.tmx");
+	ret = App->map->Load("Scene2.tmx");
 
 	CreateEntities();
 
@@ -60,6 +60,9 @@ void j1Scene::CreateEntities()
 		else if ((*position)->name == "NPC") {
 			App->entities->CreateEntity(j1Entity::Types::NPC, (*position)->coll_x, (*position)->coll_y, (*position)->name);
 		}
+		else {
+			LOG("There isn't any entity with name %s and type %s", (*position)->name, (*position)->ent_type);
+		}
 	}
 }
 
@@ -80,9 +83,13 @@ bool j1Scene::Update(float dt)
 	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
 		App->render->camera.x -= 300 * dt;
 
+
+	//------Debug Keys----------------------
+	//Show/hide grid
 	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
 		App->map->draw_grid = !App->map->draw_grid;
 
+	//Change between zoom levels
 	if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
 		App->win->SetScale(1);
 
@@ -92,6 +99,7 @@ bool j1Scene::Update(float dt)
 	if (App->input->GetKey(SDL_SCANCODE_3) == KEY_DOWN)
 		App->win->SetScale(3);
 
+	//Show/hide entities quad size and pivot
 	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
 		entities_box = !entities_box;
 
