@@ -36,7 +36,7 @@ bool j1Scene::Start()
 {
 	bool ret = false;
 
-	ret = App->map->Load("Scene2.tmx");
+	ret = App->map->Load("Iso.tmx");
 
 	CreateEntities();
 

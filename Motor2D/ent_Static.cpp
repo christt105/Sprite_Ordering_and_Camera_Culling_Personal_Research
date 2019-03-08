@@ -13,7 +13,7 @@ ent_Static::ent_Static(int x, int y, std::string name) :j1Entity(Types::STATIC, 
 		type = ent_Static::Type::STATUE;
 	}
 	else {
-		LOG("There isn't any type assigned to %s name entity", name);
+		LOG("There isn't any type assigned to %s name entity", name.data());
 	}
 
 
