@@ -15,6 +15,11 @@ public:
 		TREE,
 		STATUE,
 
+		PILAR,
+		CORNER,
+		WALL,
+		WALL_L,
+
 		UNKNOWN
 	};
 

@@ -10,6 +10,7 @@
 #include "ent_Player.h"
 #include "ent_Static.h"
 #include "ent_NPC.h"
+#include "j1Map.h"
 #include <algorithm>
 
 #include "Brofiler/Brofiler.h"
@@ -158,6 +159,14 @@ void j1EntityManager::DrawDebugQuad(j1Entity *entity)
 			App->render->DrawQuad(section, 0, 255, 255, alpha);
 		else if (entity->name == "statue")
 			App->render->DrawQuad(section, 0, 0, 255, alpha);
+		else if(entity->name == "pilar")
+			App->render->DrawQuad(section, 255, 0, 0, alpha);
+		else if (entity->name == "corner")
+			App->render->DrawQuad(section, 255, 0, 0, alpha);
+		else if (entity->name == "wall")
+			App->render->DrawQuad(section, 255, 0, 0, alpha);
+		else if (entity->name == "wall_l")
+			App->render->DrawQuad(section, 255, 0, 0, alpha);
 		break;
 	}
 

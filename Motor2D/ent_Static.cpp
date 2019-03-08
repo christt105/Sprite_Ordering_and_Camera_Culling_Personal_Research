@@ -3,6 +3,7 @@
 #include "j1Render.h"
 #include "j1Textures.h"
 #include "p2Log.h"
+#include "j1Map.h"
 
 ent_Static::ent_Static(int x, int y, std::string name) :j1Entity(Types::STATIC, x, y, name)
 {
@@ -12,6 +13,22 @@ ent_Static::ent_Static(int x, int y, std::string name) :j1Entity(Types::STATIC, 
 	else if (name == "statue") {
 		type = ent_Static::Type::STATUE;
 	}
+
+
+	//Isometric map
+	else if (name == "pilar") {
+		type = ent_Static::Type::PILAR;
+	}
+	else if (name == "corner") {
+		type = ent_Static::Type::CORNER;
+	}
+	else if (name == "wall") {
+		type = ent_Static::Type::WALL;
+	}
+	else if (name == "wall_l") {
+		type = ent_Static::Type::WALL_L;
+	}
+
 	else {
 		LOG("There isn't any type assigned to %s name entity", name.data());
 	}
@@ -28,6 +45,27 @@ ent_Static::ent_Static(int x, int y, std::string name) :j1Entity(Types::STATIC, 
 		SetRect(0, 48, 112, 160);
 		pivot = { 60, 140 };
 		break;
+
+
+		//Isometric map
+	case ent_Static::Type::PILAR:
+		SetRect(192, 128, 64, 64);
+		pivot = { 54,32 };
+		break;
+	case ent_Static::Type::CORNER:
+		SetRect(128, 192, 64, 64);
+		pivot = { 54,32 };
+		break;
+	case ent_Static::Type::WALL_L:
+		SetRect(0, 192, 64, 64);
+		pivot = { 54,32 };
+		break;
+	case ent_Static::Type::WALL:
+		SetRect(64, 192, 64, 64);
+		pivot = { 54,32 };
+		break;
+
+	case ent_Static::Type::UNKNOWN:
 	default:
 		LOG("Cannot find static object type");
 		break;
@@ -35,7 +73,14 @@ ent_Static::ent_Static(int x, int y, std::string name) :j1Entity(Types::STATIC, 
 
 	size = iPoint(frame.w, frame.h);
 
-	data.tileset.texture = App->tex->Load("maps/Pokemon_Objects.png");
+	iPoint pos;
+	pos = App->map->MapToWorld(pos.x, pos.y);
+	pos = App->map->WorldToMap(position.x, position.y);
+	
+
+	position.create(pos.x, pos.y);
+
+	data.tileset.texture = App->tex->Load("maps/Dungeon.png");
 }
 
 ent_Static::~ent_Static()

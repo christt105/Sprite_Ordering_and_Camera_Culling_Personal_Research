@@ -13,10 +13,6 @@
 struct SDL_Texture;
 
 // ----------------------------------------------------
-struct EntityPos
-{
-	fPoint initialPos;	
-};
 
 struct ColliderObject {
 
