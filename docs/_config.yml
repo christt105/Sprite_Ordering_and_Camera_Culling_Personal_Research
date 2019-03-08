@@ -1,2 +1,4 @@
 theme: jekyll-theme-midnight
 title: Sprite ordering and Camera culling
+description: Research about sorting sprites and create a camera culling mask
+show_downloads: true
