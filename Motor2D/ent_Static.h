@@ -17,8 +17,11 @@ public:
 
 		PILAR,
 		CORNER,
-		WALL,
-		WALL_L,
+		WALL_UP_RIGHT,
+		WALL_UP_LEFT,
+		WALL_DOWN_RIGHT,
+		WALL_DOWN_LEFT,
+		DOOR,
 
 		UNKNOWN
 	};
