@@ -12,8 +12,6 @@
 j1Colliders::j1Colliders() : j1Module()
 {
 	name.assign("colliders");
-	for (uint i = 0; i < MAX_COLLIDERS; ++i)
-		colliders[i] = nullptr;
 
 	matrix[COLLIDER_FLOOR][COLLIDER_FLOOR] = false;
 	matrix[COLLIDER_FLOOR][COLLIDER_PLAYER] = false;
@@ -45,7 +43,7 @@ bool j1Colliders::PreUpdate()
 {
 	BROFILER_CATEGORY("PreUpdateCollision", Profiler::Color::Yellow);
 	// Remove all colliders scheduled for deletion
-	for (uint i = 0; i < MAX_COLLIDERS; ++i)
+	for (uint i = 0; i < colliders.size(); ++i)
 	{
 		if (colliders[i] != nullptr && colliders[i]->to_delete == true)
 		{
@@ -62,14 +60,14 @@ bool j1Colliders::Update(float dt)
 
 	Collider* c1;
 	Collider* c2;
-	for (uint i = 0; i < MAX_COLLIDERS; ++i)
+	for (uint i = 0; i < colliders.size(); ++i)
 	{
 		// skip empty colliders
 		if (colliders[i] == nullptr)
 			continue;
 		c1 = colliders[i];
 		// avoid checking collisions already checked
-		for (uint k = i + 1; k < MAX_COLLIDERS; ++k)
+		for (uint k = i + 1; k < colliders.size(); ++k)
 		{
 			// skip empty colliders
 			if (colliders[k] == nullptr)
@@ -101,7 +99,7 @@ void j1Colliders::DebugDraw()
 
 	if(debug) {
 		Uint8 alpha = 80;
-		for (uint i = 0; i < MAX_COLLIDERS; ++i)
+		for (uint i = 0; i < colliders.size(); ++i)
 		{
 			if (colliders[i] == nullptr)
 				continue;
@@ -129,7 +127,7 @@ void j1Colliders::DebugDraw()
 }
 bool j1Colliders::checkColisionList(Collider * enemCollider)
 {
-	for (uint i = 0; i < MAX_COLLIDERS; ++i) {
+	for (uint i = 0; i < colliders.size(); ++i) {
 		if (colliders[i] == nullptr)
 			continue;
 		if (enemCollider->CheckCollision(colliders[i]->rect))
@@ -141,7 +139,7 @@ bool j1Colliders::checkColisionList(Collider * enemCollider)
 bool j1Colliders::CleanUp()
 {
 	LOG("Freeing all colliders");
-	for (uint i = 0; i < MAX_COLLIDERS; ++i)
+	for (uint i = 0; i < colliders.size(); ++i)
 	{
 		if (colliders[i] != nullptr)
 		{
@@ -154,7 +152,7 @@ bool j1Colliders::CleanUp()
 Collider* j1Colliders::AddCollider(SDL_Rect rect, COLLIDER_TYPE type, j1Entity * callback)
 {
 	Collider* ret = nullptr;
-	for (uint i = 0; i < MAX_COLLIDERS; ++i)
+	for (uint i = 0; i < colliders.size(); ++i)
 	{
 		if (colliders[i] == nullptr)
 		{
@@ -166,7 +164,7 @@ Collider* j1Colliders::AddCollider(SDL_Rect rect, COLLIDER_TYPE type, j1Entity *
 }
 bool j1Colliders::EraseAllCollider(Collider* collider)
 {
-	for (uint i = 0; i < MAX_COLLIDERS; ++i)
+	for (uint i = 0; i < colliders.size(); ++i)
 	{
 		if (colliders[i] == collider)
 		{
@@ -180,7 +178,7 @@ bool j1Colliders::EraseAllCollider(Collider* collider)
 
 bool j1Colliders::EraseMapCollider()
 {
-	for (uint i = 0; i < MAX_COLLIDERS; ++i)
+	for (uint i = 0; i < colliders.size(); ++i)
 	{
 		if (colliders[i] != nullptr && (colliders[i]->type <= COLLIDER_SCENE))
 		{
@@ -202,7 +200,7 @@ bool j1Colliders::Check(Collider* c1, COLLIDER_TYPE type) {
 
 	Collider* c2 = nullptr;
 	// avoid checking collisions already checked
-	for (uint k = 0; k < MAX_COLLIDERS; ++k)
+	for (uint k = 0; k < colliders.size(); ++k)
 	{
 		// skip empty colliders
 		if (colliders[k] == nullptr || colliders[k]->type != type)

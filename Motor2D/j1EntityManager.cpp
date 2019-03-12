@@ -4,13 +4,11 @@
 #include "j1Render.h"
 #include "j1Collision.h"
 #include "j1EntityManager.h"
-#include "j1Textures.h"
 #include "j1Scene.h"
 #include "j1Entity.h"
 #include "ent_Player.h"
 #include "ent_Static.h"
 #include "ent_NPC.h"
-#include "j1Map.h"
 #include "j1Window.h"
 #include <algorithm>
 
@@ -158,6 +156,9 @@ void j1EntityManager::DrawDebugQuad(j1Entity *entity)
 	switch (entity->type) {
 	case j1Entity::Types::PLAYER:
 		App->render->DrawQuad(section, 255, 0, 0, alpha);
+		break;
+	case j1Entity::Types::NPC:
+		App->render->DrawQuad(section, 0, 255, 0, alpha);
 		break;
 
 	case j1Entity::Types::STATIC:

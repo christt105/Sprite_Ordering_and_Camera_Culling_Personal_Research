@@ -1,16 +1,8 @@
 #include "j1App.h"
 #include "ent_Player.h"
-#include "p2Defs.h"
-#include "p2Log.h"
-#include "j1App.h"
-#include "j1Render.h"
 #include "j1Textures.h"
 #include "j1Collision.h"
-#include "j1Map.h"
-#include "j1Scene.h"
 #include "j1Input.h"
-#include "j1Audio.h"
-#include "j1EntityManager.h"
 
 #include "Brofiler/Brofiler.h"
 
@@ -45,9 +37,6 @@ bool Player::Update(float dt)
 {
 	BROFILER_CATEGORY("UpdatePlayer", Profiler::Color::Red);
 
-	//Player collider update
-	SetCollidersPos();
-
 	current_animation->GetCurrentFrame(dt);
 
 	return true;
@@ -58,7 +47,8 @@ bool Player::CleanUp()
 {
 	bool ret = false;
 	ret = App->tex->UnLoad(data.tileset.texture);
-	collider.collider->to_delete = true;
+	if (collider.collider != nullptr)
+		collider.collider->to_delete = true;
 
 	return ret;
 }
@@ -125,7 +115,8 @@ void Player::AddColliders() {
 }
 
 void Player::SetCollidersPos() {
-	collider.collider->SetPos((int)position.x + collider.offset.x, (int)position.y + collider.offset.y);
+	if (collider.collider != nullptr)
+		collider.collider->SetPos((int)position.x + collider.offset.x, (int)position.y + collider.offset.y);
 }
 
 void Player::IdAnimToEnum()

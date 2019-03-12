@@ -3,9 +3,7 @@
 
 #include "p2Point.h"
 #include "Animation.h"
-#include "SDL/include/SDL_timer.h"
 #include <string>
-#include "j1Module.h"
 #include "j1Collision.h"
 #include "SDL_image/include/SDL_image.h"
 

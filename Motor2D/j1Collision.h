@@ -1,8 +1,8 @@
 #ifndef __J1COLLISION_H__
 #define __J1COLLISION_H__
-#define MAX_COLLIDERS 500
 
 #include "j1Module.h"
+#include <vector>
 
 class j1Entity;
 
@@ -54,7 +54,7 @@ public:
 	bool debug = false;
 
 private:
-	Collider* colliders[MAX_COLLIDERS];
+	std::vector<Collider*> colliders;
 	bool matrix[COLLIDER_MAX][COLLIDER_MAX];
 };
 #endif // __J1COLLIDERS_H__ 

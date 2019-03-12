@@ -2,10 +2,7 @@
 #define __ENT_NPC_H__
 
 #include "j1Entity.h"
-#include "p2Point.h"
 #include "Animation.h"
-#include "j1Collision.h"
-#include "SDL_image/include/SDL_image.h"
 
 
 struct SDL_Texture;

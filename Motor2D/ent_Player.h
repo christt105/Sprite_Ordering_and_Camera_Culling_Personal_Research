@@ -2,10 +2,8 @@
 #define __ENT_PLAYER_H__
 
 #include "j1Entity.h"
-#include "p2Point.h"
 #include "Animation.h"
 #include "j1Collision.h"
-#include "SDL_image/include/SDL_image.h"
 
 
 struct SDL_Texture;
@@ -47,13 +45,6 @@ private:
 
 	PlayerState state = IDLE;
 
-	float		maxSpeed;
-	float		incrementSpeedX;
-
-	bool		air = false;
-	bool		platformOverstep = false;
-	bool		death = false;
-	
 	Animation anim_walking;
 
 	Animation anim_default;

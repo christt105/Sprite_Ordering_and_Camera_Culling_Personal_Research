@@ -3,12 +3,8 @@
 
 #include <list>
 #include <string>
-#include "p2Point.h"
 #include "j1Module.h"
 #include "j1Collision.h"
-
-#define MAX_ENTITIES 100
-
 
 struct SDL_Texture;
 
