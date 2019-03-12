@@ -7,6 +7,7 @@
 
 ent_Static::ent_Static(int x, int y, std::string name) :j1Entity(Types::STATIC, x, y, name)
 {
+	//Orthogonal map ------------------------
 	if (name == "tree") {
 		type = ent_Static::Type::TREE;
 		SetRect(16, 0, 32, 48);
@@ -19,7 +20,7 @@ ent_Static::ent_Static(int x, int y, std::string name) :j1Entity(Types::STATIC, 
 	}
 
 
-	//Isometric map
+	//Isometric map--------------------------
 	else if (name == "pilar") {
 		type = ent_Static::Type::PILAR;
 		SetRect(256, 0, 64, 64);
