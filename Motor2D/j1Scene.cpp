@@ -61,7 +61,7 @@ void j1Scene::CreateEntities()
 			App->entities->CreateEntity(j1Entity::Types::NPC, (*position)->coll_x, (*position)->coll_y, (*position)->name);
 		}
 		else {
-			LOG("There isn't any entity with name %s and type %s", (*position)->name, (*position)->ent_type);
+			LOG("There isn't any entity with name %s and type %s", (*position)->name.data(), (*position)->ent_type.data());
 		}
 	}
 }

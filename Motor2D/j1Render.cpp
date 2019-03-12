@@ -57,8 +57,7 @@ bool j1Render::Awake(pugi::xml_node& config)
 bool j1Render::Start()
 {
 	LOG("render start");
-	// back background
-	SDL_RenderGetViewport(renderer, &viewport);
+
 	return true;
 }
 
@@ -127,22 +126,12 @@ void j1Render::SetBackgroundColor(SDL_Color color)
 	background = color;
 }
 
-void j1Render::SetViewPort(const SDL_Rect& rect)
-{
-	SDL_RenderSetViewport(renderer, &rect);
-}
-
 bool j1Render::IsInCamera(const SDL_Rect& rect)
 {
 	int scale = App->win->GetScale();
 	SDL_Rect cam = { -camera.x, -camera.y, camera.w, camera.h };
 	SDL_Rect r = { rect.x * scale,rect.y*scale,rect.w*scale,rect.h*scale };
 	return SDL_HasIntersection(&r, &cam);
-}
-
-void j1Render::ResetViewPort()
-{
-	SDL_RenderSetViewport(renderer, &viewport);
 }
 
 iPoint j1Render::ScreenToWorld(int x, int y) const
