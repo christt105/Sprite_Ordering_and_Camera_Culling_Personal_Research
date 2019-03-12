@@ -59,7 +59,6 @@ bool j1EntityManager::UpdateAll(float dt)
 
 	for (std::vector<j1Entity*>::iterator item = entities.begin();item != entities.end(); ++item) {
 		if (*item != nullptr) {
-			(*item)->Move(dt);
 			ret = (*item)->Update(dt);
 
 			if (App->render->IsInCamera( (*item)->position.x, (*item)->position.y, (*item)->size.x, (*item)->size.y )) {

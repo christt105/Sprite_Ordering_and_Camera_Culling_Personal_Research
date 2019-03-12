@@ -88,7 +88,6 @@ public:
 
 	virtual bool Start() { return true; }
 	virtual bool Update(float dt);
-	virtual void Move(float dt) {}
 	virtual void Draw();
 	virtual void OnCollision(Collider* collider1, Collider * collider2, float dt) {}
 	virtual bool CleanUp();

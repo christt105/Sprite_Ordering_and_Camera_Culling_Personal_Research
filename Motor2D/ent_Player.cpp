@@ -36,25 +36,6 @@ bool Player::Start()
 bool Player::Update(float dt)
 {
 	BROFILER_CATEGORY("UpdatePlayer", Profiler::Color::Red);
-
-	current_animation->GetCurrentFrame(dt);
-
-	return true;
-}
-
-// Called before quitting
-bool Player::CleanUp()
-{
-	bool ret = false;
-	ret = App->tex->UnLoad(data.tileset.texture);
-	if (collider.collider != nullptr)
-		collider.collider->to_delete = true;
-
-	return ret;
-}
-
-void Player::Move(float dt) {
-
 	int speed = 125;
 	fPoint prev_pos = position;
 
@@ -78,11 +59,24 @@ void Player::Move(float dt) {
 		ChangeState(WALKING);
 	}
 
-	if(prev_pos == position) {
+	if (prev_pos == position) {
 		ChangeState(IDLE);
 	}
 
-	SetCollidersPos();
+	current_animation->GetCurrentFrame(dt);
+
+	return true;
+}
+
+// Called before quitting
+bool Player::CleanUp()
+{
+	bool ret = false;
+	ret = App->tex->UnLoad(data.tileset.texture);
+	if (collider.collider != nullptr)
+		collider.collider->to_delete = true;
+
+	return ret;
 }
 
 void Player::OnCollision(Collider* c1, Collider* c2, float dt) {
