@@ -197,8 +197,6 @@ bool j1Map::Load(const char* file_name)
 	bool ret = true;
 	std::string tmp = (folder.data() + std::string(file_name));
 
-	grid = App->tex->Load("maps/Quad.png");
-
 	pugi::xml_parse_result result = map_file.load_file(tmp.data());
 
 	if(result == NULL)
@@ -301,6 +299,13 @@ bool j1Map::Load(const char* file_name)
 		}*/
 
 	}
+
+	if(data.type == MAPTYPE_ISOMETRIC)
+		grid = App->tex->Load("maps/Quad_Iso.png");
+	else if(data.type == MAPTYPE_ORTHOGONAL)
+		grid = App->tex->Load("maps/Quad_Ortho.png");
+
+
 	map_file.reset();
 	map_loaded = ret;
 
