@@ -36,9 +36,9 @@
   </map>
 
   <scene>
-    <map name="Iso.tmx"/>
-    <map name="Scene.tmx"/>
+    <map name="Scene.tmx"/><!--First map that will be loaded-->
     <map name="Scene2.tmx"/>
+    <map name="Iso.tmx"/>
   </scene>
   
   <player>

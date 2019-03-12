@@ -42,7 +42,7 @@ bool j1Scene::Start()
 {
 	bool ret = false;
 
-	ret = App->map->Load("Iso.tmx");
+	ret = App->map->Load(scenes[0].data()); //Load first map in config.xml
 
 	CreateEntities();
 
@@ -95,6 +95,35 @@ bool j1Scene::Update(float dt)
 	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
 		App->map->draw_grid = !App->map->draw_grid;
 
+	//Show/hide entities quad size and pivot
+	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
+		entities_box = !entities_box;
+
+	//Change between different map types----------------------------
+	bool change_map = false;
+	uint id = -1;
+
+	if (App->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN) {
+		change_map = true;
+		id = 0;
+	}
+	else if (App->input->GetKey(SDL_SCANCODE_F4) == KEY_DOWN) {
+		change_map = true;
+		id = 1;
+	}
+	else if (App->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN) {
+		change_map = true;
+		id = 2;
+	}
+
+	if (change_map) {
+		App->map->CleanUp();
+		App->entities->CleanUp();
+
+		App->map->Load(scenes[id].data());
+		CreateEntities();
+	}
+	//--------------------------------------------------------------
 	//Change between zoom levels-----------------------------
 	if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
 		App->win->SetScale(1);
@@ -105,37 +134,6 @@ bool j1Scene::Update(float dt)
 	if (App->input->GetKey(SDL_SCANCODE_3) == KEY_DOWN)
 		App->win->SetScale(3);
 	//-------------------------------------------------------
-
-	//Show/hide entities quad size and pivot
-	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
-		entities_box = !entities_box;
-
-	//-------------------------------------
-	if (App->input->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT) {
-		bool change_map = false;
-		uint id = -1;
-
-		if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN) {
-			change_map = true;
-			id = 0;
-		}
-		else if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN) {
-			change_map = true;
-			id = 1;
-		}
-		else if (App->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN) {
-			change_map = true;
-			id = 2;
-		}
-
-		if (change_map) {
-			App->map->CleanUp();
-			App->entities->CleanUp();
-
-			App->map->Load(scenes[id].data());			
-			CreateEntities();
-		}
-	}
 
 	if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 		App->quit_game = true;
