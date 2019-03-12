@@ -166,13 +166,17 @@ void j1EntityManager::DrawDebugQuad(j1Entity *entity)
 		else if (entity->name == "statue")
 			App->render->DrawQuad(section, 0, 0, 255, alpha);
 		else if(entity->name == "pilar")
-			App->render->DrawQuad(section, 255, 0, 0, alpha);
-		else if (entity->name == "corner")
-			App->render->DrawQuad(section, 255, 0, 0, alpha);
-		else if (entity->name == "wall")
-			App->render->DrawQuad(section, 255, 0, 0, alpha);
-		else if (entity->name == "wall_l")
-			App->render->DrawQuad(section, 255, 0, 0, alpha);
+			App->render->DrawQuad(section, 0, 255, 0, alpha);
+		else if (entity->name == "corner" || entity->name == "door")
+			App->render->DrawQuad(section, 255, 255, 0, alpha);
+		else if (entity->name == "wall_d_l")
+			App->render->DrawQuad(section, 255, 255, 0, alpha);
+		else if (entity->name == "wall_d_r")
+			App->render->DrawQuad(section, 255, 255, 0, alpha);
+		else if (entity->name == "wall_u_l")
+			App->render->DrawQuad(section, 255, 255, 0, alpha);
+		else if (entity->name == "wall_u_r")
+			App->render->DrawQuad(section, 255, 255, 0, alpha);
 		break;
 	}
 
