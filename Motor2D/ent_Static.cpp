@@ -10,12 +10,12 @@ ent_Static::ent_Static(int x, int y, std::string name) :j1Entity(Types::STATIC, 
 	if (name == "tree") {
 		type = ent_Static::Type::TREE;
 		SetRect(16, 0, 32, 48);
-		pivot = { 15, 36 };
+		SetPivot(15, 36);
 	}
 	else if (name == "statue") {
 		type = ent_Static::Type::STATUE;
 		SetRect(0, 48, 112, 160);
-		pivot = { 60, 140 };
+		SetPivot(60, 140);
 	}
 
 
@@ -23,37 +23,37 @@ ent_Static::ent_Static(int x, int y, std::string name) :j1Entity(Types::STATIC, 
 	else if (name == "pilar") {
 		type = ent_Static::Type::PILAR;
 		SetRect(256, 0, 64, 64);
-		pivot = { 32,48 };
+		SetPivot(32, 48);
 	}
 	else if (name == "corner") {
 		type = ent_Static::Type::CORNER;
 		SetRect(64, 0, 64, 64);
-		pivot = { 32,48 };
+		SetPivot(32, 48);
 	}
 	else if (name == "wall_u_r") {
 		type = ent_Static::Type::WALL_UP_RIGHT;
 		SetRect(0, 0, 64, 64);
-		pivot = { 32,48 };
+		SetPivot(32, 48);
 	}
 	else if (name == "wall_u_l") {
 		type = ent_Static::Type::WALL_UP_LEFT;
 		SetRect(384, 0, 64, 64);
-		pivot = { 32,48 };
+		SetPivot(32, 48);
 	}
 	else if (name == "wall_d_r") {
 		type = ent_Static::Type::WALL_DOWN_RIGHT;
 		SetRect(448, 0, 64, 64);
-		pivot = { 32,48 };
+		SetPivot(32, 48);
 	}
 	else if (name == "wall_d_l") {
 		type = ent_Static::Type::WALL_DOWN_LEFT;
 		SetRect(192, 0, 64, 64);
-		pivot = { 32,48 };
+		SetPivot(32, 48);
 	}
 	else if (name == "door") {
 		type = ent_Static::Type::DOOR;
 		SetRect(128, 0, 64, 64);
-		pivot = { 32,48 };
+		SetPivot(32, 48);
 	}
 
 	else {

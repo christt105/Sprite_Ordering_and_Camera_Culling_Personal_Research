@@ -23,7 +23,7 @@ bool ent_NPC::Start()
 
 	data.tileset.texture = App->tex->Load(data.tileset.imagePath.data());
 
-	pivot = { 7,11 };
+	SetPivot(7, 11);
 
 	return true;
 }

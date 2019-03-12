@@ -187,6 +187,11 @@ void j1Entity::AddColliders(j1Entity* callback)
 
 }
 
+void j1Entity::SetPivot(const int & x, const int & y)
+{
+	pivot.create(x, y);
+}
+
 //Functions to help loading data in xml-------------------------------------
 //Get the rect info of an id of tileset
 SDL_Rect TileSetEntity::GetTileRect(int id) const {

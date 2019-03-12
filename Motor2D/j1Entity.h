@@ -84,12 +84,12 @@ public:
 	virtual void IdAnimToEnum();
 	virtual void PushBack() {};
 	virtual void AddColliders(j1Entity* c = nullptr);
+	void SetPivot(const int &x, const int &y);
 
 	virtual bool Start() { return true; }
 	virtual bool Update(float dt);
 	virtual void Move(float dt) {}
 	virtual void Draw();
-	virtual void CreatePath() {}
 	virtual void OnCollision(Collider* collider1, Collider * collider2, float dt) {}
 	virtual bool CleanUp();
 	
@@ -98,7 +98,7 @@ public:
 	std::string name;
 
 	fPoint position;
-	iPoint pivot;
+	iPoint pivot = { 0, 0 };
 
 	iPoint size = { 0, 0 };
 
