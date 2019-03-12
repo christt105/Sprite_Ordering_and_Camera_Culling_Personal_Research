@@ -83,6 +83,7 @@ bool j1Render::PostUpdate()
 
 	SDL_SetRenderDrawColor(renderer, background.r, background.g, background.g, background.a);
 	SDL_RenderPresent(renderer);
+	App->win->ClearTitle();
 	return true;
 }
 
@@ -121,16 +122,18 @@ bool j1Render::Save(pugi::xml_node& data) const
 	return true;
 }
 
-void j1Render::SetBackgroundColor(SDL_Color color)
+void j1Render::SetBackgroundColor(const SDL_Color &color)
 {
 	background = color;
 }
 
-bool j1Render::IsInCamera(const SDL_Rect& rect)
+bool j1Render::IsInCamera(const int &x, const int &y, const int &w, const int &h) const
 {
 	int scale = App->win->GetScale();
+
 	SDL_Rect cam = { -camera.x, -camera.y, camera.w, camera.h };
-	SDL_Rect r = { rect.x * scale,rect.y*scale,rect.w*scale,rect.h*scale };
+	SDL_Rect r = { x * scale, y * scale, w * scale, h * scale };
+
 	return SDL_HasIntersection(&r, &cam);
 }
 

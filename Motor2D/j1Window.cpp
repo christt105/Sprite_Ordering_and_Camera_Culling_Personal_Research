@@ -98,9 +98,23 @@ bool j1Window::CleanUp()
 }
 
 // Set new window title
-void j1Window::SetTitle(const char* new_title)
+void j1Window::SetNewTitle(const char* new_title)
 {
-	SDL_SetWindowTitle(window, new_title);
+	title.clear();
+	title = new_title;
+	SDL_SetWindowTitle(window, title.data());
+}
+
+void j1Window::AddStringToTitle(const char * add_title)
+{
+	title = title + std::string(add_title);
+	std::string new_title = std::string(App->GetTitle()) + title;
+	SDL_SetWindowTitle(window, new_title.data());
+}
+
+void j1Window::ClearTitle()
+{
+	title.clear();
 }
 
 uint j1Window::GetWindowWidth() const

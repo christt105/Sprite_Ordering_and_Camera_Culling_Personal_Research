@@ -52,8 +52,7 @@ void j1Map::Draw()
 					if (id != 0) {
 						TileSet* tileset = GetTilesetFromTileId(id);
 						if (tileset != nullptr) {
-							section = { MapToWorld(i,j).x, MapToWorld(i,j).y, tileset->tile_width, tileset->tile_height };
-							if (App->render->IsInCamera(section)) {
+							if (App->render->IsInCamera(MapToWorld(i, j).x, MapToWorld(i, j).y, tileset->tile_width, tileset->tile_height)) {
 								tiles_painted++;
 								App->render->Blit(tileset->texture, MapToWorld(i, j).x, MapToWorld(i, j).y, &tileset->GetTileRect(id));
 							}
@@ -64,10 +63,10 @@ void j1Map::Draw()
 		}
 	}
 
-	static char title[250];
-	sprintf_s(title, 256, "SpriteOrdering and Camera Culling | Tiles Rendered: %u", tiles_painted);
+	static char title[30];
+	sprintf_s(title, 30, " | Tiles Rendered: %u", tiles_painted);
 
-	App->win->SetTitle(title);
+	App->win->AddStringToTitle(title);
 
 	if (draw_grid) {
 		for (uint i = 0; i < data.width; ++i) {

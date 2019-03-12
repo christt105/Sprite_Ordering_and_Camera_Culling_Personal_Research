@@ -11,6 +11,7 @@
 #include "ent_Static.h"
 #include "ent_NPC.h"
 #include "j1Map.h"
+#include "j1Window.h"
 #include <algorithm>
 
 #include "Brofiler/Brofiler.h"
@@ -62,8 +63,8 @@ bool j1EntityManager::UpdateAll(float dt)
 		if (*item != nullptr) {
 			(*item)->Move(dt);
 			ret = (*item)->Update(dt);
-			r = { (int)(*item)->position.x, (int)(*item)->position.y, (*item)->size.x, (*item)->size.y };
-			if (App->render->IsInCamera(r)) {
+
+			if (App->render->IsInCamera( (*item)->position.x, (*item)->position.y, (*item)->size.x, (*item)->size.y )) {
 				draw_entities.push_back(*item);
 			}
 		}
@@ -81,8 +82,13 @@ bool j1EntityManager::UpdateAll(float dt)
 			}
 		}
 	}
+
+	draw_entities.clear();
 	
-	LOG("Entities drawn: %u", entities_drawn);
+	static char title[30];
+	sprintf_s(title, 30, " | Entities drawn: %u", entities_drawn);
+	
+	App->win->AddStringToTitle(title);
 
 	return ret;
 }
