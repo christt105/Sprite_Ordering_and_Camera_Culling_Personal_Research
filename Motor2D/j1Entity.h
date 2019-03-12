@@ -102,7 +102,7 @@ public:
 	fPoint position;
 	iPoint pivot;
 
-	iPoint size;
+	iPoint size = { 0, 0 };
 
 	Types type;
 

@@ -34,6 +34,12 @@
   <map>
     <folder>maps/</folder>
   </map>
+
+  <scene>
+    <map name="Iso.tmx"/>
+    <map name="Scene.tmx"/>
+    <map name="Scene2.tmx"/>
+  </scene>
   
   <player>
     <file>player.tsx</file>

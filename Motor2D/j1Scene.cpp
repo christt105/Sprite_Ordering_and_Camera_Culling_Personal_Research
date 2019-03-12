@@ -16,7 +16,7 @@
 
 j1Scene::j1Scene() : j1Module()
 {
-	name.assign("scenes");
+	name.assign("scene");
 }
 
 // Destructor
@@ -28,7 +28,13 @@ bool j1Scene::Awake(pugi::xml_node& conf)
 {
 	LOG("Loading Scene");
 
-	return true;
+	bool ret = true;
+
+	for (conf = conf.first_child(); conf != nullptr; conf = conf.next_sibling()) {
+		scenes.push_back(conf.attribute("name").as_string());
+	}
+
+	return ret;
 }
 
 // Called before the first frame

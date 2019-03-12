@@ -2,6 +2,7 @@
 #define __j1SCENE_H__
 
 #include "j1Module.h"
+#include <vector>
 
 class j1Scene : public j1Module
 {
@@ -27,6 +28,9 @@ public:
 	bool CleanUp();
 
 	bool entities_box = false;
+
+private:
+	std::vector<std::string> scenes;
 };
 
 #endif // __j1SCENE_H__
