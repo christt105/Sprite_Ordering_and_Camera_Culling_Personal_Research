@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.2.2" orientation="isometric" renderorder="right-down" width="25" height="25" tilewidth="64" tileheight="32" infinite="0" nextlayerid="11" nextobjectid="42">
+<map version="1.0" tiledversion="1.1.5" orientation="isometric" renderorder="right-down" width="25" height="25" tilewidth="64" tileheight="32" infinite="0" nextobjectid="42">
+ <properties>
+  <property name="object_texture" value="maps/Dungeon.png"/>
+ </properties>
  <tileset firstgid="1" name="Grass" tilewidth="64" tileheight="64" tilecount="24" columns="4">
   <tileoffset x="0" y="16"/>
   <grid orientation="isometric" width="64" height="32"/>
@@ -66,7 +69,7 @@
  <tileset firstgid="25" name="Dungeon" tilewidth="64" tileheight="64" tilecount="8" columns="8">
   <image source="Dungeon.png" width="512" height="64"/>
  </tileset>
- <layer id="1" name="Grass" width="25" height="25">
+ <layer name="Grass" width="25" height="25">
   <data>
    <tile gid="24"/>
    <tile gid="24"/>
@@ -695,7 +698,7 @@
    <tile gid="1"/>
   </data>
  </layer>
- <layer id="7" name="Floor" width="25" height="25">
+ <layer name="Floor" width="25" height="25">
   <data>
    <tile/>
    <tile/>
@@ -1324,7 +1327,7 @@
    <tile/>
   </data>
  </layer>
- <layer id="6" name="Pilars" width="25" height="25">
+ <layer name="Pilars" width="25" height="25">
   <properties>
    <property name="NoDraw" type="bool" value="false"/>
   </properties>
@@ -1956,13 +1959,13 @@
    <tile/>
   </data>
  </layer>
- <objectgroup id="8" name="Pilars">
+ <objectgroup name="Pilars">
   <object id="1" name="pilar" type="static" x="352" y="352" width="64" height="64"/>
   <object id="2" name="pilar" type="static" x="352" y="256" width="64" height="64"/>
   <object id="3" name="pilar" type="static" x="224" y="256" width="64" height="64"/>
   <object id="4" name="pilar" type="static" x="224" y="352" width="64" height="64"/>
  </objectgroup>
- <layer id="5" name="Walls" width="25" height="25">
+ <layer name="Walls" width="25" height="25">
   <properties>
    <property name="NoDraw" type="bool" value="false"/>
   </properties>
@@ -2594,7 +2597,7 @@
    <tile/>
   </data>
  </layer>
- <objectgroup id="9" name="Walls" visible="0">
+ <objectgroup name="Walls" visible="0">
   <object id="5" name="corner" type="static" x="128" y="192" width="64" height="64"/>
   <object id="6" name="corner" type="static" x="128" y="448" width="64" height="64"/>
   <object id="7" name="corner" type="static" x="448" y="448" width="64" height="64"/>
@@ -2632,7 +2635,7 @@
   <object id="40" name="wall_d_l" type="static" x="416" y="192" width="64" height="64"/>
   <object id="41" name="door" type="static" x="448" y="320" width="64" height="64"/>
  </objectgroup>
- <objectgroup id="10" name="Player">
+ <objectgroup name="Player">
   <object id="23" name="Player" type="player" x="395.5" y="592.5"/>
  </objectgroup>
 </map>

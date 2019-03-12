@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.2.2" orientation="orthogonal" renderorder="right-down" width="80" height="60" tilewidth="16" tileheight="16" infinite="0" nextlayerid="10" nextobjectid="617">
+<map version="1.0" tiledversion="1.1.5" orientation="orthogonal" renderorder="right-down" width="80" height="60" tilewidth="16" tileheight="16" infinite="0" nextobjectid="617">
+ <properties>
+  <property name="object_texture" value="maps/Pokemon_Objects.png"/>
+ </properties>
  <tileset firstgid="1" name="Pokemon_Tiles" tilewidth="16" tileheight="16" tilecount="243" columns="27">
   <image source="Pokemon_Tiles.png" width="446" height="155"/>
  </tileset>
  <tileset firstgid="244" name="Pokemon_Objects" tilewidth="16" tileheight="16" tilecount="221" columns="17">
   <image source="Pokemon_Objects.png" width="287" height="208"/>
  </tileset>
- <layer id="8" name="Background" width="80" height="60">
+ <layer name="Background" width="80" height="60">
   <data>
    <tile gid="109"/>
    <tile gid="109"/>
@@ -4810,7 +4813,7 @@
    <tile gid="109"/>
   </data>
  </layer>
- <layer id="9" name="Objects" width="80" height="60">
+ <layer name="Objects" width="80" height="60">
   <properties>
    <property name="NoDraw" type="bool" value="false"/>
   </properties>
@@ -9617,7 +9620,7 @@
    <tile/>
   </data>
  </layer>
- <objectgroup id="3" name="StaticObjects">
+ <objectgroup name="StaticObjects">
   <object id="1" name="tree" type="static" x="80" y="80" width="32" height="48"/>
   <object id="2" name="tree" type="static" x="208" y="176" width="32" height="48"/>
   <object id="3" name="statue" type="static" x="288" y="48" width="112" height="160"/>
@@ -10148,10 +10151,10 @@
   <object id="615" name="NPC" type="mudkip" x="169.333" y="637.333"/>
   <object id="616" name="NPC" type="mudkip" x="313.333" y="761.333"/>
  </objectgroup>
- <objectgroup id="4" name="Player">
+ <objectgroup name="Player">
   <object id="4" name="Player" type="player" x="138" y="169.5"/>
  </objectgroup>
- <objectgroup id="7" name="NPC">
+ <objectgroup name="NPC">
   <object id="5" name="NPC" type="mudkip" x="214" y="97"/>
   <object id="30" name="NPC" type="mudkip" x="269.333" y="155.333"/>
   <object id="31" name="NPC" type="mudkip" x="154.667" y="146.667"/>

@@ -28,9 +28,14 @@ struct ColliderObject {
 
 };
 
-struct Properties
+struct LayerProperties
 {
 	bool draw = true;
+};
+
+struct MapProperties
+{
+	std::string objects_path;
 };
 
 struct MapLayer {
@@ -39,7 +44,7 @@ struct MapLayer {
 	uint		height = 0;
 	uint*		tiles = nullptr;
 	bool		visible = true;
-	Properties	properties;
+	LayerProperties	properties;
 
 	~MapLayer() { delete[] tiles; tiles = nullptr; }
 
@@ -81,6 +86,7 @@ struct MapData
 	int							height;
 	int							tile_width;
 	int							tile_height;
+	MapProperties				properties;
 	SDL_Color					background_color;
 	MapTypes					type;
 	std::list<TileSet*>			tilesets;
@@ -119,11 +125,12 @@ public:
 private:
 
 	bool LoadMap();
+	bool LoadMapProperties(pugi::xml_node& node);
 	bool LoadTilesetDetails(pugi::xml_node& tileset_node, TileSet* set);
 	bool LoadTilesetImage(pugi::xml_node& tileset_node, TileSet* set);
 	bool LoadLayer(pugi::xml_node& layer_node, MapLayer* layer);
 	bool LoadObject(pugi::xml_node& tileset_node, ColliderObject* obj);
-	void LoadProperties(pugi::xml_node & properties_node, MapLayer* layer = nullptr);
+	void LoadLayerProperties(pugi::xml_node & properties_node, MapLayer* layer = nullptr);
 
 	TileSet* GetTilesetFromTileId(int id) const;
 

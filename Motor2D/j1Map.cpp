@@ -324,7 +324,7 @@ bool j1Map::LoadMap()
 		data.height = map.attribute("height").as_int();
 		data.tile_width = map.attribute("tilewidth").as_int();
 		data.tile_height = map.attribute("tileheight").as_int();
-		LoadProperties(map.child("properties"));
+		LoadLayerProperties(map.child("properties"));
 		std::string bg_color(map.attribute("backgroundcolor").as_string());
 
 		data.background_color.r = 0;
@@ -371,12 +371,26 @@ bool j1Map::LoadMap()
 		{
 			data.type = MAPTYPE_UNKNOWN;
 		}
+
+		LoadMapProperties(map.child("properties"));
 	}
 
 	return ret;
 }
 
-void j1Map::LoadProperties(pugi::xml_node& properties_node, MapLayer* layer) {
+bool j1Map::LoadMapProperties(pugi::xml_node & node)
+{
+	for (node = node.child("property"); node != NULL; node = node.next_sibling()) {
+		std::string prop = node.attribute("name").as_string();
+
+		if (prop == "object_texture") {
+			data.properties.objects_path = node.attribute("value").as_string();
+		}
+	}
+	return true;
+}
+
+void j1Map::LoadLayerProperties(pugi::xml_node& properties_node, MapLayer* layer) {
 
 	for (properties_node = properties_node.child("property"); properties_node != NULL; properties_node = properties_node.next_sibling()) {
 		std::string prop = properties_node.attribute("name").as_string();
@@ -463,7 +477,7 @@ bool j1Map::LoadLayer(pugi::xml_node& node, MapLayer* layer)
 
 	//Load properties of layer
 	pugi::xml_node n_property = node.child("properties");
-	LoadProperties(n_property, layer);
+	LoadLayerProperties(n_property, layer);
 	
 	layer->tiles = new uint[layer->width*layer->height];
 

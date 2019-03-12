@@ -62,13 +62,16 @@ ent_Static::ent_Static(int x, int y, std::string name) :j1Entity(Types::STATIC, 
 
 	size = iPoint(frame.w, frame.h);
 
-	position.x /= App->map->data.tile_width * 0.5f;
-	position.y /= App->map->data.tile_height;
 
-	iPoint pos = App->map->MapToWorld(position.x+1, position.y+1);
-	position.create(pos.x, pos.y);
+	if (App->map->data.type == MAPTYPE_ISOMETRIC) {
+		position.x /= App->map->data.tile_width * 0.5f;
+		position.y /= App->map->data.tile_height;
 
-	data.tileset.texture = App->tex->Load("maps/Dungeon.png");
+		iPoint pos = App->map->MapToWorld(position.x + 1, position.y + 1);
+		position.create(pos.x, pos.y);
+	}
+
+	data.tileset.texture = App->tex->Load(App->map->data.properties.objects_path.data());
 }
 
 ent_Static::~ent_Static()
