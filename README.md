@@ -36,7 +36,7 @@ This project contains a research about the optimization of a game to only blit s
 
 ## Author
 
-* **Christian Martínez de la Rosa** - [christt105](https://github.com/christt105)
+* **Christian Martínez de la Rosa** - GitHub account: [christt105](https://github.com/christt105) Contact: christt105@gmail.com
 
 ## License
 
