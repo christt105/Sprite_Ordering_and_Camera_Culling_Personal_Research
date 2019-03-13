@@ -6,7 +6,7 @@ Video Games by UPC at CITM). This content is generated for the second year’s
 subject Project 2, under supervision of lecturer
 <https://es.linkedin.com/in/ricardpillosu>(Ricard Pillosu).
 
-This project contains a research about the optimization of a game to only blit sprites that are on the camera viewport. Also, it is about sorting entities to make a feeling of depth in Top-Down and Isometric games.
+This project contains a research about the optimization of a game to only blit sprites that are on the camera viewport. Also, it is about sorting entities to make a feeling of depth in Top-Down and Isometric games. Contains an integration of Tiled into SDL.
 
 ## Getting Started
 
