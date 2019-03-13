@@ -18,6 +18,21 @@ ent_Static::ent_Static(int x, int y, std::string name) :j1Entity(Types::STATIC, 
 		SetRect(0, 48, 112, 160);
 		SetPivot(60, 140);
 	}
+	else if (name == "house") {
+		type = ent_Static::Type::HOUSE;
+		SetRect(128, 0, 80, 96);
+		SetPivot(40, 80);
+	}
+	else if (name == "center") {
+		type = ent_Static::Type::HOUSE;
+		SetRect(128, 96, 80, 96);
+		SetPivot(40, 80);
+	}
+	else if (name == "post") {
+		type = ent_Static::Type::POST;
+		SetRect(0, 0, 16, 32);
+		SetPivot(8, 15);
+	}
 
 
 	//Isometric map--------------------------

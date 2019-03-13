@@ -14,6 +14,9 @@ public:
 	enum class Type {
 		TREE,
 		STATUE,
+		POST,
+		HOUSE,
+		CENTER,
 
 		PILAR,
 		CORNER,

@@ -56,14 +56,14 @@ void j1Scene::CreateEntities()
 	//iterate all objects of tile to find entities
 
 	for (std::list<ColliderObject*>::iterator position = App->map->data.colliders.begin(); position != App->map->data.colliders.end(); position++) {
-		if ((*position)->name == "Player") {
+		if ((*position)->name == "player") {
 			App->entities->CreateEntity(j1Entity::Types::PLAYER, (*position)->coll_x, (*position)->coll_y, (*position)->name);
 		}
 		else if ((*position)->ent_type == "static") {
 			App->entities->CreateEntity(j1Entity::Types::STATIC, (*position)->coll_x, (*position)->coll_y, (*position)->name);
 				
 		}
-		else if ((*position)->name == "NPC") {
+		else if ((*position)->ent_type == "NPC") {
 			App->entities->CreateEntity(j1Entity::Types::NPC, (*position)->coll_x, (*position)->coll_y, (*position)->name);
 		}
 		else {
