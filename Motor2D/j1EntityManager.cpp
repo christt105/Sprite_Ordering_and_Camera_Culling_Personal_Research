@@ -177,6 +177,9 @@ void j1EntityManager::DrawDebugQuad(j1Entity *entity)
 			App->render->DrawQuad(section, 255, 255, 0, alpha);
 		else if (entity->name == "wall_u_r")
 			App->render->DrawQuad(section, 255, 255, 0, alpha);
+		else {
+			App->render->DrawQuad(section, 255, 255, 255, alpha);
+		}
 		break;
 	}
 
