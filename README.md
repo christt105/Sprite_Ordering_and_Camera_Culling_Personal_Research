@@ -27,6 +27,9 @@ This project contains a research about the optimization of a game to only blit s
 + 1/2/3 to change from different zoom levels.
 + F1 to show/hide grid.
 + F2 to show/hide entities area and its pivot.
++ F3 to set map 1.
++ F4 to set map 2.
++ F5 to set map 3.
 
 ## Built With
 
@@ -49,3 +52,4 @@ Special thanks to:
 + [soulcaliburfan](https://www.spriters-resource.com/submitter/soulcaliburfan/) for player sprites.
 + [Neffertity](https://www.deviantart.com/neffertity/art/Pokemon-SS-Custom-Statues-287471172) for statue sprite.
 + [Barubary](https://www.spriters-resource.com/ds_dsi/pokemonblack2white2/sheet/48050/) for Mudkip sprites.
++ [MedicineStorm](https://opengameart.org/users/medicinestorm) for isometric tileset
