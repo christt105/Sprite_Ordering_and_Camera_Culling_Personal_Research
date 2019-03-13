@@ -1,4 +1,4 @@
-# Sprite Ordering and Camera Culling Personal Research
+﻿# Sprite Ordering and Camera Culling Personal Research
 
 I am <https://www.linkedin.com/in/christianmartinezdelarosa/>(Christian Martínez de la Rosa), student of the
 <https://www.citm.upc.edu/ing/estudis/graus-videojocs/>(Bachelor’s Degree in
@@ -29,7 +29,6 @@ This project contains a research about the optimization of a game to only blit s
 + F2 to show/hide entities area and its pivot.
 + F3 to set map 1.
 + F4 to set map 2.
-+ F5 to set map 3.
 
 ## Built With
 

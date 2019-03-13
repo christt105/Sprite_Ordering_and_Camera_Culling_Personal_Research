@@ -181,6 +181,9 @@ void j1EntityManager::DrawDebugQuad(j1Entity *entity)
 			App->render->DrawQuad(section, 255, 255, 255, alpha);
 		}
 		break;
+	default:
+		App->render->DrawQuad(section, 255, 255, 255, alpha);
+		break;
 	}
 
 	App->render->DrawCircle(section.x + entity->pivot.x, section.y + entity->pivot.y, 3, 0, 255, 0);

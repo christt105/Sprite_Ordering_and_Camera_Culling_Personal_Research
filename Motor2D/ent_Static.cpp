@@ -21,12 +21,12 @@ ent_Static::ent_Static(int x, int y, std::string name) :j1Entity(Types::STATIC, 
 	else if (name == "house") {
 		type = ent_Static::Type::HOUSE;
 		SetRect(128, 0, 80, 96);
-		SetPivot(40, 80);
+		SetPivot(40, 94);
 	}
 	else if (name == "center") {
 		type = ent_Static::Type::HOUSE;
 		SetRect(128, 96, 80, 96);
-		SetPivot(40, 80);
+		SetPivot(40, 90);
 	}
 	else if (name == "post") {
 		type = ent_Static::Type::POST;
