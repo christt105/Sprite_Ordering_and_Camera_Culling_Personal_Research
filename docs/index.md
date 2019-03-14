@@ -86,7 +86,7 @@ And now we will see the profiling of that scene during execution:
 
 We see that there are a lot of time wasted in render and sorting sprites. And now, here we have a profiling of the same scene but after making the research implementation:
 
-<img img="https://github.com/christt105/Sprite_Ordering_and_Camera_Culling_Personal_Research/blob/master/docs/web_images/Profiling_low.png?raw=true"/>
+<img src="https://github.com/christt105/Sprite_Ordering_and_Camera_Culling_Personal_Research/blob/master/docs/web_images/Profiling_low.png?raw=true"/>
 
 We can see that we gain like one and a half ms rendering background and 47 ms updating all entities. 17 ms still is a lot of time but we will se later how to optimize that. You can see more profiling tests in that folder: [Brofiling tests](https://github.com/christt105/Sprite_Ordering_and_Camera_Culling_Personal_Research/tree/master/docs/Brofiler_tests)
 
