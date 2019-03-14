@@ -6,7 +6,7 @@ In the evolution of 2D games, there was an instance that we want to recreate a 3
 
 In games like _Super Mario Bros_ or _Hotline Miami_ we can identify a sprite ordering without considering the depths, for example: in Mario we can render the turtle before Mario or vice versa, just follows the order of background->entities->pipes and blocks, the game does not require the sorting of the sprites.
 
-![Super Mario Bros](https://github.com/christt105/Sprite_Ordering_and_Camera_Culling_Personal_Research/blob/master/docs/web_images/super-mario-bros.gif)
+![https://github.com/christt105/Sprite_Ordering_and_Camera_Culling_Personal_Research/blob/master/docs/web_images/super-mario-bros.gif](https://github.com/christt105/Sprite_Ordering_and_Camera_Culling_Personal_Research/blob/master/docs/web_images/super-mario-bros.gif)
 
 With the same reason, _Hotline Miami_ does not to have to sort sprites. We can follow the order of sprites like this: background->furniture->enemies->guns->player.
 
