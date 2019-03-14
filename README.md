@@ -1,14 +1,17 @@
-﻿# Sprite Ordering and Camera Culling Personal Research
+# Sprite Ordering and Camera Culling Personal Research
 
-I am <https://www.linkedin.com/in/christianmartinezdelarosa/>(Christian Martínez de la Rosa), student of the
-<https://www.citm.upc.edu/ing/estudis/graus-videojocs/>(Bachelor’s Degree in
-Video Games by UPC at CITM). This content is generated for the second year’s
-subject Project 2, under supervision of lecturer
-<https://es.linkedin.com/in/ricardpillosu>(Ricard Pillosu).
+I am [Christian Martínez de la Rosa](https://www.linkedin.com/in/christianmartinezdelarosa/), student of the
+[Bachelor’s Degree in Video Games by UPC at CITM](https://www.citm.upc.edu/ing/estudis/graus-videojocs/). This content is generated for the second year’s subject Project 2, under supervision of lecturer [Ricard Pillosu](https://es.linkedin.com/in/ricardpillosu).
+
+## About the project
 
 This project contains a research about the optimization of a game to only blit sprites that are on the camera viewport. Also, it is about sorting entities to make a feeling of depth in Top-Down and Isometric games. Contains an integration of Tiled into SDL.
 
-## Getting Started
+You can find Brofiler results in a respository [folder](https://github.com/christt105/Sprite_Ordering_and_Camera_Culling_Personal_Research/tree/master/docs/Brofiler_tests) to see the effect of _camera culling_ in games.
+
+You can find information about _sprite ordering and camera culling_ in my [website](https://christt105.github.io/Sprite_Ordering_and_Camera_Culling_Personal_Research/).
+
+Link to the [repository](https://github.com/christt105/Sprite_Ordering_and_Camera_Culling_Personal_Research).
 
 ## Installing
 
@@ -34,6 +37,8 @@ This project contains a research about the optimization of a game to only blit s
 
 * [Visual Studio](https://visualstudio.microsoft.com/) - IDE
 * [SDL](https://www.libsdl.org/license.php) - Development library
+* [STL](https://www.geeksforgeeks.org/the-c-standard-template-library-stl/) - Development library
+* [Brofiler](http://www.brofiler.com/) - Profiler
 * [Tiled](https://www.mapeditor.org/) - Creating maps
 
 ## Author
