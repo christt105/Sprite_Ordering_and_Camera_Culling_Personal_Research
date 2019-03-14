@@ -107,7 +107,7 @@ bool j1Scene::Update(float dt)
 		change_map = true;
 		id = 0;
 	}
-	else if (App->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN) {
+	else if (App->input->GetKey(SDL_SCANCODE_F4) == KEY_DOWN) {
 		change_map = true;
 		id = 1;
 	}
