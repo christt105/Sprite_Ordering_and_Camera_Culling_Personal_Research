@@ -137,10 +137,10 @@ void j1EntityManager::DestroyEntity(j1Entity * entity)
 	
 	if (entity != nullptr) {
 		entity->CleanUp();
-		for (int i = 0; i < entities.size(); ++i) {
-			if (entities[i] == entity) {
-				delete entities[i];
-				entities[i] = nullptr;
+		for (std::vector<j1Entity*>::iterator i = entities.begin(); i != entities.end(); ++i) {
+			if (*i == entity) {
+				delete *i;
+				*i = nullptr;
 			}
 		}
 	}
