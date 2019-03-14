@@ -470,6 +470,71 @@ Sorting sprites by y position could be enough, but if we set the point where it 
 ### Test
 Moving player will sort better some objects.
 
+## Solutions
+
+### TODO 1
+```cppp
+bool j1Render::IsOnCamera(const int & x, const int & y, const int & w, const int & h) const
+{
+	int scale = App->win->GetScale();
+
+	SDL_Rect r = { x*scale,y*scale,w*scale,h*scale };
+	SDL_Rect cam = { -camera.x,-camera.y,camera.w,camera.h };
+
+	return SDL_HasIntersection(&r,&cam);
+}
+```
+
+### TODO 2
+
+```cpp
+if (App->render->IsOnCamera(MapToWorld(i, j).x, MapToWorld(i, j).y, data.tile_width, data.tile_height)) {
+```
+
+### TODO 3
+
+```cpp
+else if (name == "post") {
+		type = ent_Static::Type::POST;
+		SetRect(0, 0, 16, 32);
+		SetPivot(8, 15);
+	}
+```
+
+
+### TODO 4
+```cpp
+for (std::vector<j1Entity*>::iterator item = entities.begin();item != entities.end(); ++item) {
+		if (*item != nullptr) {
+			ret = (*item)->Update(dt);
+			
+			if (App->render->IsOnCamera((*item)->position.x, (*item)->position.y, (*item)->size.x, (*item)->size.y)) {
+				draw_entities.push_back(*item);
+			}
+		}
+	}
+	
+for (std::vector<j1Entity*>::iterator item = draw_entities.begin(); item != draw_entities.end(); ++item) {
+		(*item)->Draw();
+		entities_drawn++;
+
+		if (App->scene->entities_box) {
+			DrawDebugQuad(*item);
+		}
+	}
+```
+### TODO 5
+```cpp
+std::sort(draw_entities.begin(), draw_entities.end(), j1EntityManager::SortByYPos);
+```
+### TODO 6
+```cpp
+static bool SortByYPos(const j1Entity * ent1, const j1Entity * ent2)
+	{
+		return ent1->pivot.y + ent1->position.y < ent2->pivot.y + ent2->position.y;
+	}
+```
+
 # Issues
 
 objetos con mas de un tile en isometrico
