@@ -53,7 +53,9 @@ Sorting layers by colliders is not widely used but in some cases is the only way
 
 First, the problem is that the player will have to be able to pass under the bridge and to pass above. <img src="https://github.com/christt105/Sprite_Ordering_and_Camera_Culling_Personal_Research/blob/master/docs/web_images/Bridge_Zelda_Example.png?raw=true" width="560"/>
 
-To do that, Guinxu solved the problem putting up two types of colliders. One type made player be under bridge, and the other vice versa, so, when player goes over the bridge, the last collider that touches is the red (up arrow) and the player layer moves higher than bridge, when he comes out, the player touches blue collider (down arrow) and moves player layer below bridge. Also, that colliders with arrows active or deactivate colliders that let the player pass or not. For example, if player is going below bridge, he cannot be able to pass for the left and right like if he is passing above bridge, and the same case when player is going above bridge, he cannot be able to jump across bridge.<img src="https://github.com/christt105/Sprite_Ordering_and_Camera_Culling_Personal_Research/blob/master/docs/web_images/Bridge_Zelda_Guinxu1.png?raw=true" width="560"/> <img src="https://github.com/christt105/Sprite_Ordering_and_Camera_Culling_Personal_Research/blob/master/docs/web_images/Bridge_Zelda_Guinxu2.png?raw=true" width="560"/>
+To do that, Guinxu solved the problem putting up two types of colliders. One type made player be under bridge, and the other vice versa, so, when player goes over the bridge, the last collider that touches is the red (up arrow) and the player layer moves higher than bridge, when he comes out, the player touches blue collider (down arrow) and moves player layer below bridge. Also, that colliders with arrows active or deactivate colliders that let the player pass or not. For example, if player is going below bridge, he cannot be able to pass for the left and right like if he is passing above bridge, and the same case when player is going above bridge, he cannot be able to jump across bridge.
+<img src="https://github.com/christt105/Sprite_Ordering_and_Camera_Culling_Personal_Research/blob/master/docs/web_images/Bridge_Zelda_Guinxu1.png?raw=true" width="560"/>
+<img src="https://github.com/christt105/Sprite_Ordering_and_Camera_Culling_Personal_Research/blob/master/docs/web_images/Bridge_Zelda_Guinxu2.png?raw=true" width="560"/>
 
 ### Vector 3D
 
@@ -72,6 +74,285 @@ As we can see, player moves around objects and the program sorts the render orde
 <img src="https://github.com/christt105/Sprite_Ordering_and_Camera_Culling_Personal_Research/blob/master/docs/web_images/debug_result.png?raw=true" width="560"/>
 
 Pivot is the green rectangle in every entity.
+
+In order to work with Tiled easily, I have implemented code to import entities to the game. I will explain how it works.
+
+## Importing dynamic entities from Tiled
+
+We can work with tilesets in Tiled. It allows us some functionalities. Only we have to do is to study what it gives and incorporate to our code.
+First, there is the main information of the tileset that we can see on Properties window.
+<img src="imagen de las propiedades"/>
+Here we have some general information about the tileset. The most important are:
+* Name
+* Orientation
+* Columns
+* Image
+  * Source
+  * Tile Width
+  * Tile Height
+  * Margin
+  * Spacing
+
+All of this variables will be important to import to the program. The is something strighly important: Custom Properties. There we can assign every variable we want to the code and edit so fast. In my example I use AnimationSpeed but it can be used to many things. It can be of different types: bool, float, int, string...
+
+Also is a powerfull tool to implement animations easily. All we have to do is pick the camera icon, set a reference tile and drag it to the box to set the animation of an action. Each tile has an id that we will use later to assign the animation.
+
+<img src/>
+
+We can also set many colliders and load after in code, but it won't affect to the research, so we won't touch that utility.
+
+After we save the file we will get something like that:
+
+<img src xml />
+
+Here we have in a XML the general information, properties and animations.
+
+Now, in the code we will create some structs to save the data. We will create a Entity class and then all entities than has an special behaviour will heretate from it.
+
+```cpp
+struct EntityInfo {
+	TileSetEntity tileset;
+	EntityAnim* animations = nullptr;
+	uint num_animations = 0;
+};
+```
+
+We will create a basic structure that saves the tileset of the entity and the animations.
+
+```cpp
+struct TileSetEntity {
+
+	SDL_Rect GetTileRect(int id) const;
+
+	std::string name;
+	uint tilewidth = 0;
+	uint tileheight = 0;
+	uint spacing = 0;
+	uint margin = 0;
+	uint tilecount = 0;
+	uint columns = 0;
+	std::string imagePath;
+	SDL_Texture* texture = nullptr;
+	uint width = 0;
+	uint height = 0;
+};
+```
+
+For the tileset we will save some information to load the texture. ```SDL_Rect GetTileRect(int id) const;``` returns a rect given an id. For example, id 0 is the first tile, the player looking down, so, will fill the rect with the tileset information given the width and height, and the position where is in the texture.
+
+```cpp
+//Get the rect info of an id of tileset
+SDL_Rect TileSetEntity::GetTileRect(int id) const {
+	SDL_Rect rect;
+	rect.w = tilewidth;
+	rect.h = tileheight;
+	rect.x = margin + ((rect.w + spacing) * (id % columns));
+	rect.y = margin + ((rect.h + spacing) * (id / columns));
+	return rect;
+}
+```
+
+On animations we will save the id where is come from, number of frames, the position of frames on the texture and the type of the animation. ```uint FrameCount();``` is a simple function that iterates all xml nodes and return how many frames animation has.
+
+```cpp
+struct EntityAnim {
+	uint id = 0;
+	uint num_frames = 0;
+	SDL_Rect* frames = nullptr;
+	EntityState animType;
+
+	uint FrameCount(pugi::xml_node&);
+};
+```
+
+We won't use colliders but I will give the struct to save information. We must save the collider, the offset from the entity position, the size and the type.
+
+```cpp
+struct COLLIDER_INFO {
+	Collider* collider = nullptr;
+	iPoint offset;
+	int width = 0;
+	int height = 0;
+	COLLIDER_TYPE type;
+};
+```
+
+In order to load all this information we will have some functions, some of that will be virtual because every entity will have its animations and properties.
+
+```cpp
+bool LoadEntityData(const char*); //Loads entity by tsx file
+	//Virtual functions because every entity has its properties, variables, animations...------------------------
+	virtual void LoadProperties(pugi::xml_node&);
+	virtual void LoadCollider(pugi::xml_node&);
+	virtual void IdAnimToEnum();
+	virtual void PushBack() {};
+	virtual void AddColliders(j1Entity* c = nullptr);
+	//-----------------------------------------------------------------------------------------------------------
+```
+
+```cpp LoadEntityData()``` will contain all others functions. First we save tileset information:
+
+```cpp
+//fill tileset info
+	pugi::xml_node node = entity_file.child("tileset");
+
+	data.tileset.name.assign(node.attribute("name").as_string());
+	data.tileset.tilewidth = node.attribute("tilewidth").as_uint();
+	data.tileset.tileheight = node.attribute("tileheight").as_uint();
+	data.tileset.spacing = node.attribute("spacing").as_uint();
+	data.tileset.margin = node.attribute("margin").as_uint();
+	data.tileset.tilecount = node.attribute("tilecount").as_uint();
+	data.tileset.columns = node.attribute("columns").as_uint();
+	data.tileset.imagePath = folder += node.child("image").attribute("source").as_string();
+	data.tileset.width = node.child("image").attribute("width").as_uint();
+	data.tileset.height = node.child("image").attribute("height").as_uint();
+
+	size = iPoint(data.tileset.tilewidth, data.tileset.tileheight);
+```
+
+Later we count how many animations there are and reserve memory for all of them.
+```cpp
+	//count how many animations are in file
+	node = node.child("tile");
+	data.num_animations = 0;
+	while (node != NULL) {
+		data.num_animations++;
+		node = node.next_sibling("tile");
+	}
+
+	//reserve memory for all animations
+	data.animations = new EntityAnim[data.num_animations];
+```
+
+Now, we want to save frames of animations.
+
+```cpp
+//count how many frames for each animation, assign memory for those frames and set id frame start
+	node = entity_file.child("tileset").child("tile");
+	for (uint i = 0; i < data.num_animations; ++i) {
+		data.animations[i].FrameCount(node.child("animation").child("frame"));
+		data.animations[i].frames = new SDL_Rect[data.animations[i].num_frames];
+		data.animations[i].id = node.attribute("id").as_uint();
+		node = node.next_sibling("tile");
+	}
+
+	//fill frame array with current information
+	node = entity_file.child("tileset").child("tile");
+	pugi::xml_node node_frame;
+	for (uint i = 0; i < data.num_animations; ++i) {
+		node_frame = node.child("animation").child("frame");
+		for (uint j = 0; j < data.animations[i].num_frames; ++j) {
+			data.animations[i].frames[j] = data.tileset.GetTileRect(node_frame.attribute("tileid").as_uint());
+			node_frame = node_frame.next_sibling("frame");
+		}
+		node = node.next_sibling("tile");
+	}
+```
+
+Later we save properties.
+
+```cpp
+LoadProperties(entity_file.child("tileset").child("properties").child("property")); //Load properties, is a virtual function because every entity has its variables
+```
+An example of Load properties is:
+```cpp
+void Player::LoadProperties(pugi::xml_node &node)
+{
+	std::string nameIdentificator;
+	while (node) {
+		nameIdentificator = node.attribute("name").as_string();
+
+		if (nameIdentificator == "AnimationSpeed")
+			animationSpeed = node.attribute("value").as_float();
+
+		node = node.next_sibling();
+	}
+}
+```
+Later Load collider.
+```cpp
+LoadCollider(entity_file.child("tileset").child("tile").child("objectgroup").child("object")); //Load collider
+```
+And there is an example:
+```cpp
+void Player::LoadCollider(pugi::xml_node &node)
+{
+	std::string nameIdentificator;
+	while (node) {
+		nameIdentificator = node.attribute("name").as_string();
+
+		if (nameIdentificator == "Collider") {
+			collider.offset.x = node.attribute("x").as_int();
+			collider.offset.y = node.attribute("y").as_int();
+			collider.width = node.attribute("width").as_uint();
+			collider.height = node.attribute("height").as_uint();
+			collider.type = COLLIDER_TYPE::COLLIDER_PLAYER;
+		}
+
+		node = node.next_sibling();
+	}
+}
+```
+Now, we have to convert id animations to enum animations. To do that we use a virtual function. An example may be:
+```cpp
+void Player::IdAnimToEnum()
+{
+	for (uint i = 0; i < data.num_animations; ++i) {
+		switch (data.animations[i].id) {
+		case 0:
+			data.animations[i].animType = EntityState::IDLE;
+			break;
+		case 3:
+			data.animations[i].animType = EntityState::WALKING;
+			break;
+		default:
+			data.animations[i].animType = EntityState::UNKNOWN;
+			break;
+		}
+	}
+}
+```
+After getting all animations, we have to make the pushback of the frames. An example:
+```cpp
+void Player::PushBack() {
+
+	for (uint i = 0; i < data.num_animations; ++i) {
+		for (uint j = 0; j < data.animations[i].num_frames; ++j) {
+			switch (data.animations[i].animType) {
+			case EntityState::IDLE:
+				anim_idle.PushBack(data.animations[i].frames[j]);
+				break;
+			case EntityState::WALKING:
+				anim_walking.PushBack(data.animations[i].frames[j]);
+				break;
+			default:
+				break;
+			}
+		}
+	}
+}
+```
+
+To finish, we have to delete all reserved memory that we won't use.
+```cpp
+//deleting entity animation data already loaded in its corresponding animation variables
+	for (uint i = 0; i < data.num_animations; ++i) {		//this block of code delete animation data loaded of xml,
+		if (data.animations[i].frames != nullptr) {			//is in PushBack() because when load all animation in its
+			delete[] data.animations[i].frames;				//corresponding variables, that data is useless
+			data.animations[i].frames = nullptr;
+		}
+	}
+	if (data.animations != nullptr) {
+		delete[] data.animations;
+		data.animations = nullptr;
+	}
+```
+
+With that we have finished the load of a entity setted with Tiled. You can find the code of load entity [here](https://github.com/christt105/Sprite_Ordering_and_Camera_Culling_Personal_Research/blob/master/Solution/Motor2D/j1Entity.h) for the header and [here](https://github.com/christt105/Sprite_Ordering_and_Camera_Culling_Personal_Research/blob/master/Solution/Motor2D/j1Entity.cpp) for the .cpp.
+
+## Importing static entities from Tiled
+
+For static entities it is a little different. It could not be that authomatic. But it is not difficult.
 
 You can download the release [here](https://github.com/christt105/Sprite_Ordering_and_Camera_Culling_Personal_Research/releases/tag/1.5).
 And if you want the code, you can get it [here](https://github.com/christt105/Sprite_Ordering_and_Camera_Culling_Personal_Research).
@@ -97,7 +378,11 @@ In that case, I will separate links in two sections, because sorting in isometri
 
 # TODOs and Solution
 
+## TODO 1:
 
+# Issues
+
+objetos con mas de un tile en isometrico
 
 # Improvements
 
