@@ -75,11 +75,11 @@ As we can see, player moves around objects and the program sorts the render orde
 
 Pivot is the green rectangle in every entity.
 
-In order to work with Tiled easily, I have implemented code to import entities to the game. I will explain how it works.
+In order to work with Tiled easily, I have implemented code to import entities to the game. I will explain how it works. That works from loading object layers in Tiled, you can see the code to load an entire map [here](https://github.com/christt105/Sprite_Ordering_and_Camera_Culling_Personal_Research/blob/master/Solution/Motor2D/j1Map.cpp).
 
 ## Importing dynamic entities from Tiled
 
-We can work with tilesets in Tiled. It allows us some functionalities. Only we have to do is to study what it gives and incorporate to our code.
+We can work with tilesets in Tiled. It allows us some functionalities. Only we must do is to study what it gives and incorporate to our code.
 First, there is the main information of the tileset that we can see on Properties window.
 <img src="imagen de las propiedades"/>
 Here we have some general information about the tileset. The most important are:
@@ -93,21 +93,21 @@ Here we have some general information about the tileset. The most important are:
   * Margin
   * Spacing
 
-All of this variables will be important to import to the program. The is something strighly important: Custom Properties. There we can assign every variable we want to the code and edit so fast. In my example I use AnimationSpeed but it can be used to many things. It can be of different types: bool, float, int, string...
+All these variables will be important to import to the program. This is something very important: Custom Properties. There we can assign every variable we want to the code and edit so fast. In my example I use AnimationSpeed but it can be used to many things. It can be of different types: bool, float, int, string...
 
-Also is a powerfull tool to implement animations easily. All we have to do is pick the camera icon, set a reference tile and drag it to the box to set the animation of an action. Each tile has an id that we will use later to assign the animation.
+Also is a powerful tool to implement animations easily. All we have to do is pick the camera icon, set a reference tile and drag it to the box to set the animation of an action. Each tile has an id that we will use later to assign the animation.
 
 <img src/>
 
 We can also set many colliders and load after in code, but it won't affect to the research, so we won't touch that utility.
 
-After we save the file we will get something like that:
+After we save the file, we will get something like that:
 
 <img src xml />
 
 Here we have in a XML the general information, properties and animations.
 
-Now, in the code we will create some structs to save the data. We will create a Entity class and then all entities than has an special behaviour will heretate from it.
+Now, in the code we will create some structs to save the data. We will create a Entity class and then all entities than has an special behaviour will inherited from it.
 
 ```cpp
 struct EntityInfo {
@@ -165,7 +165,7 @@ struct EntityAnim {
 };
 ```
 
-We won't use colliders but I will give the struct to save information. We must save the collider, the offset from the entity position, the size and the type.
+We won't use colliders, but I will give the struct to save information. We must save the collider, the offset from the entity position, the size and the type.
 
 ```cpp
 struct COLLIDER_INFO {
@@ -177,7 +177,7 @@ struct COLLIDER_INFO {
 };
 ```
 
-In order to load all this information we will have some functions, some of that will be virtual because every entity will have its animations and properties.
+In order to load all this information, we will have some functions, some of that will be virtual because every entity will have its animations and properties.
 
 ```cpp
 bool LoadEntityData(const char*); //Loads entity by tsx file
@@ -190,7 +190,7 @@ bool LoadEntityData(const char*); //Loads entity by tsx file
 	//-----------------------------------------------------------------------------------------------------------
 ```
 
-```cpp LoadEntityData()``` will contain all others functions. First we save tileset information:
+```cpp LoadEntityData()``` will contain all others functions. First, we save tile set information:
 
 ```cpp
 //fill tileset info
@@ -293,7 +293,7 @@ void Player::LoadCollider(pugi::xml_node &node)
 	}
 }
 ```
-Now, we have to convert id animations to enum animations. To do that we use a virtual function. An example may be:
+Now, we must convert id animations to enum animations. To do that we use a virtual function. An example may be:
 ```cpp
 void Player::IdAnimToEnum()
 {
@@ -312,7 +312,7 @@ void Player::IdAnimToEnum()
 	}
 }
 ```
-After getting all animations, we have to make the pushback of the frames. An example:
+After getting all animations, we must make the pushback of the frames. An example:
 ```cpp
 void Player::PushBack() {
 
@@ -348,11 +348,53 @@ To finish, we have to delete all reserved memory that we won't use.
 	}
 ```
 
-With that we have finished the load of a entity setted with Tiled. You can find the code of load entity [here](https://github.com/christt105/Sprite_Ordering_and_Camera_Culling_Personal_Research/blob/master/Solution/Motor2D/j1Entity.h) for the header and [here](https://github.com/christt105/Sprite_Ordering_and_Camera_Culling_Personal_Research/blob/master/Solution/Motor2D/j1Entity.cpp) for the .cpp.
+With that we have finished the load of an entity with Tiled. You can find the code of load entity [here](https://github.com/christt105/Sprite_Ordering_and_Camera_Culling_Personal_Research/blob/master/Solution/Motor2D/j1Entity.h) for the header and [here](https://github.com/christt105/Sprite_Ordering_and_Camera_Culling_Personal_Research/blob/master/Solution/Motor2D/j1Entity.cpp) for the .cpp.
 
 ## Importing static entities from Tiled
 
-For static entities it is a little different. It could not be that authomatic. But it is not difficult.
+For static entities it is a little different. It could not be that automatic. But it is not difficult.
+
+First, we must prepare the scene. We will work with three layers.
+
+<img src layers/>
+
+Background will contain all tiles that won't be affected by entities, the basic ground like grass and inaccessible trees. Now, the "Object" layer is useful to see where the objects on the scene will be. All objects will have to be in a single texture, working with an atlas texture of objects. It is so important to have the property ```NoDraw``` in off to don't render it later. Finally, we have a layer called ```StaticObjects``` and here we will set all objects in scene. Here is an example of putting a tree on scene:
+
+<img src tree_example/>
+
+As we can see, we have to put the name and set the type to "static". Also we have to fill all tiles that occupies. Now we can pass to code.
+
+We will create an entity setting its position and name. Depending of the name we will assign a rect or another for the texture.
+```cpp
+ent_Static::ent_Static(int x, int y, std::string name) :j1Entity(Types::STATIC, x, y, name)
+{
+	//assign type of static entity, texture rect and pivot
+	//Orthogonal map ------------------------
+	if (name == "tree") {
+		type = ent_Static::Type::TREE;
+		SetRect(16, 0, 32, 48);
+		SetPivot(15, 36);
+	}
+	else if (name == "statue") {
+		type = ent_Static::Type::STATUE;
+		SetRect(0, 48, 112, 160);
+		SetPivot(60, 140);
+	}
+	else if (name == "house") {
+		type = ent_Static::Type::HOUSE;
+		SetRect(128, 0, 80, 96);
+		SetPivot(40, 94);
+	}
+	else {
+		LOG("There isn't any type assigned to %s name entity", name.data());
+	}
+	
+	size = iPoint(frame.w, frame.h);
+	
+	data.tileset.texture = App->tex->Load(App->map->data.properties.objects_path.data()); //Load object texture
+```
+
+And that is all. To render we will give the texture and the frame we have loaded. Remember that it is only useful if the object will do nothing about interaction, only will be there.
 
 You can download the release [here](https://github.com/christt105/Sprite_Ordering_and_Camera_Culling_Personal_Research/releases/tag/1.5).
 And if you want the code, you can get it [here](https://github.com/christt105/Sprite_Ordering_and_Camera_Culling_Personal_Research).
@@ -378,7 +420,55 @@ In that case, I will separate links in two sections, because sorting in isometri
 
 # TODOs and Solution
 
-## TODO 1:
+## TODO 1: Create IsOnCamera function
+
+### Explication
+You have to pass to the function a rectangle to determine if it is on camera or not. It is quite important to pass a rectangle, not only a position because tiles and objects have a width and a height. The functionating of the camera could be different, in my case I had to put it negative position to work well. Also, if there is something related to the scale of the pixels you have to put it to be able to know if it is real on camera or not. In my case I am using SDL and that library has a function to know if two rectangles are or not intersecting, ```SDL_HasIntersection```.
+
+### Test
+You cannot test if it works until the next TODO.
+
+## TODO 2: Use previous function to only render tiles on camera. See the title to know if it has been well done
+
+### Explication
+Now it is the time to know if it works. You have to pass the position of the tile in pixels and the width and the height of the tiles of the map.
+
+### Test
+You can test it moving camera in all directions and looking if the Tile count on the title changes.
+
+## TODO 3: Create a post on Tiled and integrate in code
+
+<img src post/>
+
+### Explication
+You must follow the steps we have decelerated above this to create a static entity. In that case we will create a post. Is quite simple, first put it on Tiled and later follow the same structure that other objects.
+
+### Test
+In theory, if it has been well done, it will be where you put on the map. If is not, look carefully the steps and see if there is any LOG message.
+
+## TODO 4: Save entities on camera during update iteration in draw_entities vector and iterate after update iteration
+
+### Explication
+We will start sprite ordering area. You must move draw functions to another iteration. You have a vector called ```draw_entities``` that you must use to iterate. During Update() iteration you have to push back entities on camera. Later, iterating that vector, you will have to draw entities.
+
+### Test
+You can move the camera out of the map and see if the entity count is 0 or not.
+
+## TODO 5: Use std::sort(Iterator first, Iterator last, Compare comp) before iterate draw_entities.
+
+### Explication
+Once you have only entities on camera, you must sort them in order to render before entities above. To do that there is a function in ```<algorithm>``` library to sort vectors. The function is sort() and you have to pass the beginning and the end of a vector. For that case we also have to pass a function, it is created on ```j1EntityManager::SortByYPos``` and sorts the position of an entity.
+
+### Test
+There will be some buildings and trees that will be correctly sorted. You can also move the player for the scene and see if it is sorting by the position.
+
+## TODO 6: Add the pivot position to general position
+
+### Explication
+Sorting sprites by y position could be enough, but if we set the point where it will be the sorting will be much better. Just add the pivot y position to its entity.
+
+### Test
+Moving player will sort better some objects.
 
 # Issues
 
