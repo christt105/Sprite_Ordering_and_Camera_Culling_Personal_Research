@@ -82,21 +82,24 @@ We will see a radical change in the performancing of the program. There is a sce
 
 And now we will see the profiling of that scene during execution:
 
-<img src="https://github.com/christt105/Sprite_Ordering_and_Camera_Culling_Personal_Research/blob/master/docs/web_images/Profiling_high.png?raw=true">
+<img src="https://github.com/christt105/Sprite_Ordering_and_Camera_Culling_Personal_Research/blob/master/docs/web_images/Profiling_high.png?raw=true"/>
 
 We see that there are a lot of time wasted in render and sorting sprites. And now, here we have a profiling of the same scene but after making the research implementation:
 
 <img img="https://github.com/christt105/Sprite_Ordering_and_Camera_Culling_Personal_Research/blob/master/docs/web_images/Profiling_low.png?raw=true"/>
 
-We can see that we gain like one and a half ms rendering background and 47 ms updating all entities. 17 ms still is a lot of time but we will se later how to optimize that.
+We can see that we gain like one and a half ms rendering background and 47 ms updating all entities. 17 ms still is a lot of time but we will se later how to optimize that. You can see more profiling tests in that folder: [Brofiling tests](https://github.com/christt105/Sprite_Ordering_and_Camera_Culling_Personal_Research/tree/master/docs/Brofiler_tests)
 
+## Working with Tiled
 In order to work with Tiled easily, I have implemented code to import entities to the game. I will explain how it works. That works from loading object layers in Tiled, you can see the code to load an entire map [here](https://github.com/christt105/Sprite_Ordering_and_Camera_Culling_Personal_Research/blob/master/Solution/Motor2D/j1Map.cpp).
 
 ## Importing dynamic entities from Tiled
 
 We can work with tilesets in Tiled. It allows us some functionalities. Only we must do is to study what it gives and incorporate to our code.
 First, there is the main information of the tileset that we can see on Properties window.
+
 <img src="https://github.com/christt105/Sprite_Ordering_and_Camera_Culling_Personal_Research/blob/master/docs/web_images/player_tsx_properties.png?raw=true"/>
+
 Here we have some general information about the tileset. The most important are:
 * Name
 * Orientation
@@ -118,7 +121,28 @@ We can also set many colliders and load after in code, but it won't affect to th
 
 After we save the file, we will get something like that:
 
-<img src="https://github.com/christt105/Sprite_Ordering_and_Camera_Culling_Personal_Research/blob/master/docs/web_images/player_xml.PNG?raw=true"/>
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<tileset version="1.2" tiledversion="1.2.2" name="Player" tilewidth="14" tileheight="21" tilecount="9" columns="3">
+ <properties>
+  <property name="AnimationSpeed" type="float" value="5"/>
+ </properties>
+ <image source="Player.png" width="42" height="63"/>
+ <tile id="0">
+  <animation>
+   <frame tileid="0" duration="200"/>
+  </animation>
+ </tile>
+ <tile id="3">
+  <animation>
+   <frame tileid="0" duration="200"/>
+   <frame tileid="3" duration="200"/>
+   <frame tileid="0" duration="200"/>
+   <frame tileid="6" duration="200"/>
+  </animation>
+ </tile>
+</tileset>
+```
 
 Here we have in a XML the general information, properties and animations.
 
