@@ -53,29 +53,31 @@ bool j1EntityManager::UpdateAll(float dt)
 {
 	bool ret = true;
 
+	//TODO 4: Save entities on camera during update iteration in draw_entities vector and iterate after update iteration
+	//move draw function, entities_drawn++ and DrawDebugQuad to the new iteration
+
 	std::vector<j1Entity*> draw_entities;
 	uint entities_drawn = 0;
 
 	for (std::vector<j1Entity*>::iterator item = entities.begin();item != entities.end(); ++item) {
 		if (*item != nullptr) {
 			ret = (*item)->Update(dt);
-
-			if (App->render->IsOnCamera( (*item)->position.x, (*item)->position.y, (*item)->size.x, (*item)->size.y )) { //Save only entities on camera
+			
+			if (App->render->IsOnCamera((*item)->position.x, (*item)->position.y, (*item)->size.x, (*item)->size.y)) {
 				draw_entities.push_back(*item);
 			}
 		}
 	}
 
-	std::sort(draw_entities.begin(), draw_entities.end(), j1EntityManager::SortByYPos); //Sort entities on camera by pivot position
+	// TODO 5: Use std::sort(Iterator first, Iterator last, Compare comp) before iterate draw_entities. Sort only entities in draw_entities vector. For function to compare you can use j1EntityManager::SortByYPos
+	std::sort(draw_entities.begin(), draw_entities.end(), j1EntityManager::SortByYPos);
 
-	for (std::vector<j1Entity*>::iterator item = draw_entities.begin(); item != draw_entities.end(); ++item) { //Blit sorted entities
-		if (*item != nullptr) {
-			(*item)->Draw();
-			entities_drawn++;
+	for (std::vector<j1Entity*>::iterator item = draw_entities.begin(); item != draw_entities.end(); ++item) {
+		(*item)->Draw();
+		entities_drawn++;
 
-			if (App->scene->entities_box) {
-				DrawDebugQuad(*item);
-			}
+		if (App->scene->entities_box) {
+			DrawDebugQuad(*item);
 		}
 	}
 
@@ -137,10 +139,10 @@ void j1EntityManager::DestroyEntity(j1Entity * entity)
 	
 	if (entity != nullptr) {
 		entity->CleanUp();
-		for (int i = 0; i < entities.size(); ++i) {
-			if (entities[i] == entity) {
-				delete entities[i];
-				entities[i] = nullptr;
+		for (std::vector<j1Entity*>::iterator i = entities.begin(); i != entities.end(); ++i) {
+			if (*i == entity) {
+				delete *i;
+				*i = nullptr;
 			}
 		}
 	}

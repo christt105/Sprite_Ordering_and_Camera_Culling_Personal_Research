@@ -42,7 +42,8 @@ void j1Map::Draw()
 		if ((*layer)->visible && (*layer)->properties.draw) {
 			for (uint i = 0; i < (*layer)->width; ++i) {
 				for (uint j = 0; j < (*layer)->height; ++j) {
-					if (App->render->IsOnCamera(MapToWorld(i, j).x, MapToWorld(i, j).y, data.tile_width, data.tile_height)) { //Only blit tile if is in camera
+					//TODO 2: Use previous function to only blit tiles on camera. See the title to know if it has been well done
+					if (App->render->IsOnCamera(MapToWorld(i, j).x, MapToWorld(i, j).y, data.tile_width, data.tile_height)) {
 						id = (*layer)->Get(i, j);
 						if (id != 0) {
 							TileSet* tileset = GetTilesetFromTileId(id);

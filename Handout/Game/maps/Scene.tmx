@@ -3583,7 +3583,7 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile gid="208"/>
+   <tile/>
    <tile gid="281"/>
    <tile gid="282"/>
    <tile gid="283"/>
@@ -3628,7 +3628,7 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile gid="221"/>
+   <tile/>
    <tile/>
    <tile/>
    <tile/>
@@ -4759,7 +4759,6 @@
   <object id="9" name="tree" type="static" x="432" y="80" width="32" height="48"/>
   <object id="10" name="house" type="static" x="112" y="64" width="80" height="96"/>
   <object id="11" name="center" type="static" x="272" y="64" width="80" height="96"/>
-  <object id="12" name="post" type="static" x="96" y="144" width="16" height="32"/>
  </objectgroup>
  <objectgroup id="4" name="Player">
   <object id="4" name="player" type="player" x="138" y="169.5"/>
