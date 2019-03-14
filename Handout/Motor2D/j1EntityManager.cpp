@@ -63,13 +63,21 @@ bool j1EntityManager::UpdateAll(float dt)
 		if (*item != nullptr) {
 			ret = (*item)->Update(dt);
 
-			(*item)->Draw();
-			entities_drawn++;
-
-			if (App->scene->entities_box) {
-				DrawDebugQuad(*item);
+			if (App->render->IsOnCamera((*item)->position.x, (*item)->position.y, (*item)->size.x, (*item)->size.y)) {
+				draw_entities.push_back((*item));
 			}
 
+		}
+	}
+
+	std::sort(draw_entities.begin(), draw_entities.end(), j1EntityManager::SortByYPos);
+
+	for (std::vector<j1Entity*>::iterator item = draw_entities.begin(); item != draw_entities.end(); ++item) {
+		(*item)->Draw();
+		entities_drawn++;
+
+		if (App->scene->entities_box) {
+			DrawDebugQuad(*item);
 		}
 	}
 

@@ -43,17 +43,17 @@ void j1Map::Draw()
 			for (uint i = 0; i < (*layer)->width; ++i) {
 				for (uint j = 0; j < (*layer)->height; ++j) {
 					//TODO 2: Use previous function to only blit tiles on camera. See the title to know if it has been well done
+					if (App->render->IsOnCamera(MapToWorld(i, j).x, MapToWorld(i, j).y, data.tile_width, data.tile_height)) {
+						id = (*layer)->Get(i, j);
+						if (id != 0) {
+							TileSet* tileset = GetTilesetFromTileId(id);
+							if (tileset != nullptr) {
 
-					id = (*layer)->Get(i, j);
-					if (id != 0) {
-						TileSet* tileset = GetTilesetFromTileId(id);
-						if (tileset != nullptr) {
-
-							tiles_painted++;
-							App->render->Blit(tileset->texture, MapToWorld(i, j).x, MapToWorld(i, j).y, &tileset->GetTileRect(id));
+								tiles_painted++;
+								App->render->Blit(tileset->texture, MapToWorld(i, j).x, MapToWorld(i, j).y, &tileset->GetTileRect(id));
+							}
 						}
 					}
-
 				}
 			}
 		}

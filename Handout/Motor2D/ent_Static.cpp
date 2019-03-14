@@ -29,13 +29,18 @@ ent_Static::ent_Static(int x, int y, std::string name) :j1Entity(Types::STATIC, 
 		SetRect(128, 96, 80, 96);
 		SetPivot(40, 90);
 	}
-	//TODO 3: Create a post on Tiled and integrate in code
+	//TODO 3: Create a post on Tiled (Scene.tmx) and integrate in code
 	/*Warnings:
 				Each entity has a name and a type. For static entities, type must be "static"
 				Only the Object in Tiled will be significant to the code
 				Texture rect for post is: (0, 0, 16, 32)
 				Correct pivot might be (8, 15) (we will see what it is for later)
 	*/
+	else if (name == "post") {
+		type = ent_Static::Type::POST;
+		SetRect(0, 0, 16, 32);
+		SetPivot(8, 15);
+	}
 
 
 	//Isometric map--------------------------

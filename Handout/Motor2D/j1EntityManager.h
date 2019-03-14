@@ -33,7 +33,7 @@ public:
 	//TODO 6: add the pivot position to general position
 	static bool SortByYPos(const j1Entity * ent1, const j1Entity * ent2)
 	{
-		return ent1->position.y < ent2->position.y;
+		return ent1->pivot.y + ent1->position.y < ent2->pivot.y + ent2->position.y;
 	}
 
 public:
