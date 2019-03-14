@@ -15,6 +15,7 @@ With the same reason, _Hotline Miami_ does not to have to sort sprites. We can f
 In the other hand, we have games like _The Legend of Zelda: Minish Cap_ and _Pokémon_ (from Ruby and Sapphire gba versions to Black and White versions) are a good example of the beginning of sorting sprites in video games.
 
 In this example, I set player behind and front of that villager. We can see when the player is down the villager, the player hides the feet of the villager. And the same occurs when the player is upper the villager.
+
 <img src="https://github.com/christt105/Sprite_Ordering_and_Camera_Culling_Personal_Research/blob/master/docs/web_images/Pokemon_Village_Example.png?raw=true"/>
 
 Sprite ordering might be like this:
@@ -77,15 +78,15 @@ Pivot is the green rectangle in every entity.
 ## Profiling
 We will see a radical change in the performancing of the program. There is a scene full of entities and tiles.
 
-<img src escena llena de entidades/>
+<img src="https://github.com/christt105/Sprite_Ordering_and_Camera_Culling_Personal_Research/blob/master/docs/web_images/Profiling_scene.png?raw=true"/>
 
 And now we will see the profiling of that scene during execution:
 
-<img execution>
+<img src="https://github.com/christt105/Sprite_Ordering_and_Camera_Culling_Personal_Research/blob/master/docs/web_images/Profiling_high.png?raw=true">
 
 We see that there are a lot of time wasted in render and sorting sprites. And now, here we have a profiling of the same scene but after making the research implementation:
 
-<img execution bien/>
+<img img="https://github.com/christt105/Sprite_Ordering_and_Camera_Culling_Personal_Research/blob/master/docs/web_images/Profiling_low.png?raw=true"/>
 
 We can see that we gain like one and a half ms rendering background and 47 ms updating all entities. 17 ms still is a lot of time but we will se later how to optimize that.
 
@@ -95,7 +96,7 @@ In order to work with Tiled easily, I have implemented code to import entities t
 
 We can work with tilesets in Tiled. It allows us some functionalities. Only we must do is to study what it gives and incorporate to our code.
 First, there is the main information of the tileset that we can see on Properties window.
-<img src="imagen de las propiedades"/>
+<img src="https://github.com/christt105/Sprite_Ordering_and_Camera_Culling_Personal_Research/blob/master/docs/web_images/player_tsx_properties.png?raw=true"/>
 Here we have some general information about the tileset. The most important are:
 * Name
 * Orientation
@@ -111,13 +112,13 @@ All these variables will be important to import to the program. This is somethin
 
 Also is a powerful tool to implement animations easily. All we have to do is pick the camera icon, set a reference tile and drag it to the box to set the animation of an action. Each tile has an id that we will use later to assign the animation.
 
-<img src/>
+<img src="https://github.com/christt105/Sprite_Ordering_and_Camera_Culling_Personal_Research/blob/master/docs/web_images/player_tsx.png?raw=true"/>
 
 We can also set many colliders and load after in code, but it won't affect to the research, so we won't touch that utility.
 
 After we save the file, we will get something like that:
 
-<img src xml />
+<img src="https://github.com/christt105/Sprite_Ordering_and_Camera_Culling_Personal_Research/blob/master/docs/web_images/player_xml.PNG?raw=true"/>
 
 Here we have in a XML the general information, properties and animations.
 
@@ -370,11 +371,11 @@ For static entities it is a little different. It could not be that automatic. Bu
 
 First, we must prepare the scene. We will work with three layers.
 
-<img src layers/>
+<img src="https://github.com/christt105/Sprite_Ordering_and_Camera_Culling_Personal_Research/blob/master/docs/web_images/layers.PNG?raw=true"/>
 
 Background will contain all tiles that won't be affected by entities, the basic ground like grass and inaccessible trees. Now, the "Object" layer is useful to see where the objects on the scene will be. All objects will have to be in a single texture, working with an atlas texture of objects. It is so important to have the property ```NoDraw``` in off to don't render it later. Finally, we have a layer called ```StaticObjects``` and here we will set all objects in scene. Here is an example of putting a tree on scene:
 
-<img src tree_example/>
+<img src="https://github.com/christt105/Sprite_Ordering_and_Camera_Culling_Personal_Research/blob/master/docs/web_images/tree_example.PNG?raw=true"/>
 
 As we can see, we have to put the name and set the type to "static". Also we have to fill all tiles that occupies. Now we can pass to code.
 
@@ -452,7 +453,7 @@ You can test it moving camera in all directions and looking if the Tile count on
 
 ## TODO 3: Create a post on Tiled and integrate in code
 
-<img src post/>
+<img src="https://github.com/christt105/Sprite_Ordering_and_Camera_Culling_Personal_Research/blob/master/docs/web_images/post.PNG?raw=true"/>
 
 ### Explication
 You must follow the steps we have decelerated above this to create a static entity. In that case we will create a post. Is quite simple, first put it on Tiled and later follow the same structure that other objects.
