@@ -551,10 +551,19 @@ static bool SortByYPos(const j1Entity * ent1, const j1Entity * ent2)
 
 # Issues
 
-objetos con mas de un tile en isometrico
+* Objects in isometric with more than one tile of size will have problems to order. In many cases, the best thing to do is to separate objects in one by one tile.
 
 # Improvements
 
-* Textures
-* Sorting method
-* Not iterate all map
+* Loading textures is so expensive and now we have a texture loaded for every entity. A possible solution is to have only the textures we will use, and set by an id the texture that you need. For example texture 0 to background, 1 to player, 2 to objects and 3 to npc's.
+* There are a lot of sorting methods and a lot of type of containers. Sorting vectors doing sort() function is expensive. You have to study which container and sorting method adjust better to your game. Here you have some links to different types of sorting methods.
+[Brilliant.org](https://brilliant.org/wiki/sorting-algorithms/)
+[Geeksforgeeks.org](https://www.geeksforgeeks.org/sorting-algorithms/)
+* Iterate all map and know if that tile is on camera is so expensive when map is so big. In order to improve that, you can iterate the map from the beginning of the camera position to the camera position plus viewport size.
+* The way that we implement static entities is simple but it is not authomatic and it is ugly to see hardcode. First improve is to set all static entities information in a XML file. Second, you can investigate a way to load pivot and frame of static entities in Tiled.
+
+# Author
+
+All the project has been done by Christian Martínez de la Rosa. You can find me in:
+* Github: [christt105](https://github.com/christt105)
+* Contact: christt105@gmail.com
