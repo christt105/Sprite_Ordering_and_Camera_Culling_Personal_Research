@@ -25,8 +25,17 @@ This is the most lazy way to solve the sorting sprites problem, but it can serve
 
 This is the most common system used, but it could be used with differents approaches.
 
+### By position
+
+That consist in sort entities depending of the position of an entity. It is only focus on the vertical position (Y). In order to make sense of depth, all entities and objects will be sorting by Y position, from low Y to high Y (depending on the engine). Entities higher will render before entities below. We can see this example of _Chrono Trigger_ that uses this system.
+[Chrono Trigger]
+
+That could consume more resources than we expected, because we have to sort a lot of objects. In order to optimize, we have also to implement a camera culling, to only sort and blit entities on camera.
+
 ### Colliders
 
 
 
-### By position
+### Z position
+
+
