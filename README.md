@@ -38,6 +38,7 @@ Link to the [repository](https://github.com/christt105/Sprite_Ordering_and_Camer
 * [Visual Studio](https://visualstudio.microsoft.com/) - IDE
 * [SDL](https://www.libsdl.org/license.php) - Development library
 * [STL](https://www.geeksforgeeks.org/the-c-standard-template-library-stl/) - Development library
+* [PugiXML](https://pugixml.org/) - XML processing library
 * [Brofiler](http://www.brofiler.com/) - Profiler
 * [Tiled](https://www.mapeditor.org/) - Creating maps
 
