@@ -34,6 +34,11 @@ That could consume more resources than we expected, because we have to sort a lo
 
 ### Colliders
 
+Sorting layers by colliders is not widely used but in some cases is the only way to get a good result. A good example for this, is a video made by [Guinxu](https://www.youtube.com/user/GuinxuVideos)(A Spanish indie game developer) that we can found [here](https://youtu.be/eMMnaUmWtnw?t=85)(In Spanish). In order to explain it, I will get some screenshots and I will explain how it works.
+
+First of all, the problem is that the player will have to be able to pass under the bridge and also to pass above.[foto ejemplo]
+
+To do that, Guinxu solved the problem putting up two types of colliders. One type made player be under bridge, and the other vice versa, so, when player goes over the bridge, the last collider that touches is the red(up arrow) and the player layer moves higher than bridge, when he comes out, the player touches blue collider(down arroy) and moves player layer below bridge. Also, that colliders with arrows active or deactive colliders that let the player pass or not. For example, if player is going below bridge, he can not be able to pass for the left and right like if he is passing above bridge, and the same case when player is going above bridge, he can not be able to jump across bridge.  [foto ejemploguinxu]
 
 
 ### Z position
