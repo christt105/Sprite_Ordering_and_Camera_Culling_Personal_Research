@@ -57,6 +57,15 @@ To do that, Guinxu solved the problem putting up two types of colliders. One typ
 
 # Selected approach
 
-In my case, I will sort layers by position, but with a modification. We won't operate with layers, we will operate directly with a list of entities. We will have an entity type that will be ```STATIC```, which won't 
+In my case, I will sort layers by position, but with a modification. We won't operate with layers, we will operate directly with a list of entities. We will have an entity type that will be ```STATIC```, which will do nothing. I decided to do it like this because Tiled works only with objects with one tile, we will see what integration I have done from Tiled. Also, we will make a camera culling that prevent to render tiles that there are not on camera, sort entities and render that are only on the camera.
 
-we have to do that because el codigo base y como funciona el tiled
+The result of this project that we want is something like this:
+![Result gif]()
+As we can see, player moves around objects and the program sorts the render order. On the title we can see the information of how many tiles are being rendered and how many entities are being sorted and rendered. In my case, I used a fictional pivot to sort entities, entities with pivot above will render before entities with pivot below.
+![debug_pivot]()
+Pivot is the green rect in every entity.
+
+You can download the release [here](https://github.com/christt105/Sprite_Ordering_and_Camera_Culling_Personal_Research/releases/tag/1.5).
+And if you want the code, you can get it [here](https://github.com/christt105/Sprite_Ordering_and_Camera_Culling_Personal_Research).
+
+#
