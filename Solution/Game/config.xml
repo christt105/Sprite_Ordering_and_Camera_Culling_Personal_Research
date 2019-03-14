@@ -1,0 +1,47 @@
+<!-- Config file for the game -->
+
+<config>
+  <app framerate_cap="30">
+    <title>SpriteOrdering and Camera Culling</title>
+    <organization>UPC</organization>
+  </app>
+	
+  <renderer>
+    <vsync value="false"/>
+	<camera camera_x="0" camera_y="0"/>
+  </renderer>
+
+  <colliders>
+    <debug value="false"/>
+  </colliders>
+
+  <window>
+    <resolution width="1024" height="768" scale="1"/>
+    <fullscreen value="false"/>
+    <borderless value="false"/>
+    <resizable value="false"/>
+    <fullscreen_window value="false"/>
+  </window>
+
+  <audio>
+    <volume lvl="128"/>
+  </audio>
+  
+  <file_system>
+    <path>data.zip</path>
+  </file_system>
+
+  <map>
+    <folder>maps/</folder>
+  </map>
+
+  <scene>
+    <map name="Scene.tmx"/><!--First map that will be loaded-->
+    <map name="Iso.tmx"/>
+  </scene>
+  
+  <player>
+    <file>player.tsx</file>
+  </player>
+
+</config>
