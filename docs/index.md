@@ -94,3 +94,13 @@ In that case, I will separate links in two sections, because sorting in isometri
 * [Optimization of sorting sprites in isometric](https://gamedev.stackexchange.com/questions/97442/sorting-sprites-layers-in-isometric-view)
 * [Sort with Z-buffer and anchor point, isometric map](https://gamedev.stackexchange.com/questions/69851/isometric-map-draw-sort-with-z-buffer-and-anchor-point)
 * [Isometric sort algorithm](https://gamedev.stackexchange.com/questions/8151/how-do-i-sort-isometric-sprites-into-the-correct-order)
+
+# TODOs and Solution
+
+
+
+# Improvements
+
+* Textures
+* Sorting method
+* Not iterate all map
