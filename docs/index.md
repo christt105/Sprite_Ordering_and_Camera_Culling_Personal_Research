@@ -32,7 +32,7 @@ There are some systems to sorting sprites, it depends on the type of game, the r
 
 ## Cut Sprites
 
-This is the laziest way to solve the sorting sprites problem, but it can serve as leftovers in many cases. It consists in separate a sprite in two parts, the down part and the high part. So, the core of the system is to render first the down part, later all entities, and finally the high part. That system is good to mix static and dynamic entities, for example a building isometric game. There is an example of _Pocket City_ made to its game. It is quite interesting and fits well in that project for the simplicity of the project, the isometric type map and the mobile resources. You can see the separated layers and the result, tinted to see where the cut is.
+This is the laziest way to solve the sorting sprites problem, but it can serve ample in many cases. It consists in separate a sprite in two parts, the down part and the high part. So, the core of the system is to render first the down part, later all entities, and finally the high part. That system is good to mix static and dynamic entities, for example a building isometric game. There is an example of _Pocket City_ made to its game. It is quite interesting and fits well in that project for the simplicity of the project, the isometric type map and the mobile resources. You can see the separated layers and the result, tinted to see where the cut is.
 
 <img src="https://github.com/christt105/Sprite_Ordering_and_Camera_Culling_Personal_Research/blob/master/docs/web_images/PocketCity_layers.png?raw=true" width="400"/><img src="https://github.com/christt105/Sprite_Ordering_and_Camera_Culling_Personal_Research/blob/master/docs/web_images/PocketCity_result.gif?raw=true" width="400"/>
 
