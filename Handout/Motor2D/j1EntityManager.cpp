@@ -187,3 +187,9 @@ void j1EntityManager::DrawDebugQuad(j1Entity *entity) //Draw rectangle occupied 
 
 	App->render->DrawCircle(section.x + entity->pivot.x, section.y + entity->pivot.y, 3, 0, 255, 0);
 }
+
+//TODO 6: add the pivot position to general position
+bool j1EntityManager::SortByYPos(const j1Entity * ent1, const j1Entity * ent2)
+{
+	return ent1->position.y < ent2->position.y;
+}
