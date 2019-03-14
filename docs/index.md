@@ -74,6 +74,21 @@ As we can see, player moves around objects and the program sorts the render orde
 
 Pivot is the green rectangle in every entity.
 
+## Profiling
+We will see a radical change in the performancing of the program. There is a scene full of entities and tiles.
+
+<img src escena llena de entidades/>
+
+And now we will see the profiling of that scene during execution:
+
+<img execution>
+
+We see that there are a lot of time wasted in render and sorting sprites. And now, here we have a profiling of the same scene but after making the research implementation:
+
+<img execution bien/>
+
+We can see that we gain like one and a half ms rendering background and 47 ms updating all entities. 17 ms still is a lot of time but we will se later how to optimize that.
+
 In order to work with Tiled easily, I have implemented code to import entities to the game. I will explain how it works. That works from loading object layers in Tiled, you can see the code to load an entire map [here](https://github.com/christt105/Sprite_Ordering_and_Camera_Culling_Personal_Research/blob/master/Solution/Motor2D/j1Map.cpp).
 
 ## Importing dynamic entities from Tiled
