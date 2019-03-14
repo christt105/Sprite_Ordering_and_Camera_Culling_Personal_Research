@@ -78,12 +78,14 @@ public:
 
 	const Collider* GetCollider() const;
 
-	bool LoadEntityData(const char*);
+	bool LoadEntityData(const char*); //Loads entity by tsx file
+	//Virtual functions because every entity has its properties, variables, animations...------------------------
 	virtual void LoadProperties(pugi::xml_node&);
 	virtual void LoadCollider(pugi::xml_node&);
 	virtual void IdAnimToEnum();
 	virtual void PushBack() {};
 	virtual void AddColliders(j1Entity* c = nullptr);
+	//-----------------------------------------------------------------------------------------------------------
 	void SetPivot(const int &x, const int &y);
 
 	virtual bool Start() { return true; }
@@ -101,7 +103,7 @@ public:
 
 	iPoint size = { 0, 0 };
 
-	Types type;
+	Types type = j1Entity::Types::UNKNOWN;
 
 	Animation anim_idle;
 

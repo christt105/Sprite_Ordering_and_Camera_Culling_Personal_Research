@@ -7,6 +7,7 @@
 
 ent_Static::ent_Static(int x, int y, std::string name) :j1Entity(Types::STATIC, x, y, name)
 {
+	//assign type of static entity, texture rect and pivot
 	//Orthogonal map ------------------------
 	if (name == "tree") {
 		type = ent_Static::Type::TREE;
@@ -79,7 +80,7 @@ ent_Static::ent_Static(int x, int y, std::string name) :j1Entity(Types::STATIC, 
 	size = iPoint(frame.w, frame.h);
 
 
-	if (App->map->data.type == MAPTYPE_ISOMETRIC) {
+	if (App->map->data.type == MAPTYPE_ISOMETRIC) { //If map is isometric, we have to transform orthogonal position to isometric position
 		position.x /= App->map->data.tile_width * 0.5f;
 		position.y /= App->map->data.tile_height;
 
@@ -87,7 +88,7 @@ ent_Static::ent_Static(int x, int y, std::string name) :j1Entity(Types::STATIC, 
 		position.create(pos.x, pos.y);
 	}
 
-	data.tileset.texture = App->tex->Load(App->map->data.properties.objects_path.data());
+	data.tileset.texture = App->tex->Load(App->map->data.properties.objects_path.data()); //Load object texture
 }
 
 ent_Static::~ent_Static()

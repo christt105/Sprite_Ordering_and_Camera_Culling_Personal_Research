@@ -24,8 +24,6 @@ bool Player::Start()
 	current_animation = &anim_idle;
 	current_animation->speed = animationSpeed;
 
-	AddColliders();
-
 	data.tileset.texture = App->tex->Load(data.tileset.imagePath.data());
 
 	SetPivot(6, 18);

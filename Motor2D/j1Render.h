@@ -33,7 +33,7 @@ public:
 	bool Save(pugi::xml_node&) const;
 	SDL_Rect CameraInitPos();
 	// Blit
-	bool IsInCamera(const int &x, const int &y, const int &w, const int &h) const;
+	bool IsOnCamera(const int &x, const int &y, const int &w, const int &h) const;
 
 	iPoint ScreenToWorld(int x, int y) const;
 	bool Blit(SDL_Texture* texture, int x, int y, const SDL_Rect* section = NULL, float speed = 1.0f, bool scale = true, SDL_RendererFlip = SDL_FLIP_NONE, double angle = 0, int pivot_x = INT_MAX, int pivot_y = INT_MAX);

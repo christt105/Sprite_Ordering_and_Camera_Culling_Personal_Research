@@ -30,7 +30,7 @@ bool j1Scene::Awake(pugi::xml_node& conf)
 
 	bool ret = true;
 
-	for (conf = conf.first_child(); conf != nullptr; conf = conf.next_sibling()) {
+	for (conf = conf.first_child(); conf != nullptr; conf = conf.next_sibling()) { //Save name of all scenes set in config.xml in a vector
 		scenes.push_back(conf.attribute("name").as_string());
 	}
 
@@ -44,7 +44,7 @@ bool j1Scene::Start()
 
 	ret = App->map->Load(scenes[0].data()); //Load first map in config.xml
 
-	CreateEntities();
+	CreateEntities(); //Create entities saved in map from Tiled
 
 	App->render->camera = App->render->CameraInitPos();
 
@@ -53,7 +53,7 @@ bool j1Scene::Start()
 
 void j1Scene::CreateEntities()
 {
-	//iterate all objects of tile to find entities
+	//iterate all objects of map made with Tiled to find entities
 
 	for (std::list<ColliderObject*>::iterator position = App->map->data.colliders.begin(); position != App->map->data.colliders.end(); position++) {
 		if ((*position)->name == "player") {

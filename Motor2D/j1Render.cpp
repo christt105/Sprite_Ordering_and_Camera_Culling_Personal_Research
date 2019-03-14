@@ -127,12 +127,12 @@ void j1Render::SetBackgroundColor(const SDL_Color &color)
 	background = color;
 }
 
-bool j1Render::IsInCamera(const int &x, const int &y, const int &w, const int &h) const
+bool j1Render::IsOnCamera(const int &x, const int &y, const int &w, const int &h) const //Given a quad, returns true if is in camera viewport and false if not
 {
 	int scale = App->win->GetScale();
-
-	SDL_Rect cam = { -camera.x, -camera.y, camera.w, camera.h };
-	SDL_Rect r = { x * scale, y * scale, w * scale, h * scale };
+	
+	SDL_Rect cam = { -camera.x, -camera.y, camera.w, camera.h }; //Negate camera position because it moves contrary to how the rest moves
+	SDL_Rect r = { x * scale, y * scale, w * scale, h * scale }; //Multiply section by scale
 
 	return SDL_HasIntersection(&r, &cam);
 }

@@ -54,22 +54,21 @@ bool j1EntityManager::UpdateAll(float dt)
 	bool ret = true;
 
 	std::vector<j1Entity*> draw_entities;
-	SDL_Rect r = { 0,0,0,0 };
 	uint entities_drawn = 0;
 
 	for (std::vector<j1Entity*>::iterator item = entities.begin();item != entities.end(); ++item) {
 		if (*item != nullptr) {
 			ret = (*item)->Update(dt);
 
-			if (App->render->IsInCamera( (*item)->position.x, (*item)->position.y, (*item)->size.x, (*item)->size.y )) {
+			if (App->render->IsOnCamera( (*item)->position.x, (*item)->position.y, (*item)->size.x, (*item)->size.y )) { //Save only entities on camera
 				draw_entities.push_back(*item);
 			}
 		}
 	}
 
-	std::sort(draw_entities.begin(), draw_entities.end(), j1EntityManager::SortByYPos);
+	std::sort(draw_entities.begin(), draw_entities.end(), j1EntityManager::SortByYPos); //Sort entities on camera by pivot position
 
-	for (std::vector<j1Entity*>::iterator item = draw_entities.begin(); item != draw_entities.end(); ++item) {
+	for (std::vector<j1Entity*>::iterator item = draw_entities.begin(); item != draw_entities.end(); ++item) { //Blit sorted entities
 		if (*item != nullptr) {
 			(*item)->Draw();
 			entities_drawn++;
@@ -147,7 +146,7 @@ void j1EntityManager::DestroyEntity(j1Entity * entity)
 	}
 }
 
-void j1EntityManager::DrawDebugQuad(j1Entity *entity)
+void j1EntityManager::DrawDebugQuad(j1Entity *entity) //Draw rectangle occupied by the entity
 {
 	SDL_Rect section = { entity->position.x, entity->position.y, entity->size.x, entity->size.y };
 	Uint8 alpha = 80;
