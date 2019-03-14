@@ -1,4 +1,4 @@
-# Intro to the problem
+# Sprite Ordering and Camera culling
 
 ## Sprite Ordering
 
