@@ -8,13 +8,13 @@ In games like _Super Mario Bros_ or _Hotline Miami_ we can identify a sprite ord
 
 <img src="https://github.com/christt105/Sprite_Ordering_and_Camera_Culling_Personal_Research/blob/master/docs/web_images/super-mario-bros.gif?raw=true" width="400"/>
 
-With the same reason, _Hotline Miami_ does not to have to sort sprites. We can follow the order of sprites like this: background->furniture->enemies->guns->player.
+With the same reason, _Hotline Miami_ does not have to sort sprites. We can follow the order of sprites like this: background->furniture->enemies->guns->player.
 
 <img src="https://github.com/christt105/Sprite_Ordering_and_Camera_Culling_Personal_Research/blob/master/docs/web_images/hotline_miami.png?raw=true"/>
 
-In the other hand, we have games like _The Legend of Zelda: Minish Cap_ and _Pokémon_ (from Ruby and Sapphire gba versions to Black and White versions) are a good example of the beginning of sorting sprites in video games.
+On the other hand, we have games like _The Legend of Zelda: Minish Cap_ and _Pokémon_ (from Ruby and Sapphire gba versions to Black and White versions) are a good example of the beginning of sorting sprites in video games.
 
-In this example, I set player behind and front of that villager. We can see when the player is down the villager, the player hides the feet of the villager. And the same occurs when the player is upper the villager.
+In this example, I set player behind and front of that villager. We can see when the player is below the villager, the player overlaps the feet of the villager. And the same occurs when the player is above the villager.
 
 <img src="https://github.com/christt105/Sprite_Ordering_and_Camera_Culling_Personal_Research/blob/master/docs/web_images/Pokemon_Village_Example.png?raw=true"/>
 
@@ -24,7 +24,7 @@ Sprite ordering might be like this:
 
 ## Camera Culling
 
-Camera culling is a basic method that allows to develop to only work with objects and entities that are only on the camera viewport. This is used to save resources to the machine. It helps especially in games with large worlds and a lot of entities to render. We will see the effect in program later.
+Camera culling is a basic method that allows to the program to work with objects and entities that are only on the camera viewport. This is used to save resources to the machine. It helps especially in games with large worlds and a lot of entities to render. We will see the effect in program later.
 
 # Different approaches by different games
 
@@ -32,7 +32,7 @@ There are some systems to sorting sprites, it depends on the type of game, the r
 
 ## Cut Sprites
 
-This is the laziest way to solve the sorting sprites problem, but it can serve ample in many cases. It consists in separate a sprite in two parts, the down part and the high part. So, the core of the system is to render first the down part, later all entities, and finally the high part. That system is good to mix static and dynamic entities, for example a building isometric game. There is an example of _Pocket City_ made to its game. It is quite interesting and fits well in that project for the simplicity of the project, the isometric type map and the mobile resources. You can see the separated layers and the result, tinted to see where the cut is.
+This is the laziest way to solve the sorting sprites problem, but it can serve ample in many cases. It consists in separate a sprite in two parts, the down part and the high part. So, the core of the system is to render first the down part, later all entities, and finally the high part. That system is good to mix static and dynamic entities, for example a building isometric game. There is an example of _Pocket City_ made. It is quite interesting and fits well in that project for the simplicity of the project, the isometric type map and the mobile resources. You can see the separated layers and the result, tinted to see where the cut is.
 
 <img src="https://github.com/christt105/Sprite_Ordering_and_Camera_Culling_Personal_Research/blob/master/docs/web_images/PocketCity_layers.png?raw=true" width="400"/><img src="https://github.com/christt105/Sprite_Ordering_and_Camera_Culling_Personal_Research/blob/master/docs/web_images/PocketCity_result.gif?raw=true" width="400"/>
 
@@ -42,10 +42,11 @@ This is the most common system used, but it could be used with different approac
 
 ### By position
 
-That consist in sort entities depending of the position of an entity. It is only focus on the vertical position (Y). In order to make sense of depth, all entities and objects will be sorting by Y position, from low Y to high Y (depending on the engine). Entities higher will render before entities below. We can see this example of _Chrono Trigger_ that uses this system.
+That consist in sort entities depending of the position of an entity. It is only focus on the vertical position (Y). In order to make sense of depth, all entities and objects will be sorting by Y position, from low Y to high Y, from top of the window to down. Entities higher will render before entities below. We can see this example of _Chrono Trigger_ that uses this system.
+
 <img src="https://github.com/christt105/Sprite_Ordering_and_Camera_Culling_Personal_Research/blob/master/docs/web_images/chronoTrigger.png?raw=true" width="500"/>
 
-That could consume more resources than we expected, because we must sort a lot of objects. In order to optimize, we have also to implement a camera culling, to only sort and render entities on camera.
+That could consume more resources than we expected, because we must sort a lot of objects. In order to optimize, we have also to implement a camera culling, to only sort and render entities on camera. Also, it depends on the entity types and how are saved. The sort method also influences.
 
 ### Colliders
 
@@ -229,7 +230,7 @@ bool LoadEntityData(const char*); //Loads entity by tsx file
 	//-----------------------------------------------------------------------------------------------------------
 ```
 
-```cpp LoadEntityData()``` will contain all others functions. First, we save tile set information:
+```LoadEntityData()``` will contain all others functions. First, we save tile set information:
 
 ```cpp
 //fill tileset info
@@ -403,7 +404,7 @@ Background will contain all tiles that won't be affected by entities, the basic 
 
 As we can see, we have to put the name and set the type to "static". Also we have to fill all tiles that occupies. Now we can pass to code.
 
-We will create an entity setting its position and name. Depending of the name we will assign a rect or another for the texture.
+We will create an entity, setting its position and name. Depending of the name we will assign a rect or another for the texture.
 ```cpp
 ent_Static::ent_Static(int x, int y, std::string name) :j1Entity(Types::STATIC, x, y, name)
 {
@@ -440,7 +441,7 @@ And if you want the code, you can get it [here](https://github.com/christt105/Sp
 
 # Links to more documentation
 
-If you want to know more about Sprite Ordering, here do you have some links of interest:
+If you want to know more about Sprite Ordering, here you have some links of interest:
 
 * [Cut Sprites solution](https://trederia.blogspot.com/2014/08/z-ordering-of-sprites-in-tiled-maps.html)
 * [Different approaches to Ordering by position](https://eliasdaler.wordpress.com/2013/11/20/z-order-in-top-down-2d-games/)
@@ -467,7 +468,7 @@ You have to pass to the function a rectangle to determine if it is on camera or 
 ### Test
 You cannot test if it works until the next TODO.
 
-## TODO 2: Use previous function to only render tiles on camera. See the title to know if it has been well done
+## TODO 2: Use previous function to only render tiles on camera
 
 ### Explication
 Now it is the time to know if it works. You have to pass the position of the tile in pixels and the width and the height of the tiles of the map.
@@ -480,7 +481,7 @@ You can test it moving camera in all directions and looking if the Tile count on
 <img src="https://github.com/christt105/Sprite_Ordering_and_Camera_Culling_Personal_Research/blob/master/docs/web_images/post.PNG?raw=true"/>
 
 ### Explication
-You must follow the steps we have decelerated above this to create a static entity. In that case we will create a post. Is quite simple, first put it on Tiled and later follow the same structure that other objects.
+You must follow the steps we have explained above this to create a static entity. In that case we will create a post. Is quite simple, first put it on Tiled and later follow the same structure that other objects.
 
 ### Test
 In theory, if it has been well done, it will be where you put on the map. If is not, look carefully the steps and see if there is any LOG message.
@@ -585,7 +586,7 @@ static bool SortByYPos(const j1Entity * ent1, const j1Entity * ent2)
 [Brilliant.org](https://brilliant.org/wiki/sorting-algorithms/)
 [Geeksforgeeks.org](https://www.geeksforgeeks.org/sorting-algorithms/)
 * Iterate all map and know if that tile is on camera is so expensive when map is so big. In order to improve that, you can iterate the map from the beginning of the camera position to the camera position plus viewport size.
-* The way that we implement static entities is simple but it is not authomatic and it is ugly to see hardcode. First improve is to set all static entities information in a XML file. Second, you can investigate a way to load pivot and frame of static entities in Tiled.
+* The way that we implement static entities is simple but it is not automatic and it is ugly to see hardcode. First improve is to set all static entities information in a XML file. Second, you can investigate a way to load pivot and frame of static entities in Tiled.
 
 # Author
 
