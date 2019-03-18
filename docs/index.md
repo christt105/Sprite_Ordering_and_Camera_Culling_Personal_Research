@@ -26,6 +26,10 @@ Sprite ordering might be like this:
 
 Camera culling is a basic method that allows to the program to work with objects and entities that are only on the camera viewport. This is used to save resources to the machine. It helps especially in games with large worlds and a lot of entities to render. We will see the effect in program later.
 
+# Resources
+
+You can download the power point presentation [here](https://github.com/christt105/Sprite_Ordering_and_Camera_Culling_Personal_Research/raw/master/docs/Sprite_Ordering_and_Camera_culling.pptx) and you can download the project with a few exercises and the solution [here](https://github.com/christt105/Sprite_Ordering_and_Camera_Culling_Personal_Research).
+
 # Different approaches by different games
 
 There are some systems to sorting sprites, it depends on the type of game, the resources of the machine and the code structure.
